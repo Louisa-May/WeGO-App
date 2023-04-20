@@ -8,11 +8,11 @@ import Group from '../screens/Account/GroupScreen/Group';
 import Trip from '../screens/Account/TripScreen/Trip';
 import Profile from '../screens/Account/ProfileScreen/Profile';
 import Payout from '../screens/Account/PayoutScreen/Payout';
-// import GroupIcon from "../assets/svgs/tab-icons/groupIcon.svg"
-// import HomeIcon from "../assets/svgs/tab-icons/home-icon.svg"
-// import TripIcon from "../assets/svgs/tab-icons/trip.svg"
-// import PayoutIcon from "../assets/svgs/tab-icons/payout.svg"
-// import ProfileIcon from "../assets/svgs/tab-icons/profile.svg"
+import GroupIcon from '../assets/svgs/tab-icons/groupIcon.svg';
+import HomeIcon from '../assets/svgs/tab-icons/home-icon.svg';
+import TripIcon from '../assets/svgs/tab-icons/trip.svg';
+import PayoutIcon from '../assets/svgs/tab-icons/payout.svg';
+import ProfileIcon from '../assets/svgs/tab-icons/profile.svg';
 const AppBottomTabNabigator = createBottomTabNavigator();
 
 function AppNavigator() {
@@ -22,42 +22,42 @@ function AppNavigator() {
         tabBarIcon: ({focused}) => {
           if (route.name === 'Home') {
             if (focused) {
-              // return <HomeIcon width={23} height={23} />;
+              return <HomeIcon width={23} height={23} />;
             } else {
-              // return <HomeIcon width={23} height={23} />;
+              return <HomeIcon width={23} height={23} />;
             }
           } else if (route.name === 'Group') {
             if (focused) {
-              // return <GroupIcon width={23} height={23} />;
+              return <GroupIcon width={23} height={23} />;
             } else {
-              // return <GroupIcon width={23} height={23} />;
+              return <GroupIcon width={23} height={23} />;
             }
           } else if (route.name === 'Payout') {
             if (focused) {
-              // return <PayoutIcon width={23} height={23} />;
+              return <PayoutIcon width={23} height={23} />;
             } else {
-              // return <PayoutIcon width={23} height={23} />;
+              return <PayoutIcon width={23} height={23} />;
             }
           }
           else if (route.name === 'Trip') {
             if (focused) {
-              // return <TripIcon width={23} height={23} />;
+              return <TripIcon width={23} height={23} />;
             } else {
-              // return <TripIcon width={23} height={23} />;
+              return <TripIcon width={23} height={23} />;
             }
           }
           else {
             if (focused) {
-              // return <ProfileIcon width={23} height={23} />;
+              return <ProfileIcon width={23} height={23} />;
             } else {
-              // return <ProfileIcon width={23} height={23} />;
+              return <ProfileIcon width={23} height={23} />;
             }
           }
         },
 
         headerShown: false,
         gestureEnabled: false,
-        tabBarActiveTintColor: '#9DC64E',
+        tabBarActiveTintColor: '#00214E',
         tabBarInactiveTintColor: '#CCCCCC',
         tabBarAllowFontScaling: true,
         tabBarLabelStyle: {marginBottom: 5, fontSize: 14},
