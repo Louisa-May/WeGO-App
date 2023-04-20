@@ -132,7 +132,7 @@ export default function SignUp({navigation}) {
              <CustomButton  text="Proceed" onPress={handleClick} />
            </View>
             ) : (
-              <ActivityIndicator color="tomato" animating={true} />
+              <ActivityIndicator color="purple" animating={true} />
             )
         }
         </View>

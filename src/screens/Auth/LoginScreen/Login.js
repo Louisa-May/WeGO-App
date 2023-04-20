@@ -16,15 +16,14 @@ import CustomButton from '../../../components/customButton';
 import auth from '@react-native-firebase/auth';
 import {useSelector} from 'react-redux';
 import { useDispatch } from 'react-redux';
+import { setIsAunthenticated } from '../../../../redux-store/userAuth';
 export default function Login({navigation}) {
 
   const [Email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsloading] = useState(false);
   const [isError, setIsError] = useState('');
-   const isAuthenticated = useSelector(
-    (state) => state.user.isAunthenticated,
-  );
+
   const dispatch = useDispatch()
   const handleClick = () => {
     console.log(Email, password);
@@ -38,7 +37,7 @@ export default function Login({navigation}) {
     .signInWithEmailAndPassword(Email, password)
     .then(() => {
       console.log('User account created & signed in!');
-    navigation.navigate('AppStack');
+      dispatch(setIsAunthenticated(true));
     })
     .catch(error => {
       if (error.code === 'auth/invalid-email') {
@@ -99,7 +98,7 @@ export default function Login({navigation}) {
              <CustomButton  text="Login" onPress={handleClick} />
            </View>
             ) : (
-              <ActivityIndicator color="tomato" animating={true} />
+              <ActivityIndicator color="purple" animating={true} />
             )
         }
         </View>

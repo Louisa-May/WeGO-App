@@ -14,6 +14,7 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, onChangeTex
         secureTextEntry={secureTextEntry}
         placeholderTextColor={colors.lightBlue}
         onChangeText={onChangeText}
+        
       />
     </View>
   );

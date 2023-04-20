@@ -14,7 +14,7 @@ import Trip from '../screens/Account/TripScreen/Trip';
 import Profile from '../screens/Account/ProfileScreen/Profile';
 import ProfileDetails from '../screens/Account/ProfileDetailsScreen/ProfileDetails';
 
-export const AuthStack = [
+export const AuthStackScreens = [
   {
     screen: SplashScreen,
     name: 'SplashScreen',
@@ -37,7 +37,7 @@ export const AuthStack = [
   },
 ];
 
-export const AppStack = [
+export const AppStackScreens = [
   {
     screen: Dashboard,
     name: 'Dashboard',
