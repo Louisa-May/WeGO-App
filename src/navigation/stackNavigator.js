@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import SplashScreen from '../screens/Splash/SplashScreen';
 import SwipeUp from '../screens/Auth/LoginScreen/SwipeUp';
 import Login from '../screens/Auth/LoginScreen/Login';

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {AuthStack, AppStack} from './stackNavigator';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';

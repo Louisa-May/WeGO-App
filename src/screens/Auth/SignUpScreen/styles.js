@@ -1,11 +1,17 @@
+/* eslint-disable prettier/prettier */
 import {StyleSheet} from 'react-native';
 import {colors} from '../../../constants/colors';
 
 export const styles = StyleSheet.create({
-  container: {
+  container1: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    backgroundColor: colors.white,
+    height:'100%'
+  },
+  container2: {
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: colors.white,
   },
   logoCover: {
@@ -43,7 +49,24 @@ export const styles = StyleSheet.create({
     padding: 10,
   },
   flex: {
-    flex: 1,
+    // width:'100%',
+    // justifyContent:'center',
+    // alignContent:'center',
+    // alignItems:'center'
+    width:'100%',
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center',
+    // height:200,
+  },
+  form: {
+    width:350,
+  },
+  headerSubText:{
+    color: colors.black,
+    fontSize: 15,
+    fontWeight: '400',
+    padding: 10,
   },
   flexDirection: {
     flexDirection: 'row',
@@ -54,6 +77,7 @@ export const styles = StyleSheet.create({
     fontSize: 27,
     fontWeight: 'bold',
     padding: 10,
+    textAlign:'center'
   },
   signupButton: {
     justifyContent: 'center',
@@ -62,13 +86,12 @@ export const styles = StyleSheet.create({
   footerContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
-    marginTop: 25,
+  
   },
   footerText: {
     color: colors.orange,
     fontWeight: 'bold',
-    marginTop: 50,
+    marginTop:20,
   },
   //   Congrats Screen
   congratsCover: {
