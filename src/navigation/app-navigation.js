@@ -13,6 +13,7 @@ import HomeIcon from '../assets/svgs/tab-icons/home-icon.svg';
 import TripIcon from '../assets/svgs/tab-icons/trip.svg';
 import PayoutIcon from '../assets/svgs/tab-icons/payout.svg';
 import ProfileIcon from '../assets/svgs/tab-icons/profile.svg';
+import DashboardNavigation from "../navigation/dashboard-navigation"
 const AppBottomTabNabigator = createBottomTabNavigator();
 
 function AppNavigator() {
@@ -76,7 +77,7 @@ function AppNavigator() {
       {/* {AppStackScreens.map((item, index) => (
         <AppBottomTabNabigator.Screen name={item.name} component={item.screen} key={index} />
       ))} */}
-          <AppBottomTabNabigator.Screen name="Home" component={Dashboard} />
+          <AppBottomTabNabigator.Screen name="Home" component={DashboardNavigation} />
           <AppBottomTabNabigator.Screen name="Group" component={Group} />
           <AppBottomTabNabigator.Screen name="Payout" component={Payout} />
           <AppBottomTabNabigator.Screen name="Trip" component={Trip} />

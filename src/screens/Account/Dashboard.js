@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   View,
   StatusBar,
@@ -101,24 +102,7 @@ export default function Dashboard({navigation}) {
         </View>
       </Card>
 
-      {/* Footer */}
-      <View style={styles.footer}>
-        <TouchableOpacity onPress={goToHome}>
-          <Text style={styles.mediumText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={goToGroup}>
-          <Text style={styles.mediumText}>Group</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={goToPayout}>
-          <Text style={styles.mediumText}>Payout</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={goToTrip}>
-          <Text style={styles.mediumText}>Trip</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={goToProfile}>
-          <Text style={styles.mediumText}>Profile</Text>
-        </TouchableOpacity>
-      </View>
+      
     </SafeAreaView>
   );
 }

@@ -129,25 +129,6 @@ export default function Group({navigation}) {
       <TouchableOpacity style={styles.plusIcon} onPress={createGroup}>
         <FeatherIcon name="plus-circle" size={45} color={colors.green} />
       </TouchableOpacity>
-
-      {/* Footer */}
-      <View style={styles.footer}>
-        <TouchableOpacity onPress={goToHome}>
-          <Text style={styles.mediumText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={goToGroup}>
-          <Text style={styles.mediumText}>Group</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={goToPayout}>
-          <Text style={styles.mediumText}>Payout</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={goToTrip}>
-          <Text style={styles.mediumText}>Trip</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={goToProfile}>
-          <Text style={styles.mediumText}>Profile</Text>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 }
