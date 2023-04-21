@@ -13,7 +13,8 @@ import { useEffect } from 'react';
 
 
 export default function CreateGroup({navigation}) {
- 
+  const userReference = database().ref('users');
+
   const handleClick = () => {
     navigation.navigate('CompleteGroup');
   };
@@ -24,26 +25,20 @@ export default function CreateGroup({navigation}) {
   let [users, setUsers] = useState([]);
 
   const getUsers =  () => {
-    const reference = database().ref('Users');
-    console.log(reference)
-   reference
-  .once('value')
-  .then(snapshot => {
-    console.log('User data: ', snapshot.val());
-  });
-  //   database()
-  // .ref('/users')
-  // .on('value', snapshot => {
-  //   console.log('User data: ', snapshot.val());
-  // })
+    userReference
+    .once('value')
+    .then(snapshot => {
+      const usersList = snapshot.val();
+      setUsers(users = usersList)
+      console.log('User data: ', users);
 
-    // setUsers(reference);
-    // console.log('users',users);
+    });
+
   };
 
   useEffect(()=>{
-   getUsers();
-  },[setUsers]);
+    getUsers();
+   },[]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -73,12 +68,6 @@ export default function CreateGroup({navigation}) {
           {/* <Text style={styles.searchText}>Hold and drag to reorder</Text> */}
         </View>
             <FlatList 
-            // refreshControl={
-            //     <RefreshControl
-            //     colors={["tomato","gray"]}
-            //     refreshing
-            // }
-            // showsHorizontalScrollIndicator={false}
              data={users}
              contentContainerStyle={styles.mainGroup}
             numColumns={2}
@@ -93,11 +82,10 @@ export default function CreateGroup({navigation}) {
                   <Image source={require('../../../assets/images/userImage.png')} />
                 </View>
                 <Text style={styles.memberNameText}>
-                  {/* {user} */}
-                 {/* {user.last_name} */}
+                 {user.last_name}
                  </Text>
                 <Text style={styles.adminNameText}>
-                  {/* {user._data.role} */}
+                  {user._data.role}
                   </Text>
               </TouchableOpacity>
             );
