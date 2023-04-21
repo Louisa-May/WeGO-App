@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   View,
   StatusBar,
@@ -13,21 +14,7 @@ import {colors} from '../../../constants/colors';
 import Card from '../../../components/card';
 
 export default function Trip({navigation}) {
-  const goToHome = () => {
-    navigation.navigate('Dashboard');
-  };
-  const goToGroup = () => {
-    navigation.navigate('Group');
-  };
-  const goToPayout = () => {
-    navigation.navigate('Payout');
-  };
-  const goToTrip = () => {
-    navigation.navigate('Trip');
-  };
-  const goToProfile = () => {
-    navigation.navigate('Profile');
-  };
+  
   const goBack = () => {
     navigation.navigate('Dashboard');
   };
