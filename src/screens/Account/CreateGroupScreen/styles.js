@@ -38,8 +38,9 @@ export const styles = StyleSheet.create({
   },
   mainGroup: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     width: '100%',
+    flex: 1,
   },
   member: {
     backgroundColor: colors.deepGrey,
@@ -59,12 +60,19 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 8,
-    color: colors.black
+    color: 'black',
+    textAlign:'center'
   },
   adminNameText: {
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 5,
     color: colors.green,
+    textAlign:'center'
   },
+  individualUser: {
+    width:100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });

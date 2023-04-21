@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "82377701014",
-    "project_id": "ajo-saving-project",
-    "storage_bucket": "ajo-saving-project.appspot.com"
+    "project_number": "832581638335",
+    "project_id": "wego-app-8e4a0",
+    "storage_bucket": "wego-app-8e4a0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:82377701014:android:a3dc36b70504a133ee34b7",
+        "mobilesdk_app_id": "1:832581638335:android:66921016b9e6fb80350e0a",
         "android_client_info": {
           "package_name": "com.wego"
         }
       },
       "oauth_client": [
         {
-          "client_id": "82377701014-h8tp3fcbbh7ng3o64lq0p0nvfv7aclnu.apps.googleusercontent.com",
+          "client_id": "832581638335-uu373t1ks5ifg1i1p26fpni6agu5tuoq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDr2kjcvSwtKZfKuIW0iD3qSBa2UqZzDBM"
+          "current_key": "AIzaSyDHtS_mYgiwRvDUjUTcLJhG95zetaPiu4k"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "82377701014-h8tp3fcbbh7ng3o64lq0p0nvfv7aclnu.apps.googleusercontent.com",
+              "client_id": "832581638335-uu373t1ks5ifg1i1p26fpni6agu5tuoq.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {StyleSheet} from 'react-native';
 import {colors} from '../../../constants/colors';
 
@@ -40,8 +41,6 @@ export const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 10,
     paddingTop: 5,
-    borderColor: colors.green,
-    borderWidth: 2,
     borderRadius: 15,
   },
   tripInnerRow: {

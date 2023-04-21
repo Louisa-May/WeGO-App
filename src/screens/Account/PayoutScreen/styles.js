@@ -1,13 +1,16 @@
+/* eslint-disable prettier/prettier */
 import {StyleSheet} from 'react-native';
 import {colors} from '../../../constants/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    flex: 1,
+    // flex: 1,
     backgroundColor: colors.white,
     position: 'relative',
+    paddingTop:30,
+    height:'100%'
   },
   row: {
     flexDirection: 'row',
@@ -19,14 +22,16 @@ export const styles = StyleSheet.create({
     color: colors.black,
     fontSize: 30,
     fontWeight: 'bold',
-    paddingBottom: 10,
     paddingLeft: 20,
+    marginTop:-5
   },
   searchText: {
     justifyContent: 'flex-start',
     width: '100%',
     marginTop: 20,
     padding: 20,
+    fontSize:20,
+    color:colors.black
   },
   smallText: {
     color: colors.black,
@@ -42,6 +47,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'semiBold',
     left: 105,
+    color: colors.black,
   },
   bigText: {
     color: colors.black,
@@ -60,10 +66,15 @@ export const styles = StyleSheet.create({
   },
   cardPadding: {
     paddingVertical: 30,
+    backgroundColor: colors.deepGrey,
+    width:'90%',
+    borderRadius:20
   },
   button: {
     justifyContent: 'center',
     alignItems: 'center',
+    alignContent:'center',
     paddingVertical: 40,
+    width:'100%'
   },
 });

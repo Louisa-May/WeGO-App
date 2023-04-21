@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {View, StatusBar, SafeAreaView, Text, Image} from 'react-native';
 import React from 'react';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
@@ -29,19 +30,21 @@ export default function GroupDetails({navigation}) {
       </View>
       <Text style={styles.searchText}>Book your trip now</Text>
 
-      <Card>
+      {/* <Card> */}
         <View style={styles.cardPadding}>
           <Text style={styles.bigText}>Book your trip</Text>
           <Text style={styles.noColorText}>Available balance £2,500</Text>
           <Text style={styles.bigText2}>£1,200</Text>
-          <Image source={require('../../../assets/images/metric.png')} />
+          {/* <Image source={require('../../../assets/images/metric.png')} /> */}
 
           {/* Choose Trip Button Section */}
           <View style={styles.button}>
-            <CustomButton text="Choose Trip" onPress={handleClick} />
+           <View style={{width:'80%'}}>
+            <CustomButton text="Choose Trip"  onPress={handleClick} />
+           </View>
           </View>
         </View>
-      </Card>
+      {/* </Card> */}
     </SafeAreaView>
   );
 }
