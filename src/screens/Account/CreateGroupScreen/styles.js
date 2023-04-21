@@ -1,19 +1,20 @@
+/* eslint-disable prettier/prettier */
 import {StyleSheet} from 'react-native';
 import {colors} from '../../../constants/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
     backgroundColor: colors.white,
-    position: 'relative',
+    height:'100%',
   },
   row: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'flex-start',
     width: '100%',
-    paddingHorizontal: 10,
+    marginTop:50
+    // paddingHorizontal: 10,
   },
   headerText: {
     color: colors.black,
@@ -23,16 +24,22 @@ export const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   searchText: {
-    justifyContent: 'flex-start',
-    width: '100%',
+    // justifyContent: 'flex-start',
+    // width: '100%',
     marginTop: 20,
     padding: 20,
+    color:colors.black
   },
   mainText: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
     paddingVertical: 10,
+  },
+  mainGroup: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
   },
   member: {
     backgroundColor: colors.deepGrey,
@@ -46,11 +53,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 20,
+    width:'90%'
   },
   memberNameText: {
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 8,
+    color: colors.black
   },
   adminNameText: {
     justifyContent: 'center',

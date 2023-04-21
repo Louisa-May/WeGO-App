@@ -1,16 +1,17 @@
+/* eslint-disable prettier/prettier */
 import {StyleSheet} from 'react-native';
 import {colors} from '../../constants/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    height:'100%',
     backgroundColor: colors.white,
     position: 'relative',
   },
   topView: {
-    flex: 1,
+    
     flexDirection: 'row',
     width: '90%',
     marginRight: 50,
@@ -69,8 +70,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   cardCover: {
-    width: '100%',
-    paddingVertical: 10,
+    // width: '100%',
+    // paddingVertical: 10,
+    backgroundColor:'red'
   },
   graphImage: {
     resizeMode: 'contain',

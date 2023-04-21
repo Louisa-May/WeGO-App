@@ -17,6 +17,7 @@ import auth from '@react-native-firebase/auth';
 import {useSelector} from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setIsAunthenticated } from '../../../../redux-store/userAuth';
+import firestore from '@react-native-firebase/firestore'
 export default function Login({navigation}) {
 
   const [Email, setEmail] = useState('');
@@ -25,7 +26,7 @@ export default function Login({navigation}) {
   const [isError, setIsError] = useState('');
 
   const dispatch = useDispatch()
-  const handleClick = () => {
+  const handleClick =  () => {
     console.log(Email, password);
     setIsloading(true);
     if (Email  === '' || password === '') {
@@ -35,9 +36,14 @@ export default function Login({navigation}) {
     }
     auth()
     .signInWithEmailAndPassword(Email, password)
-    .then(() => {
+    .then(async() => {
       console.log('User account created & signed in!');
+
+      const user = await firestore().collection('Users').doc('ABC').get();
+      console.log(user);
       dispatch(setIsAunthenticated(true));
+      setIsloading(false);
+
     })
     .catch(error => {
       if (error.code === 'auth/invalid-email') {

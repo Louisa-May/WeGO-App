@@ -1,19 +1,17 @@
 /* eslint-disable prettier/prettier */
 // import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {AppStackScreens} from './stackNavigator';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Dashboard from '../screens/Account/Dashboard';
-import Group from '../screens/Account/GroupScreen/Group';
-import Trip from '../screens/Account/TripScreen/Trip';
-import Profile from '../screens/Account/ProfileScreen/Profile';
-import Payout from '../screens/Account/PayoutScreen/Payout';
 import GroupIcon from '../assets/svgs/tab-icons/groupIcon.svg';
 import HomeIcon from '../assets/svgs/tab-icons/home-icon.svg';
 import TripIcon from '../assets/svgs/tab-icons/trip.svg';
 import PayoutIcon from '../assets/svgs/tab-icons/payout.svg';
 import ProfileIcon from '../assets/svgs/tab-icons/profile.svg';
 import DashboardNavigation from "../navigation/dashboard-navigation"
+import GroupNavigation from './group-navigation';
+import PayoutNavigation from './payout-navihation';
+import TripNavigation from './trip-navigation';
+import ProfileNavigation from './profile-naviigation';
 const AppBottomTabNabigator = createBottomTabNavigator();
 
 function AppNavigator() {
@@ -78,10 +76,10 @@ function AppNavigator() {
         <AppBottomTabNabigator.Screen name={item.name} component={item.screen} key={index} />
       ))} */}
           <AppBottomTabNabigator.Screen name="Home" component={DashboardNavigation} />
-          <AppBottomTabNabigator.Screen name="Group" component={Group} />
-          <AppBottomTabNabigator.Screen name="Payout" component={Payout} />
-          <AppBottomTabNabigator.Screen name="Trip" component={Trip} />
-          <AppBottomTabNabigator.Screen name="Profile" component={Profile} />
+          <AppBottomTabNabigator.Screen name="Group" component={GroupNavigation} />
+          <AppBottomTabNabigator.Screen name="Payout" component={PayoutNavigation} />
+          <AppBottomTabNabigator.Screen name="Trip" component={TripNavigation} />
+          <AppBottomTabNabigator.Screen name="Profile-nav" component={ProfileNavigation} />
 
     </AppBottomTabNabigator.Navigator>
   );

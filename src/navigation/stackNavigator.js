@@ -19,10 +19,10 @@ export const AuthStackScreens = [
     screen: SplashScreen,
     name: 'SplashScreen',
   },
-  {
-    screen: SwipeUp,
-    name: 'SwipeUp',
-  },
+  // {
+  //   screen: SwipeUp,
+  //   name: 'SwipeUp',
+  // },
   {
     screen: Login,
     name: 'Login',

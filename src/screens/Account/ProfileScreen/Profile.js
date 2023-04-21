@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   View,
   StatusBar,
@@ -16,22 +17,7 @@ import {colors} from '../../../constants/colors';
 import Card from '../../../components/card';
 
 export default function Profile({navigation}) {
-  const goToHome = () => {
-    navigation.navigate('Dashboard');
-  };
-  const goToGroup = () => {
-    navigation.navigate('Group');
-  };
-  const goToPayout = () => {
-    navigation.navigate('Payout');
-  };
-  const goToTrip = () => {
-    navigation.navigate('Trip');
-  };
-  const goToProfile = () => {
-    navigation.navigate('Profile');
-  };
-
+  
   const handleClick = () => {
     navigation.navigate('ProfileDetails');
   };
@@ -64,7 +50,7 @@ export default function Profile({navigation}) {
             name="chevron-right"
             size={32}
             color={colors.black}
-            onPress={handleClick}
+            onPress={() => handleClick()}
             style={styles.chevron}
           />
         </View>

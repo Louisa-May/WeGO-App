@@ -1,4 +1,5 @@
-import {View, StatusBar, SafeAreaView, Text, Image} from 'react-native';
+/* eslint-disable prettier/prettier */
+import {View, StatusBar, SafeAreaView, Text, Image, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {styles} from './styles';
@@ -12,14 +13,14 @@ export default function CreateGroup({navigation}) {
     navigation.navigate('CompleteGroup');
   };
   const goBack = () => {
-    navigation.navigate('Group');
+    navigation.goBack()
   };
   const [searchInput, setSearchInput] = useState('');
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
       {/* Header */}
+      {/* <ScrollView style={{width:'90%', height:800, }}> */}
       <View style={styles.row}>
         <EntypoIcon
           name="chevron-left"
@@ -29,21 +30,21 @@ export default function CreateGroup({navigation}) {
         />
         <Text style={styles.headerText}>Create Group</Text>
       </View>
-      <Text style={styles.searchText}>Edit Members</Text>
+      {/* <Text style={styles.searchText}>Edit Members</Text> */}
       {/* Search Bar */}
-      <CustomSearch
+      {/* <CustomSearch
         placeholder="Search Contacts"
         value={searchInput}
         setValue={setSearchInput}
-      />
+      /> */}
 
       {/* Members list */}
-      <Card>
+      {/* <Card> */}
         <View style={styles.mainText}>
-          <Text>Available slots: 3/12</Text>
-          <Text>Hold and drag to reorder</Text>
+          <Text style={styles.searchText}>Available slots: 3/12</Text>
+          {/* <Text style={styles.searchText}>Hold and drag to reorder</Text> */}
         </View>
-        <View style={styles.mainText}>
+        <View style={styles.mainGroup}>
           <View>
             <View style={styles.member}>
               <Image source={require('../../../assets/images/userImage.png')} />
@@ -64,7 +65,7 @@ export default function CreateGroup({navigation}) {
             <Text style={styles.memberNameText}>Name</Text>
           </View>
         </View>
-        <View style={styles.mainText}>
+        <View style={styles.mainGroup}>
           <View>
             <View style={styles.member} />
             <Text style={styles.memberNameText}>Name</Text>
@@ -82,7 +83,7 @@ export default function CreateGroup({navigation}) {
             <Text style={styles.memberNameText}>Name</Text>
           </View>
         </View>
-        <View style={styles.mainText}>
+        <View style={styles.mainGroup}>
           <View>
             <View style={styles.member} />
             <Text style={styles.memberNameText}>Name</Text>
@@ -105,7 +106,8 @@ export default function CreateGroup({navigation}) {
         <View style={styles.button}>
           <CustomButton text="Continue" onPress={handleClick} />
         </View>
-      </Card>
+      {/* </Card> */}
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 }

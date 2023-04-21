@@ -32,10 +32,6 @@ export default function SignUp({navigation}) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsloading] = useState(false);
   const [isError, setIsError] = useState('');
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector(
-    (state) => state.user.isAunthenticated,
-  );
   const onLoginPressed = () => {
     navigation.navigate('Login');
   };
@@ -59,11 +55,9 @@ export default function SignUp({navigation}) {
     role: role,
   })
   .then(() => {
-    console.log('User added!');
-    dispatch(setIsAunthenticated(true));
-    console.log('isauth', isAuthenticated);
+    navigation.navigate('Congrats');
   });
-      navigation.navigate('Congrats');
+     
     })
     .catch(error => {
       if (error.code === 'auth/invalid-email') {
@@ -93,7 +87,7 @@ export default function SignUp({navigation}) {
       
 
       <View style={styles.flex}>
-        <View style={styles.container}>
+        <View style={styles.container2}>
           <Text style={styles.headerText}>Sign Up</Text>
           <Text style={styles.headerSubText}>Create an account to continue</Text>
         </View>

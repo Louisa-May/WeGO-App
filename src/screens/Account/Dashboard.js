@@ -14,25 +14,8 @@ import {styles} from './styles';
 import {colors} from '../../constants/colors';
 import Card from '../../components/card';
 export default function Dashboard({navigation}) {
-  const goToHome = () => {
-    navigation.navigate('Dashboard');
-  };
-  const goToGroup = () => {
-    navigation.navigate('Group');
-  };
-  const goToPayout = () => {
-    navigation.navigate('Payout');
-  };
-  const goToTrip = () => {
-    navigation.navigate('Trip');
-  };
-  const goToProfile = () => {
-    navigation.navigate('Profile');
-  };
-
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
       {/* Top View */}
       <View style={styles.topView}>
         <View style={styles.imageHello}>
@@ -70,7 +53,6 @@ export default function Dashboard({navigation}) {
             <Text style={styles.mediumText}>61,500</Text>
             <Text style={styles.smallText}>5,000/month</Text>
           </View>
-          <Image source={require('../../assets/images/graph.png')} />
         </View>
       </Card>
 
@@ -101,8 +83,6 @@ export default function Dashboard({navigation}) {
           </View>
         </View>
       </Card>
-
-      
     </SafeAreaView>
   );
 }

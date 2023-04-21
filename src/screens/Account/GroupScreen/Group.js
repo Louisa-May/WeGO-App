@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   View,
   StatusBar,
@@ -5,6 +6,7 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import React, {useState} from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -42,25 +44,26 @@ export default function Group({navigation}) {
   const [searchInput, setSearchInput] = useState('');
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
+    <View style={styles.container}>
       {/* Header */}
-      <View style={styles.row}>
+     <ScrollView style={{width:'90%'}}>
+     <View style={styles.row}>
         <EntypoIcon
           name="chevron-left"
           size={32}
+          style={{marginTop:7}}
           color={colors.black}
           onPress={goBack}
         />
         <Text style={styles.headerText}>Group</Text>
       </View>
-      <Text style={styles.searchText}>Search or select savings group</Text>
+      {/* <Text style={styles.searchText}>Search or select savings group</Text> */}
       {/* Search Bar */}
-      <CustomSearch
+      {/* <CustomSearch
         placeholder="Search Group"
         value={searchInput}
         setValue={setSearchInput}
-      />
+      /> */}
       <Text style={styles.mainText}>All Groups</Text>
 
       {/* Group list */}
@@ -124,11 +127,43 @@ export default function Group({navigation}) {
           />
         </View>
       </Card>
+      <Card>
+        <View style={styles.groupCardRow}>
+          <Image
+            source={require('../../../assets/images/groupImage1.png')}
+            style={styles.groupImageCover}
+          />
+          <Text style={styles.groupText}>Family Trip</Text>
+          <EntypoIcon
+            name="chevron-right"
+            size={32}
+            color={colors.black}
+            onPress={groupDetails}
+          />
+        </View>
+      </Card>
 
+      <Card>
+        <View style={styles.groupCardRow}>
+          <Image
+            source={require('../../../assets/images/groupImage1.png')}
+            style={styles.groupImageCover}
+          />
+          <Text style={styles.groupText}>Family Trip</Text>
+          <EntypoIcon
+            name="chevron-right"
+            size={32}
+            color={colors.black}
+            onPress={groupDetails}
+          />
+        </View>
+      </Card>
+
+     </ScrollView>
       {/* Create Group */}
       <TouchableOpacity style={styles.plusIcon} onPress={createGroup}>
         <FeatherIcon name="plus-circle" size={45} color={colors.green} />
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 }
