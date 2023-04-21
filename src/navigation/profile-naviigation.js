@@ -15,7 +15,7 @@ function ProfileNavigation() {
         // cardStyleInterpolator:
         //   CardStyleInterpolators.forRevealFromBottomAndroid,
       }}>
-      <ProfileStackNavigator.Screen name="Profile" component={Profile} />
+      <ProfileStackNavigator.Screen name="ProfileMain" component={Profile} />
       <ProfileStackNavigator.Screen name="ProfileDetails" component={ProfileDetails} />
 
     </ProfileStackNavigator.Navigator>

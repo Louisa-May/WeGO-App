@@ -13,7 +13,11 @@ import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {styles} from './styles';
 import {colors} from '../../constants/colors';
 import Card from '../../components/card';
+import { useSelector } from 'react-redux';
 export default function Dashboard({navigation}) {
+  const user = useSelector(
+    (state) => state.user.user,
+  );
   return (
     <SafeAreaView style={styles.container}>
       {/* Top View */}
@@ -26,8 +30,7 @@ export default function Dashboard({navigation}) {
             />
           </View>
           <View style={styles.welcomeTextCover}>
-            <Text style={styles.smallText}>Hello</Text>
-            <Text style={styles.mediumText}>Gabriel</Text>
+            <Text style={styles.mediumText}>Hello {user.first_name}</Text>
           </View>
         </View>
       </View>

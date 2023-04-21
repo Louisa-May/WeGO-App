@@ -17,10 +17,11 @@ import CustomButton from '../../../components/customButton';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import RNPickerSelect from 'react-native-picker-select';
-import {useSelector} from 'react-redux';
+import database from '@react-native-firebase/database';
+import { firebase } from '@react-native-firebase/database';
+import { setUser } from '../../../../redux-store/userAuth';
 import { useDispatch } from 'react-redux';
-import { setIsAunthenticated } from '../../../../redux-store/userAuth';
-
+const reference = database().ref('/users');
 
 export default function SignUp({navigation}) {
 
@@ -32,9 +33,11 @@ export default function SignUp({navigation}) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsloading] = useState(false);
   const [isError, setIsError] = useState('');
+  const dispatch = useDispatch()
   const onLoginPressed = () => {
     navigation.navigate('Login');
   };
+  const newReference = database().ref('/users').push();
   const handleClick = () => {
     setIsloading(true);
     if (email  === '' || password === ''|| firstName === '' || lastName === '' ) {
@@ -46,18 +49,20 @@ export default function SignUp({navigation}) {
     .createUserWithEmailAndPassword(email, password)
     .then(() => {
       console.log('User account created & signed in!');
-      firestore()
-  .collection('Users')
-  .add({
-    first_name: firstName,
-    last_name: lastName,
-    email: email,
-    role: role,
-  })
-  .then(() => {
-    navigation.navigate('Congrats');
-  });
-     
+      let userData = {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        role: 'user',
+        wallet_amount:0,
+    }
+      let newUser = reference.push();
+      userData.id = newUser.key;
+      newUser.set(userData)
+      dispatch(setUser(userData))
+    setIsloading(false)
+  }).then(() => {
+      navigation.navigate('Congrats');
     })
     .catch(error => {
       if (error.code === 'auth/invalid-email') {
@@ -72,8 +77,10 @@ export default function SignUp({navigation}) {
         setIsloading(false);
         return;
       }
-      console.error(error);
-    });
+      console.log(error);
+      setIsError('error')
+      setIsloading(false);
+    })
   };
   return (
     <SafeAreaView style={styles.container1}>
@@ -141,6 +148,4 @@ export default function SignUp({navigation}) {
       </View>
     </SafeAreaView>
   );
-}
-
-// -The footer Login text is not alligning here too; the Sign Up should be in the center
+};

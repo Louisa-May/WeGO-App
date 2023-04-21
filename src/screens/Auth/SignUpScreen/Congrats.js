@@ -17,7 +17,6 @@ export default function Congrats({navigation}) {
   };
   const handleClick = () => {
     dispatch(setIsAunthenticated(true));
-    navigation.navigate('AppStack');
   };
   return (
     <SafeAreaView style={styles.container1}>

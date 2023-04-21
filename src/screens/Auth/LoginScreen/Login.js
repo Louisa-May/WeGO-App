@@ -16,8 +16,8 @@ import CustomButton from '../../../components/customButton';
 import auth from '@react-native-firebase/auth';
 import {useSelector} from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setIsAunthenticated } from '../../../../redux-store/userAuth';
-import firestore from '@react-native-firebase/firestore'
+import { setIsAunthenticated, setUser } from '../../../../redux-store/userAuth';
+import database from '@react-native-firebase/database';
 export default function Login({navigation}) {
 
   const [Email, setEmail] = useState('');
@@ -26,6 +26,10 @@ export default function Login({navigation}) {
   const [isError, setIsError] = useState('');
 
   const dispatch = useDispatch()
+
+  const onSignUpPressed = () => {
+    navigation.navigate('SignUp');
+  };
   const handleClick =  () => {
     console.log(Email, password);
     setIsloading(true);
@@ -37,14 +41,18 @@ export default function Login({navigation}) {
     auth()
     .signInWithEmailAndPassword(Email, password)
     .then(async() => {
-      console.log('User account created & signed in!');
-
-      const user = await firestore().collection('Users').doc('ABC').get();
-      console.log(user);
+      console.log('User account signed in!');
+     let usersRef = database().ref('users').orderByChild('email').equalTo(Email);
+     usersRef.once('value', snapshot => {
+      if (snapshot.exists()) {
+        const user = snapshot.val()
+        console.log(user.first_name);
+      dispatch(setUser(user))
       dispatch(setIsAunthenticated(true));
+      }
       setIsloading(false);
-
     })
+  })
     .catch(error => {
       if (error.code === 'auth/invalid-email') {
         console.log('That email address is invalid!');
@@ -60,10 +68,8 @@ export default function Login({navigation}) {
       }
       console.error(error);
     });
-  };
-  const onSignUpPressed = () => {
-    navigation.navigate('SignUp');
-  };
+
+}
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
@@ -71,11 +77,8 @@ export default function Login({navigation}) {
       {/* Circle Section */}
       <View style={styles.greenCircle} />
       <View style={styles.orangeCircle} />
-
-           
       <View style={styles.flex}>
       {/* Header Text */}
-
         <View style={styles.container}>
             <Text style={styles.headerText}>Login</Text>
             <Text style={styles.headerSubText}>Please sign in to continue</Text>
@@ -118,6 +121,6 @@ export default function Login({navigation}) {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 // -The footer SignUP text is not alligning; -I want to put a Forgot text inside the password input

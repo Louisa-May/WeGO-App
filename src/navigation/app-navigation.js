@@ -79,7 +79,7 @@ function AppNavigator() {
           <AppBottomTabNabigator.Screen name="Group" component={GroupNavigation} />
           <AppBottomTabNabigator.Screen name="Payout" component={PayoutNavigation} />
           <AppBottomTabNabigator.Screen name="Trip" component={TripNavigation} />
-          <AppBottomTabNabigator.Screen name="Profile-nav" component={ProfileNavigation} />
+          <AppBottomTabNabigator.Screen name="Profile" component={ProfileNavigation} />
 
     </AppBottomTabNabigator.Navigator>
   );

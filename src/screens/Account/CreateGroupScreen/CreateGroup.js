@@ -7,15 +7,12 @@ import {colors} from '../../../constants/colors';
 import Card from '../../../components/card';
 import CustomSearch from '../../../components/customSearch';
 import CustomButton from '../../../components/customButton';
-import firestore from '@react-native-firebase/firestore';
 import database from '@react-native-firebase/database';
 import { useEffect } from 'react';
-import { firebase } from '@react-native-firebase/database';
 
 
 
 export default function CreateGroup({navigation}) {
-  const reference = database().ref('/Users')
  
   const handleClick = () => {
     navigation.navigate('CompleteGroup');
@@ -27,11 +24,13 @@ export default function CreateGroup({navigation}) {
   let [users, setUsers] = useState([]);
 
   const getUsers =  () => {
-    database()
-    .ref('/users/123')
-    .on('value', snapshot => {
-      console.log('User data: ', snapshot.val());
-    });
+    const reference = database().ref('Users');
+    console.log(reference)
+   reference
+  .once('value')
+  .then(snapshot => {
+    console.log('User data: ', snapshot.val());
+  });
   //   database()
   // .ref('/users')
   // .on('value', snapshot => {
