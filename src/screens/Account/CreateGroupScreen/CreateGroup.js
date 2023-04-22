@@ -29,7 +29,7 @@ export default function CreateGroup({navigation}) {
     .once('value')
     .then(snapshot => {
       const usersList = snapshot.val();
-      setUsers(users = usersList)
+      setUsers(users = Object.values(usersList));
       console.log('User data: ', users);
 
     });
@@ -67,25 +67,25 @@ export default function CreateGroup({navigation}) {
           <Text style={styles.searchText}>Available slots: 3/12</Text>
           {/* <Text style={styles.searchText}>Hold and drag to reorder</Text> */}
         </View>
-            <FlatList 
+            <FlatList
              data={users}
              contentContainerStyle={styles.mainGroup}
             numColumns={2}
             key={'#'}
-             renderItem={({user})=> {
+             renderItem={(user)=> {
             return  (
               <TouchableOpacity activeOpacity={0.8} onPress={(userDetail) => {
-                console.log(userDetail);
-                console.log(user);
+                console.log('userdetail',userDetail);
+                console.log('user',user);
               }} style={styles.individualUser}>
                 <View style={styles.member}>
                   <Image source={require('../../../assets/images/userImage.png')} />
                 </View>
                 <Text style={styles.memberNameText}>
-                 {user.last_name}
+                {user.item.first_name} {user.item.last_name}
                  </Text>
                 <Text style={styles.adminNameText}>
-                  {user._data.role}
+                  {user.role}
                   </Text>
               </TouchableOpacity>
             );

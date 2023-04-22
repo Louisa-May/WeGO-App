@@ -45,13 +45,17 @@ export default function Login({navigation}) {
      let usersRef = database().ref('users').orderByChild('email').equalTo(Email);
      usersRef.once('value', snapshot => {
       if (snapshot.exists()) {
-        const user = snapshot.val()
-        console.log(user.first_name);
+        snapshot.forEach(userSnapshot => {
+          if (userSnapshot.val().email === Email) {
+            const user = userSnapshot.val();
+        // const user = snapshot.val()
+        console.log('user first name:', user);
       dispatch(setUser(user))
       dispatch(setIsAunthenticated(true));
       }
       setIsloading(false);
-    })
+    }
+     )}})
   })
     .catch(error => {
       if (error.code === 'auth/invalid-email') {
