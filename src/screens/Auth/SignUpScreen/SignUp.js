@@ -29,8 +29,6 @@ export default function SignUp({navigation}) {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsloading] = useState(false);
   const [isError, setIsError] = useState('');
   const dispatch = useDispatch()

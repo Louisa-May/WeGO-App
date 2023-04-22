@@ -21,7 +21,7 @@ export default function CreateGroup({navigation}) {
   let [users, setUsers] = useState([]);
 
   const handleClick = () => {
-    navigation.navigate('CompleteGroup');
+    navigation.navigate('CreateGroupForm');
   };
   const goBack = () => {
     navigation.goBack();

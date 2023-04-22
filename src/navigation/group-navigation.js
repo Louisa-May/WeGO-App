@@ -5,6 +5,7 @@ import Group from '../screens/Account/GroupScreen/Group';
 import CreateGroup from '../screens/Account/CreateGroupScreen/CreateGroup';
 import CompleteGroup from '../screens/Account/CompleteGroup/CompleteGroup';
 import GroupDetails from '../screens/Account/GroupDetailsScreen/GroupDetails';
+import CreateGroupForm from '../screens/Account/Create-group-form/create-group-form';
 
 const GroupStackNavigator = createNativeStackNavigator();
 
@@ -18,6 +19,7 @@ function GroupNavigation() {
       }}>
       <GroupStackNavigator.Screen name="GroupStackNavigator" component={Group} />
       <GroupStackNavigator.Screen name="CreateGroup" component={CreateGroup} />
+      <GroupStackNavigator.Screen name="CreateGroupForm" component={CreateGroupForm} />
       <GroupStackNavigator.Screen name="CompleteGroup" component={CompleteGroup} />
       <GroupStackNavigator.Screen name="GroupDetails" component={GroupDetails} />
     </GroupStackNavigator.Navigator>
