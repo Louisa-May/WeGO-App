@@ -29,7 +29,6 @@ export const styles = StyleSheet.create({
     color: colors.black,
     fontSize: 26,
     fontWeight: 'bold',
-    left: 90,
     padding: 10,
   },
   searchText: {

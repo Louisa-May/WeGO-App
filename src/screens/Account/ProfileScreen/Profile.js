@@ -43,20 +43,20 @@ export default function Profile({navigation}) {
 
       {/* Trip list */}
       {/* <Card> */}
-     <View style={{width:'100%', alignItems:'center', flexDirection:'row'}}>
-        <Text style={styles.bigText}>Personal Details</Text>
+     <View style={{width:'100%', alignItems:'center',justifyContent:"center", flexDirection:'row'}}>
+        <View style={{flexDirection:'row', width:250, }}>
+            <FontAwesomeIcon name="info-circle" size={32} style={{marginTop:13}} color={colors.black} />
+            <Text style={styles.bigText}>Personal Details</Text>
+        </View>
      </View>
-     
       <View style={{width:'100%', justifyContent:'center', alignItems:'center'}}>
         <View style={{width:'90%', backgroundColor:colors.grey, borderRadius:20, padding:20}}>
-      
                 <Text style={styles.profileText}>Name : {user.first_name} {user.last_name} </Text>
                 <Text style={styles.profileText}>Role : {user.email}  </Text>
                 <Text style={styles.profileText}>Role : {user.role}  </Text>
           </View>
       </View>
-      {/* </Card> */}
-      {/* <Card>
+      <Card>
         <View style={styles.profileCardRow}>
           <FontAwesomeIcon name="bank" size={32} color={colors.black} />
           <Text style={styles.profileText}>Payment Details</Text>
@@ -68,8 +68,8 @@ export default function Profile({navigation}) {
             style={styles.chevron}
           />
         </View>
-      </Card> */}
-      {/* <Card>
+      </Card>
+       <Card>
         <View style={styles.profileCardRow}>
           <AntDesignIcon name="contacts" size={32} color={colors.black} />
           <Text style={styles.profileText}>Contacts</Text>
@@ -94,7 +94,7 @@ export default function Profile({navigation}) {
             style={styles.chevron}
           />
         </View>
-      </Card> */}
+      </Card>
     </SafeAreaView>
   );
 }
