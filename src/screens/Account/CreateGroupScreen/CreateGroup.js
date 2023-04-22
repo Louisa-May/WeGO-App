@@ -9,22 +9,22 @@ import CustomSearch from '../../../components/customSearch';
 import CustomButton from '../../../components/customButton';
 import database from '@react-native-firebase/database';
 import { useEffect } from 'react';
-import UserImage from "../../../assets/svgs/images/userProfileImage.svg"
-import Checkmark from "../../../assets/svgs/icons/icons8-checkmark.svg"
+import UserImage from "../../../assets/svgs/images/userProfileImage.svg";
+import Checkmark from "../../../assets/svgs/icons/icons8-checkmark.svg";
 
 
 
 export default function CreateGroup({navigation}) {
   const userReference = database().ref('users');
-  const [groupMembers, setGroupMembers] = useState([])
-  let [adhocUsers, setAdhocUsers] = useState([])
+  let [groupMembers, setGroupMembers] = useState([]);
+  let [adhocUsers, setAdhocUsers] = useState([]);
   let [users, setUsers] = useState([]);
 
   const handleClick = () => {
     navigation.navigate('CompleteGroup');
   };
   const goBack = () => {
-    navigation.goBack()
+    navigation.goBack();
   };
   const [searchInput, setSearchInput] = useState('');
 
@@ -33,31 +33,43 @@ export default function CreateGroup({navigation}) {
     .on('value', snapshot => {
       const usersList = snapshot.val();
       setUsers(users = Object.values(usersList));
-      setAdhocUsers(adhocUsers = Object.values(usersList))
+      setAdhocUsers(adhocUsers = Object.values(usersList));
     });
 
   };
 
   const createGroup = () => {
 
-  }
+  };
+
   const addMember = (index) => {
-    //    const clickedUser = adhocUsers.filter((member)=>{
-    //   return member.email === email
-    // })
     const newAdhocUsers = [...adhocUsers];
-    // let id = clickedUser[0].id
-  
       if (newAdhocUsers[index].clicked) {
           newAdhocUsers[index].clicked = false;
-          console.log("false",newAdhocUsers[index].clicked);
-        return setAdhocUsers(newAdhocUsers);
+         const currentAddedMembers = adhocUsers.filter((item,ItemIndex)=>{
+          console.log(index, ItemIndex);
+            // return index !== ItemIndex;
+            return item.clicked === true
+         });
+         setGroupMembers(groupMembers = currentAddedMembers);
+         console.log('false',groupMembers);
+          setAdhocUsers(newAdhocUsers);
+          return ;
       } else {
         newAdhocUsers[index].clicked = true;
-        console.log("true",newAdhocUsers[index].clicked);
-        return setAdhocUsers(newAdhocUsers);
+        const currentAddedMembers = adhocUsers.filter((item,ItemIndex)=>{
+          console.log(index, ItemIndex);
+            // return index !== ItemIndex;
+            return item.clicked === true
+         });
+        console.log('true',groupMembers);
+        // setGroupMembers( groupMembers = [...groupMembers, newAdhocUsers[index]]);
+        setGroupMembers( groupMembers = [...groupMembers, currentAddedMembers]);
+
+        setAdhocUsers(newAdhocUsers);
+        return; 
       }
-}
+};
 
   useEffect(()=>{
     getUsers();
@@ -87,7 +99,7 @@ export default function CreateGroup({navigation}) {
       {/* Members list */}
       {/* <Card> */}
         <View style={styles.mainText}>
-          <Text style={styles.searchText}>Group Members: {groupMembers.length}</Text>
+          <Text style={styles.searchText}>Group Members Added: {groupMembers.length}</Text>
           {/* <Text style={styles.searchText}>Hold and drag to reorder</Text> */}
         </View>
             <FlatList
