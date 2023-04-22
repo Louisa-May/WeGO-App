@@ -52,7 +52,7 @@ export default function Profile({navigation}) {
       <View style={{width:'100%', justifyContent:'center', alignItems:'center'}}>
         <View style={{width:'90%', backgroundColor:colors.grey, borderRadius:20, padding:20}}>
                 <Text style={styles.profileText}>Name : {user.first_name} {user.last_name} </Text>
-                <Text style={styles.profileText}>Role : {user.email}  </Text>
+                <Text style={styles.profileText}>Email : {user.email}  </Text>
                 <Text style={styles.profileText}>Role : {user.role}  </Text>
           </View>
       </View>

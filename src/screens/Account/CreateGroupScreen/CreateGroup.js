@@ -17,6 +17,8 @@ import Checkmark from "../../../assets/svgs/icons/icons8-checkmark.svg"
 export default function CreateGroup({navigation}) {
   const userReference = database().ref('users');
   const [groupMembers, setGroupMembers] = useState([])
+  let [adhocUsers, setAdhocUsers] = useState([])
+  let [users, setUsers] = useState([]);
 
   const handleClick = () => {
     navigation.navigate('CompleteGroup');
@@ -25,13 +27,13 @@ export default function CreateGroup({navigation}) {
     navigation.goBack()
   };
   const [searchInput, setSearchInput] = useState('');
-  let [users, setUsers] = useState([]);
 
   const getUsers =  () => {
     userReference
     .on('value', snapshot => {
       const usersList = snapshot.val();
       setUsers(users = Object.values(usersList));
+      setAdhocUsers(adhocUsers = Object.values(usersList))
     });
 
   };
@@ -39,39 +41,21 @@ export default function CreateGroup({navigation}) {
   const createGroup = () => {
 
   }
-  const addMember = (email) => {
-       const clickedUser = users.filter((member)=>{
-      return member.email === email
-    })
+  const addMember = (index) => {
+    //    const clickedUser = adhocUsers.filter((member)=>{
+    //   return member.email === email
+    // })
+    const newAdhocUsers = [...adhocUsers];
+    // let id = clickedUser[0].id
   
-      if (clickedUser[0].clicked) {
-         return database()
-          .ref(`/users/${clickedUser[0].id}`)
-          .update({
-            clicked: false,
-          })
-          .then(() => {
-            // console.log('Data updated.')
-            // console.log('email',clickedUser)
-           const newGroupMembers = groupMembers.filter((member) => {
-              return member.id !== clickedUser
-            } )
-            setGroupMembers(newGroupMembers);
-            console.log('groupMmebers', groupMembers);
-        })
+      if (newAdhocUsers[index].clicked) {
+          newAdhocUsers[index].clicked = false;
+          console.log("false",newAdhocUsers[index].clicked);
+        return setAdhocUsers(newAdhocUsers);
       } else {
-          database()
-          .ref(`/users/${clickedUser[0].id}`)
-          .update({
-            clicked: true,
-          })
-          .then(() => {
-            // console.log('Data updated.')
-            // console.log('email',clickedUser)
-            groupMembers.push(clickedUser);
-            setGroupMembers(groupMembers);
-            console.log('groupMmebers', groupMembers);
-        });
+        newAdhocUsers[index].clicked = true;
+        console.log("true",newAdhocUsers[index].clicked);
+        return setAdhocUsers(newAdhocUsers);
       }
 }
 
@@ -103,33 +87,33 @@ export default function CreateGroup({navigation}) {
       {/* Members list */}
       {/* <Card> */}
         <View style={styles.mainText}>
-          <Text style={styles.searchText}>Available slots: 3/12</Text>
+          <Text style={styles.searchText}>Group Members: {groupMembers.length}</Text>
           {/* <Text style={styles.searchText}>Hold and drag to reorder</Text> */}
         </View>
             <FlatList
-             data={users}
+             data={adhocUsers}
              contentContainerStyle={styles.mainGroup}
             numColumns={4}
             key={'#'}
-             renderItem={(user)=> {
+             renderItem={({item, index})=> {
             return  (
-              <TouchableOpacity activeOpacity={0.8} onPress={() => addMember(user.item.email)} style={styles.individualUser}>
+              <TouchableOpacity  activeOpacity={0.8} onPress={() => addMember(index)} style={styles.individualUser}>
                 <View style={styles.member}>
                  {
-                  user.item.clicked === true &&  <Checkmark style={{marginLeft:50}} />
+                  item.clicked === true &&  <Checkmark style={{marginLeft:50}} />
                  }
                   <UserImage />
                 </View>
                 <Text style={styles.memberNameText}>
-                {user.item.first_name} {user.item.last_name}
+                {item.first_name} {item.last_name}
                  </Text>
                 <Text style={styles.adminNameText}>
-                  {user.item.role}
+                  {item.role}
                   </Text>
               </TouchableOpacity>
             );
                }  }
-             keyExtractor={(user,index) => index}
+             keyExtractor={(user,index) => user}
             />
         {/* Continue Button Section */}
         <View style={styles.button}>
