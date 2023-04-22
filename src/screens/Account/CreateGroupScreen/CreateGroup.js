@@ -70,7 +70,7 @@ export default function CreateGroup({navigation}) {
             <FlatList
              data={users}
              contentContainerStyle={styles.mainGroup}
-            numColumns={2}
+            numColumns={4}
             key={'#'}
              renderItem={(user)=> {
             return  (

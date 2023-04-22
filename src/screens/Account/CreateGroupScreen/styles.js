@@ -37,10 +37,11 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   mainGroup: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     width: '100%',
-    flex: 1,
+    // flex: 1,
+    // flexWrap: 'wrap',
   },
   member: {
     backgroundColor: colors.deepGrey,
