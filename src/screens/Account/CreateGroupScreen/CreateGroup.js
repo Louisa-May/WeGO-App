@@ -9,11 +9,14 @@ import CustomSearch from '../../../components/customSearch';
 import CustomButton from '../../../components/customButton';
 import database from '@react-native-firebase/database';
 import { useEffect } from 'react';
+import UserImage from "../../../assets/svgs/images/userProfileImage.svg"
+import Checkmark from "../../../assets/svgs/icons/icons8-checkmark.svg"
 
 
 
 export default function CreateGroup({navigation}) {
   const userReference = database().ref('users');
+  const [groupMembers, setGroupMembers] = useState([])
 
   const handleClick = () => {
     navigation.navigate('CompleteGroup');
@@ -26,15 +29,51 @@ export default function CreateGroup({navigation}) {
 
   const getUsers =  () => {
     userReference
-    .once('value')
-    .then(snapshot => {
+    .on('value', snapshot => {
       const usersList = snapshot.val();
       setUsers(users = Object.values(usersList));
-      console.log('User data: ', users);
-
     });
 
   };
+
+  const createGroup = () => {
+
+  }
+  const addMember = (email) => {
+       const clickedUser = users.filter((member)=>{
+      return member.email === email
+    })
+  
+      if (clickedUser[0].clicked) {
+         return database()
+          .ref(`/users/${clickedUser[0].id}`)
+          .update({
+            clicked: false,
+          })
+          .then(() => {
+            // console.log('Data updated.')
+            // console.log('email',clickedUser)
+           const newGroupMembers = groupMembers.filter((member) => {
+              return member.id !== clickedUser
+            } )
+            setGroupMembers(newGroupMembers);
+            console.log('groupMmebers', groupMembers);
+        })
+      } else {
+          database()
+          .ref(`/users/${clickedUser[0].id}`)
+          .update({
+            clicked: true,
+          })
+          .then(() => {
+            // console.log('Data updated.')
+            // console.log('email',clickedUser)
+            groupMembers.push(clickedUser);
+            setGroupMembers(groupMembers);
+            console.log('groupMmebers', groupMembers);
+        });
+      }
+}
 
   useEffect(()=>{
     getUsers();
@@ -74,18 +113,18 @@ export default function CreateGroup({navigation}) {
             key={'#'}
              renderItem={(user)=> {
             return  (
-              <TouchableOpacity activeOpacity={0.8} onPress={(userDetail) => {
-                console.log('userdetail',userDetail);
-                console.log('user',user);
-              }} style={styles.individualUser}>
+              <TouchableOpacity activeOpacity={0.8} onPress={() => addMember(user.item.email)} style={styles.individualUser}>
                 <View style={styles.member}>
-                  <Image source={require('../../../assets/images/userImage.png')} />
+                 {
+                  user.item.clicked === true &&  <Checkmark style={{marginLeft:50}} />
+                 }
+                  <UserImage />
                 </View>
                 <Text style={styles.memberNameText}>
                 {user.item.first_name} {user.item.last_name}
                  </Text>
                 <Text style={styles.adminNameText}>
-                  {user.role}
+                  {user.item.role}
                   </Text>
               </TouchableOpacity>
             );

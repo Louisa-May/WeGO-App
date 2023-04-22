@@ -6,6 +6,7 @@ import {styles} from './styles';
 import {colors} from '../../../constants/colors';
 import Card from '../../../components/card';
 import CustomButton from '../../../components/customButton';
+import { useSelector } from 'react-redux';
 
 export default function GroupDetails({navigation}) {
   const handleClick = () => {
@@ -14,6 +15,9 @@ export default function GroupDetails({navigation}) {
   const goBack = () => {
     navigation.navigate('Dashboard');
   };
+  const user = useSelector(
+    (state) => state.user.user,
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -33,7 +37,7 @@ export default function GroupDetails({navigation}) {
       {/* <Card> */}
         <View style={styles.cardPadding}>
           <Text style={styles.bigText}>Book your trip</Text>
-          <Text style={styles.noColorText}>Available balance £2,500</Text>
+          <Text style={styles.noColorText}>Available balance £{user.wallet_amount}</Text>
           <Text style={styles.bigText2}>£1,200</Text>
           {/* <Image source={require('../../../assets/images/metric.png')} /> */}
 

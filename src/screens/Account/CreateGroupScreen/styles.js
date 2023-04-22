@@ -47,9 +47,9 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.deepGrey,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 54,
-    height: 54,
-    borderRadius: 27,
+    width: 74,
+    height: 74,
+    borderRadius: 74,
   },
   button: {
     justifyContent: 'center',

@@ -15,9 +15,12 @@ import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import {styles} from './styles';
 import {colors} from '../../../constants/colors';
 import Card from '../../../components/card';
+import { useSelector } from 'react-redux';
 
 export default function Profile({navigation}) {
-  
+  const user = useSelector(
+    (state) => state.user.user,
+  );
   const handleClick = () => {
     navigation.navigate('ProfileDetails');
   };
@@ -31,31 +34,29 @@ export default function Profile({navigation}) {
       </View>
 
       <View style={styles.profileImageCover}>
-        <Image
-          source={require('../../../assets/images/userImage.png')}
-          style={styles.profileImage}
-        />
+      <IonIcon
+            name="person-circle-outline"
+            size={102}
+            color={colors.black}
+          />
       </View>
 
       {/* Trip list */}
-      <Card>
-        <View style={styles.profileCardRow}>
-          <IonIcon
-            name="person-circle-outline"
-            size={32}
-            color={colors.black}
-          />
-          <Text style={styles.profileText}>Personal Details</Text>
-          <EntypoIcon
-            name="chevron-right"
-            size={32}
-            color={colors.black}
-            onPress={() => handleClick()}
-            style={styles.chevron}
-          />
-        </View>
-      </Card>
-      <Card>
+      {/* <Card> */}
+     <View style={{width:'100%', alignItems:'center', flexDirection:'row'}}>
+        <Text style={styles.bigText}>Personal Details</Text>
+     </View>
+     
+      <View style={{width:'100%', justifyContent:'center', alignItems:'center'}}>
+        <View style={{width:'90%', backgroundColor:colors.grey, borderRadius:20, padding:20}}>
+      
+                <Text style={styles.profileText}>Name : {user.first_name} {user.last_name} </Text>
+                <Text style={styles.profileText}>Role : {user.email}  </Text>
+                <Text style={styles.profileText}>Role : {user.role}  </Text>
+          </View>
+      </View>
+      {/* </Card> */}
+      {/* <Card>
         <View style={styles.profileCardRow}>
           <FontAwesomeIcon name="bank" size={32} color={colors.black} />
           <Text style={styles.profileText}>Payment Details</Text>
@@ -67,8 +68,8 @@ export default function Profile({navigation}) {
             style={styles.chevron}
           />
         </View>
-      </Card>
-      <Card>
+      </Card> */}
+      {/* <Card>
         <View style={styles.profileCardRow}>
           <AntDesignIcon name="contacts" size={32} color={colors.black} />
           <Text style={styles.profileText}>Contacts</Text>
@@ -93,7 +94,7 @@ export default function Profile({navigation}) {
             style={styles.chevron}
           />
         </View>
-      </Card>
+      </Card> */}
     </SafeAreaView>
   );
 }

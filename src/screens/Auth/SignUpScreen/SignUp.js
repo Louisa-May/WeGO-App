@@ -54,6 +54,7 @@ export default function SignUp({navigation}) {
         last_name: lastName,
         email: email,
         role: 'user',
+        clciked:false,
         wallet_amount:0,
     }
       let newUser = reference.push();
