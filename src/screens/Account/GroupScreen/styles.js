@@ -4,8 +4,8 @@ import {colors} from '../../../constants/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: colors.white,
     height:'100%'
   },
@@ -46,6 +46,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 5,
   },
+  mainGroup:{width:'95%'},
   groupText: {
     justifyContent: 'flex-start',
     width: '70%',

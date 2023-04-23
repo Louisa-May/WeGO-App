@@ -68,6 +68,14 @@ export const styles = StyleSheet.create({
   },
   profileText: {
     justifyContent: 'flex-start',
+    width: '100%',
+    color: colors.black,
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingTop: 5,
+  },
+  profileText1: {
+    justifyContent: 'flex-start',
     width: '70%',
     color: colors.black,
     fontSize: 20,

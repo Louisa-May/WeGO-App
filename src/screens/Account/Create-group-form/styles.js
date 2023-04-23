@@ -10,6 +10,25 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
     position: 'relative',
   },
+  mainGroup: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    width: '100%',
+    // flex: 1,
+    // flexWrap: 'wrap',
+  },
+  flex:{
+    width:'90%'
+  },
+  inputSelect:{
+    height: 50,
+    width: '100%',
+    backgroundColor: colors.grey,
+    // borderWidth: 1,
+    marginTop: 8,
+  },
+  container2:{
+  },
   row: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -20,8 +39,12 @@ export const styles = StyleSheet.create({
     color: colors.black,
     fontSize: 30,
     fontWeight: 'bold',
-    paddingBottom: 10,
-    paddingLeft: 20,
+  },
+  headerSubText:{
+    color: colors.black,
+    fontSize: 18,
+    fontWeight: 'normal',
+    marginBottom:10
   },
   smallText: {
     color: colors.black,

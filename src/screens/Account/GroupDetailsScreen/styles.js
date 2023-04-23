@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {StyleSheet} from 'react-native';
 import {colors} from '../../../constants/colors';
 
@@ -14,6 +15,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: '100%',
     paddingHorizontal: 10,
+    marginTop:20
   },
   headerText: {
     color: colors.black,
@@ -36,6 +38,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     paddingTop: 10,
+    color:colors.black
   },
   bigText: {
     color: colors.black,
@@ -45,23 +48,33 @@ export const styles = StyleSheet.create({
   cardRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     width: 320,
   },
   pushLeft: {
     left: 30,
     paddingVertical: 5,
+    color:colors.black
   },
   pushRight: {
     right: -10,
     paddingVertical: 5,
+    color:colors.black
   },
   pushRight2: {
     right: 20,
     paddingVertical: 5,
+    color:colors.black
   },
   payoutAmount: {
     paddingVertical: 50,
+    paddingHorizontal:20,
+    shadowColor:'black',
+    shadowOffset: { width: 20, height: 20},
+    shadowOpacity:0.5,
+    // shadowRadius:20,
+    backgroundColor:colors.grey,
+    borderRadius:20
   },
   cardInnerRow: {
     flexDirection: 'row',
@@ -77,9 +90,11 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'semiBold',
     paddingVertical: 10,
+    textAlign:'right'
   },
   cardPadding: {
     paddingVertical: 30,
+    marginTop:10
   },
   scheduleCover: {
     marginHorizontal: 30,

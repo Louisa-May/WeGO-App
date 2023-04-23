@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  FlatList
 } from 'react-native';
 import React, {useState} from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -15,38 +16,46 @@ import {styles} from './styles';
 import {colors} from '../../../constants/colors';
 import Card from '../../../components/card';
 import CustomSearch from '../../../components/customSearch';
+import { useEffect } from 'react';
+import database from '@react-native-firebase/database';
+
 
 export default function Group({navigation}) {
-  const goToHome = () => {
-    navigation.navigate('Dashboard');
-  };
-  const goToGroup = () => {
-    navigation.navigate('Group');
-  };
-  const goToPayout = () => {
-    navigation.navigate('Payout');
-  };
-  const goToTrip = () => {
-    navigation.navigate('Trip');
-  };
-  const goToProfile = () => {
-    navigation.navigate('Profile');
-  };
+  const groupReference = database().ref('groups');
+  let [groups, setGroups] = useState([]);
   const goBack = () => {
-    navigation.navigate('Dashboard');
+    navigation.goBack();
   };
+
   const createGroup = () => {
     navigation.navigate('CreateGroup');
-  };
-  const groupDetails = () => {
-    navigation.navigate('GroupDetails');
-  };
+  }
+ 
+  // const groupDetails = () => {
+  //   navigation.navigate('GroupDetails');
+  // };
   const [searchInput, setSearchInput] = useState('');
+
+  const getGroups =  () => {
+    groupReference
+    .on('value', snapshot => {
+      const groupList = snapshot.val();
+      console.log("groupslist",groupList);
+      const restructuredGroup = Object.values(groupList);
+      setGroups(groups = Object.values(restructuredGroup));
+   console.log('groups', groups);
+    });
+  };
+
+
+  useEffect(()=>{
+    getGroups();
+   },[]);
 
   return (
     <View style={styles.container}>
       {/* Header */}
-     <ScrollView style={{width:'90%'}}>
+     <View style={{width:'100%'}}>
      <View style={styles.row}>
         <EntypoIcon
           name="chevron-left"
@@ -64,10 +73,39 @@ export default function Group({navigation}) {
         value={searchInput}
         setValue={setSearchInput}
       /> */}
-      <Text style={styles.mainText}>All Groups</Text>
+      <Text style={styles.mainText}>Available Groups</Text>
+      <View style={{width:'100%',  justifyContent: 'center', alignItems: 'center', alignContent:"center"}}>
+        <FlatList
+        data={groups}
+        contentContainerStyle={styles.mainGroup}
+        vertical
+        keyExtractor={(item) => item}
+        renderItem={({item, index})=> {
+        return  (
+          <Card >
+          <View style={styles.groupCardRow}>
+            <Image
+              source={require('../../../assets/images/groupImage1.png')}
+              style={styles.groupImageCover}
+            />
+            <Text style={styles.groupText}>{item.groupName}</Text>
+            <EntypoIcon
+              name="chevron-right"
+              size={32}
+              color={colors.black}
+              onPress={() => {
+                navigation.navigate('GroupDetails', {item})
+              }}
+            />
+          </View>
+        </Card>
+      );
+          }  }
+      />
+      </View>
+      
 
-      {/* Group list */}
-      <Card>
+{/* <Card>
         <View style={styles.groupCardRow}>
           <Image
             source={require('../../../assets/images/groupImage1.png')}
@@ -81,85 +119,9 @@ export default function Group({navigation}) {
             onPress={groupDetails}
           />
         </View>
-      </Card>
-      <Card>
-        <View style={styles.groupCardRow}>
-          <Image
-            source={require('../../../assets/images/groupImage1.png')}
-            style={styles.groupImageCover}
-          />
-          <Text style={styles.groupText}>Jazz Club</Text>
-          <EntypoIcon
-            name="chevron-right"
-            size={32}
-            color={colors.black}
-            onPress={groupDetails}
-          />
-        </View>
-      </Card>
-      <Card>
-        <View style={styles.groupCardRow}>
-          <Image
-            source={require('../../../assets/images/groupImage1.png')}
-            style={styles.groupImageCover}
-          />
-          <Text style={styles.groupText}>HBL Office Group</Text>
-          <EntypoIcon
-            name="chevron-right"
-            size={32}
-            color={colors.black}
-            onPress={groupDetails}
-          />
-        </View>
-      </Card>
-      <Card>
-        <View style={styles.groupCardRow}>
-          <Image
-            source={require('../../../assets/images/groupImage1.png')}
-            style={styles.groupImageCover}
-          />
-          <Text style={styles.groupText}>Family Trip</Text>
-          <EntypoIcon
-            name="chevron-right"
-            size={32}
-            color={colors.black}
-            onPress={groupDetails}
-          />
-        </View>
-      </Card>
-      <Card>
-        <View style={styles.groupCardRow}>
-          <Image
-            source={require('../../../assets/images/groupImage1.png')}
-            style={styles.groupImageCover}
-          />
-          <Text style={styles.groupText}>Family Trip</Text>
-          <EntypoIcon
-            name="chevron-right"
-            size={32}
-            color={colors.black}
-            onPress={groupDetails}
-          />
-        </View>
-      </Card>
+      </Card> */}
 
-      <Card>
-        <View style={styles.groupCardRow}>
-          <Image
-            source={require('../../../assets/images/groupImage1.png')}
-            style={styles.groupImageCover}
-          />
-          <Text style={styles.groupText}>Family Trip</Text>
-          <EntypoIcon
-            name="chevron-right"
-            size={32}
-            color={colors.black}
-            onPress={groupDetails}
-          />
-        </View>
-      </Card>
-
-     </ScrollView>
+     </View>
       {/* Create Group */}
       <TouchableOpacity style={styles.plusIcon} onPress={createGroup}>
         <FeatherIcon name="plus-circle" size={45} color={colors.green} />

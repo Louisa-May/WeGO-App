@@ -4,6 +4,7 @@ import {createSlice} from '@reduxjs/toolkit';
 const initialState = {
   user: null,
   isAunthenticated: false,
+  groupMembers: null,
 };
 
 export const userSlice = createSlice({
@@ -16,11 +17,23 @@ export const userSlice = createSlice({
     setIsAunthenticated: (state, action) => {
       state.isAunthenticated = action.payload;
     },
+    setGroupMembersRedux: (state, action) => {
+      state.groupMembers = action.payload;
+    },
+    resetGroupMembers: (state, action) => {
+      state.groupMembers = null;
+    },
     resetUser: () => initialState,
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {setUser, resetUser, setIsAunthenticated} = userSlice.actions;
+export const {
+  setUser,
+  resetUser,
+  setIsAunthenticated,
+  setGroupMembersRedux,
+  resetGroupMembers,
+} = userSlice.actions;
 
 export default userSlice.reducer;

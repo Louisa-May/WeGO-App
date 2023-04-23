@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import {View, StatusBar, SafeAreaView, Text, Image, ScrollView, TouchableOpacity, FlatList} from 'react-native';
+import {View, StatusBar, SafeAreaView, Text, Image, ScrollView, TouchableOpacity, FlatList, Alert} from 'react-native';
 import React, {useState} from 'react';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {styles} from './styles';
@@ -11,6 +11,8 @@ import database from '@react-native-firebase/database';
 import { useEffect } from 'react';
 import UserImage from "../../../assets/svgs/images/userProfileImage.svg";
 import Checkmark from "../../../assets/svgs/icons/icons8-checkmark.svg";
+import { setGroupMembersRedux } from '../../../../redux-store/userAuth';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
@@ -19,8 +21,17 @@ export default function CreateGroup({navigation}) {
   let [groupMembers, setGroupMembers] = useState([]);
   let [adhocUsers, setAdhocUsers] = useState([]);
   let [users, setUsers] = useState([]);
+  const dispatch = useDispatch();
+  const groupMembersb = useSelector(
+    (state) => state.user.groupMembers,
+  );
 
   const handleClick = () => {
+    if (!groupMembers.length) {
+      return Alert.alert("No group member selected!")
+    }
+    dispatch(setGroupMembersRedux(groupMembers));
+    console.log('group members', groupMembersb);
     navigation.navigate('CreateGroupForm');
   };
   const goBack = () => {
@@ -33,6 +44,7 @@ export default function CreateGroup({navigation}) {
     .on('value', snapshot => {
       const usersList = snapshot.val();
       setUsers(users = Object.values(usersList));
+      console.log("users", users);
       setAdhocUsers(adhocUsers = Object.values(usersList));
     });
 

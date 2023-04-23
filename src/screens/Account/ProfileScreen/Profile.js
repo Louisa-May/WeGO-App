@@ -53,13 +53,12 @@ export default function Profile({navigation}) {
         <View style={{width:'90%', backgroundColor:colors.grey, borderRadius:20, padding:20}}>
                 <Text style={styles.profileText}>Name : {user.first_name} {user.last_name} </Text>
                 <Text style={styles.profileText}>Email : {user.email}  </Text>
-                <Text style={styles.profileText}>Role : {user.role}  </Text>
           </View>
       </View>
-      <Card>
-        <View style={styles.profileCardRow}>
-          <FontAwesomeIcon name="bank" size={32} color={colors.black} />
-          <Text style={styles.profileText}>Payment Details</Text>
+      <View style={{width:'100%', justifyContent:'center', alignItems:'center',alignContent:'center', marginTop:20}}>
+        <View style={{width:'90%', height:100, backgroundColor:colors.grey, borderRadius:20, padding:20, paddingTop:30, flexDirection:'row', justifyContent:'space-around'}}>
+           <FontAwesomeIcon name="bank" size={32} color={colors.black} />
+          <Text style={styles.profileText1}>Payment Details</Text>
           <EntypoIcon
             name="chevron-right"
             size={32}
@@ -67,25 +66,26 @@ export default function Profile({navigation}) {
             onPress={''}
             style={styles.chevron}
           />
-        </View>
-      </Card>
-       <Card>
-        <View style={styles.profileCardRow}>
-          <AntDesignIcon name="contacts" size={32} color={colors.black} />
-          <Text style={styles.profileText}>Contacts</Text>
+          </View>
+      </View>
+      <View style={{width:'100%', justifyContent:'center', alignItems:'center',alignContent:'center', marginTop:20}}>
+        <View style={{width:'90%', height:100, backgroundColor:colors.grey, borderRadius:20, padding:20, paddingTop:30, flexDirection:'row', justifyContent:'space-around'}}>
+        <FontAwesomeIcon name="group" size={32} color={colors.black} />
+          <Text style={styles.profileText1}>Invite Friends to WeGO</Text>
           <EntypoIcon
             name="chevron-right"
             size={32}
             color={colors.black}
             onPress={''}
             style={styles.chevron}
-          />
-        </View>
-      </Card>
-      <Card>
+            />
+          </View>
+      </View>
+      <View style={{width:'100%', justifyContent:'center', alignItems:'center',alignContent:'center', marginTop:20}}>
+        <View style={{width:'90%', height:100, backgroundColor:colors.grey, borderRadius:20, padding:20, paddingTop:30, flexDirection:'row', justifyContent:'space-around'}}>
         <View style={styles.profileCardRow}>
           <FontAwesomeIcon name="group" size={32} color={colors.black} />
-          <Text style={styles.profileText}>Invite Friends to WeGO</Text>
+          <Text style={styles.profileText1}>Invite Friends to WeGO</Text>
           <EntypoIcon
             name="chevron-right"
             size={32}
@@ -94,7 +94,11 @@ export default function Profile({navigation}) {
             style={styles.chevron}
           />
         </View>
-      </Card>
+          </View>
+      </View>
+     
+       
+      
     </SafeAreaView>
   );
 }
