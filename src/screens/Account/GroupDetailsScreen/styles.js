@@ -62,9 +62,10 @@ export const styles = StyleSheet.create({
     color:colors.black
   },
   pushRight2: {
-    right: 20,
+    right: 55,
     paddingVertical: 5,
-    color:colors.black
+    color:colors.black,
+    
   },
   payoutAmount: {
     paddingVertical: 50,
@@ -78,6 +79,11 @@ export const styles = StyleSheet.create({
   },
   cardInnerRow: {
     flexDirection: 'row',
+    alignItems:'center',
+    justifyContent:'center',
+    width:'50%',
+    textAlign:'center'
+    
   },
   summaryText: {
     color: colors.black,

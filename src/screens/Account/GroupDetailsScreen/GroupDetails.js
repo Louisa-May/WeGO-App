@@ -73,12 +73,12 @@ export default function GroupDetails({route, navigation}) {
             <View style={styles.payoutAmount}>
               <View style={styles.cardRow}>
                 <View style={styles.cardInnerRow}>
-                  <Text style={styles.bigText}>£4000</Text>
+                  <Text style={styles.bigText}>£{user.wallet_amount}</Text>
                   <Text style={styles.noColorText}>/£{group.item.paymentAmount}</Text>
                 </View>
                 <View style={styles.cardInnerRow}>
                   <Text style={styles.bigText}>£{group.item.contributionAmount}</Text>
-                  <Text style={styles.noColorText}> X 9</Text>
+                  <Text style={styles.noColorText}> X {groupMembers.length}</Text>
                 </View>
               </View>
               <View style={styles.cardRow}>
