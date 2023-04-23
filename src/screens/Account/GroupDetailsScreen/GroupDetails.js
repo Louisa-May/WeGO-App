@@ -31,7 +31,7 @@ export default function GroupDetails({route, navigation}) {
     setCurrentGroupUser(presentUser);
   }
   const goBack = () => {
-    navigation.navigate('Group');
+    navigation.goBack()
   };
 
 
