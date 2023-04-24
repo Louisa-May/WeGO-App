@@ -9,45 +9,109 @@ export const styles = StyleSheet.create({
     height:'100%',
     backgroundColor: colors.white,
     position: 'relative',
+    paddingHorizontal:16
   },
   topView: {
-    
-    flexDirection: 'row',
-    width: '90%',
-    marginRight: 50,
-  },
-  imageHello: {
     flexDirection: 'row',
     width: '100%',
-    justifyContent: 'flex-start',
   },
+  // imageHello: {
+  //   flexDirection: 'row',
+  //   width: '100%',
+  //   justifyContent:'space-between',
+  // },
   userImageCover: {
-    justifyContent: 'center',
+    // justifyContent: 'space-between',
     alignItems: 'center',
-    width: 54,
+    flexDirection: 'row',
+    width: '100%',
     height: 54,
     backgroundColor: 'transparent',
-    borderRadius: 27,
-    borderColor: colors.deepGrey,
-    borderWidth: 2,
-    shadowRadius: 27,
-    shadowOpacity: 0.3,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    elevation: 3,
-    marginHorizontal: 20,
-    marginVertical: 10,
+    // borderRadius: 27,
+    // borderColor: colors.deepGrey,
+    // borderWidth: 2,
+    // shadowRadius: 27,
+    // shadowOpacity: 0.3,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 1,
+    // },
+    // elevation: 3,
+    marginVertical: 30,
+    justifyContent:'flex-end',
+    marginRight:20, 
   },
   userImage: {
     resizeMode: 'contain',
-    width: 46,
-    height: 46,
+    width: 60,
+    height: 60,
     borderRadius: 23,
   },
   welcomeTextCover: {
     marginVertical: 10,
+  },
+  WelometextDiv:{
+    flexDirection:'row',
+    borderWidth:0.1,
+    borderRadius:30,
+    // padding:20,
+    paddingHorizontal:30,
+    paddingVertical:10
+  },
+  cardCover:{
+    width:'100%',
+    justifyContent:'center',
+    alignItems:'center',
+    alignContent:'center',
+    paddingBottom:20,
+  },
+  depositView: {
+    width:'100%',
+    height:100,
+    borderRadius:10,
+    borderWidth:0.2,
+    borderColor:'grey',
+    paddingHorizontal:20,
+    paddingVertical:10,
+    justifyContent:'space-between',
+    flexDirection:'row',
+    paddingTop:15
+  },
+  cardImage: {
+    width:380,
+    height: 200,
+
+    // borderRadius: 23,
+  },
+  DepositIcon:{
+    height:50,
+    width:50
+  },
+  DepositSmallView:{
+
+  },
+  makeDepositView:{
+    width:'100%',
+    borderRadius:10,
+    borderWidth:0.2,
+    borderColor:'grey',
+    paddingHorizontal:15,
+    paddingVertical:20,
+    marginTop:15,
+    paddingBottom:20
+
+  },
+  inputSelect:{
+    height: 50,
+    width: '100%',
+    backgroundColor: colors.grey,
+    // borderWidth: 1,
+    marginTop: 8,
+  },
+  DepositText:{
+    fontSize:15,
+    color:'grey',
+    textAlign:'center'
   },
   smallText: {
     color: colors.black,
@@ -56,7 +120,7 @@ export const styles = StyleSheet.create({
   },
   mediumText: {
     color: colors.black,
-    fontSize: 22,
+    fontSize: 15,
     fontWeight: 'semiBold',
   },
   bigText: {
@@ -69,11 +133,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
   },
-  cardCover: {
-    // width: '100%',
-    // paddingVertical: 10,
-    backgroundColor:'red'
-  },
+  
   graphImage: {
     resizeMode: 'contain',
     width: 100,

@@ -57,10 +57,10 @@ export default function CreateGroupForm({navigation}) {
     paymentFrequency: paymentFrequency,
     members_list: groupMembers,
     collectionMethod: collectionMethod,
-    paymentAmount: contributionAmount * groupMembers.length,
+    paymentAmount: contributionAmount * groupMembers.length
    }
    let newGroup = groupReference;
-      // groupData.id = newGroup.key;
+      groupData.id = newGroup.key;
       newGroup.set(groupData);
     dispatch(resetGroupMembers());
     Alert.alert('group created successfully!');
@@ -108,7 +108,7 @@ export default function CreateGroupForm({navigation}) {
               }}
           />
         </View>
-           <View style={styles.inputSelect}>
+           <View style={styles.inputSelect} >
           <RNPickerSelect
               style={pickerSelectStyles}
               onValueChange={(text) => setPaymentFrequency(text)}

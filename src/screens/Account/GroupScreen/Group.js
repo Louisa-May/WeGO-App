@@ -47,10 +47,9 @@ export default function Group({navigation}) {
     });
   };
 
-
-  useEffect(()=>{
-    getGroups();
-   },[]);
+useEffect(()=>{
+  getGroups()
+},[])
 
   return (
     <View style={styles.container}>
@@ -75,7 +74,9 @@ export default function Group({navigation}) {
       /> */}
       <Text style={styles.mainText}>Available Groups</Text>
       <View style={{width:'100%',  justifyContent: 'center', alignItems: 'center', alignContent:"center"}}>
-        <FlatList
+       {
+        groups.length > 0 ?
+      <FlatList
         data={groups}
         contentContainerStyle={styles.mainGroup}
         vertical
@@ -101,7 +102,8 @@ export default function Group({navigation}) {
         </Card>
       );
           }  }
-      />
+      /> : <Text style={styles.mainText}> No created groups at the moment</Text>
+       }
       </View>
       
 

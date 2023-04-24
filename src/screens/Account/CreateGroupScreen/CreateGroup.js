@@ -22,16 +22,16 @@ export default function CreateGroup({navigation}) {
   let [adhocUsers, setAdhocUsers] = useState([]);
   let [users, setUsers] = useState([]);
   const dispatch = useDispatch();
-  const groupMembersb = useSelector(
-    (state) => state.user.groupMembers,
+  const user = useSelector(
+    (state) => state.user.user,
   );
 
   const handleClick = () => {
     if (!groupMembers.length) {
-      return Alert.alert("No group member selected!")
+      return Alert.alert("No group member selected!");
     }
+    groupMembers.push(user);
     dispatch(setGroupMembersRedux(groupMembers));
-    console.log('group members', groupMembersb);
     navigation.navigate('CreateGroupForm');
   };
   const goBack = () => {
@@ -50,9 +50,6 @@ export default function CreateGroup({navigation}) {
 
   };
 
-  const createGroup = () => {
-
-  };
 
   const addMember = (index) => {
     const newAdhocUsers = [...adhocUsers];
@@ -66,7 +63,7 @@ export default function CreateGroup({navigation}) {
          setGroupMembers(groupMembers = currentAddedMembers);
          console.log('false',groupMembers);
           setAdhocUsers(newAdhocUsers);
-          return ;
+          return;
       } else {
         newAdhocUsers[index].clicked = true;
         const currentAddedMembers = adhocUsers.filter((item,ItemIndex)=>{
@@ -77,9 +74,8 @@ export default function CreateGroup({navigation}) {
         console.log('true',groupMembers);
         // setGroupMembers( groupMembers = [...groupMembers, newAdhocUsers[index]]);
         setGroupMembers( groupMembers = [...groupMembers, currentAddedMembers]);
-
         setAdhocUsers(newAdhocUsers);
-        return; 
+        return;
       }
 };
 

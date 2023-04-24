@@ -12,6 +12,7 @@ import GroupNavigation from './group-navigation';
 import PayoutNavigation from './payout-navihation';
 import TripNavigation from './trip-navigation';
 import ProfileNavigation from './profile-naviigation';
+import { colors } from '../constants/colors';
 const AppBottomTabNabigator = createBottomTabNavigator();
 
 function AppNavigator() {
@@ -56,7 +57,7 @@ function AppNavigator() {
 
         headerShown: false,
         gestureEnabled: false,
-        tabBarActiveTintColor: '#00214E',
+        tabBarActiveTintColor: colors.lightBlue,
         tabBarInactiveTintColor: '#CCCCCC',
         tabBarAllowFontScaling: true,
         tabBarLabelStyle: {marginBottom: 5, fontSize: 14},
@@ -68,7 +69,7 @@ function AppNavigator() {
           shadowRadius: 15,
           elevation: 3,
           borderTopColor: 'transparent',
-          backgroundColor: '#fff',
+          backgroundColor: colors.black,
           height: 65,
         },
       })}>
