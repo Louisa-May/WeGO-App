@@ -52,6 +52,7 @@ export default function Login({navigation}) {
         console.log('User account signed in!');
       dispatch(setUser(user))
       dispatch(setIsAunthenticated(true));
+      setIsloading(false);
       }
       setIsloading(false);
     }

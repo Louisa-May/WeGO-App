@@ -96,14 +96,30 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'semiBold',
     paddingVertical: 10,
-    textAlign:'right'
+    textAlign:'center',
+    textTransform: 'capitalize'
   },
   cardPadding: {
     paddingVertical: 30,
-    marginTop:10
+    marginTop:10,
+    width:'100%'
+  },
+  cardPadding1: {
+    paddingVertical: 30,
+    marginTop:10,
+    width:'90%'
   },
   scheduleCover: {
-    marginHorizontal: 30,
+    width:'100%',
+  },
+  nohistoryText:{
+    color: colors.black,
+  },
+  nohistoryView: {
+    backgroundColor:colors.grey,
+    width: '98%',
+    paddingHorizontal: 20,
+    paddingVertical:10
   },
   paymentToday: {
     backgroundColor: colors.grey,
@@ -113,6 +129,15 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: 280,
+  },
+  repaymentRow1: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: colors.grey,
+    borderRadius:15,
+    paddingHorizontal:20,
+    marginTop:15,
+    // paddingVertical:20
   },
   repaymentStatusRow: {
     paddingTop: 20,
@@ -127,5 +152,6 @@ export const styles = StyleSheet.create({
     color: colors.green,
     fontSize: 14,
     fontWeight: 'semiBold',
+    textTransform: 'capitalize'
   },
 });

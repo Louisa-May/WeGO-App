@@ -80,7 +80,7 @@ useEffect(()=>{
         data={groups}
         contentContainerStyle={styles.mainGroup}
         vertical
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => item.id}
         renderItem={({item, index})=> {
         return  (
           <Card >

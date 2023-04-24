@@ -69,7 +69,7 @@ export default function Dashboard({navigation}) {
     date: moment().format('MMMM Do, YYYY'),
     contributor: `${user.first_name} ${user.last_name}`,
     contributor_id: user.id,
-    status:'pending',
+    status:'Pending',
    }
    let newTransaction = transactionReference.push();
       transactionData.id = newTransaction.key;
