@@ -20,7 +20,7 @@ export const userSlice = createSlice({
     setGroupMembersRedux: (state, action) => {
       state.groupMembers = action.payload;
     },
-    resetGroupMembers: (state, action) => {
+    resetGroupMembers: state => {
       state.groupMembers = null;
     },
     resetUser: () => initialState,

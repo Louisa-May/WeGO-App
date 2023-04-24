@@ -15,15 +15,35 @@ import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import {styles} from './styles';
 import {colors} from '../../../constants/colors';
 import Card from '../../../components/card';
+import LogoutIcon from '../../../assets/svgs/icons/log-out-icon.svg'
 import { useSelector } from 'react-redux';
+import auth from '@react-native-firebase/auth';
+import { resetUser } from '../../../../redux-store/userAuth';
+import { useDispatch } from 'react-redux';
 
 export default function Profile({navigation}) {
   const user = useSelector(
     (state) => state.user.user,
   );
+  const dispatch = useDispatch()
   const handleClick = () => {
     navigation.navigate('ProfileDetails');
   };
+  const onSignOut = () => {
+    auth()
+  .signOut()
+  .then(() => 
+  {
+    console.log('User signed out!')
+    dispatch(resetUser())
+    console.log('user',user);
+  }
+  )
+  .catch((error) => console.log(error))
+  dispatch(resetUser())
+  console.log('user',user);
+  
+  }
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
@@ -55,7 +75,7 @@ export default function Profile({navigation}) {
                 <Text style={styles.profileText}>Email : {user.email}  </Text>
           </View>
       </View>
-      <View style={{width:'100%', justifyContent:'center', alignItems:'center',alignContent:'center', marginTop:20}}>
+      <TouchableOpacity style={{width:'100%', justifyContent:'center', alignItems:'center',alignContent:'center', marginTop:20}}>
         <View style={{width:'90%', height:100, backgroundColor:colors.grey, borderRadius:20, padding:20, paddingTop:30, flexDirection:'row', justifyContent:'space-around'}}>
            <FontAwesomeIcon name="bank" size={32} color={colors.black} />
           <Text style={styles.profileText1}>Payment Details</Text>
@@ -67,8 +87,8 @@ export default function Profile({navigation}) {
             style={styles.chevron}
           />
           </View>
-      </View>
-      <View style={{width:'100%', justifyContent:'center', alignItems:'center',alignContent:'center', marginTop:20}}>
+      </TouchableOpacity>
+      <TouchableOpacity style={{width:'100%', justifyContent:'center', alignItems:'center',alignContent:'center', marginTop:20}}>
         <View style={{width:'90%', height:100, backgroundColor:colors.grey, borderRadius:20, padding:20, paddingTop:30, flexDirection:'row', justifyContent:'space-around'}}>
         <FontAwesomeIcon name="group" size={32} color={colors.black} />
           <Text style={styles.profileText1}>Invite Friends to WeGO</Text>
@@ -80,22 +100,16 @@ export default function Profile({navigation}) {
             style={styles.chevron}
             />
           </View>
-      </View>
-      <View style={{width:'100%', justifyContent:'center', alignItems:'center',alignContent:'center', marginTop:20}}>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={onSignOut} style={{width:'100%', justifyContent:'center', alignItems:'center',alignContent:'center', marginTop:20}}>
         <View style={{width:'90%', height:100, backgroundColor:colors.grey, borderRadius:20, padding:20, paddingTop:30, flexDirection:'row', justifyContent:'space-around'}}>
         <View style={styles.profileCardRow}>
-          <FontAwesomeIcon name="group" size={32} color={colors.black} />
-          <Text style={styles.profileText1}>Invite Friends to WeGO</Text>
-          <EntypoIcon
-            name="chevron-right"
-            size={32}
-            color={colors.black}
-            onPress={''}
-            style={styles.chevron}
-          />
+          {/* <FontAwesomeIcon icon="fa-arrow-right-from-bracket" size={32} color={colors.black} /> */}
+          <LogoutIcon height={32} width={32} />
+          <Text style={styles.profileText1}>Log Out </Text>
         </View>
           </View>
-      </View>
+      </TouchableOpacity>
      
        
       
