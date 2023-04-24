@@ -41,7 +41,6 @@ export default function Login({navigation}) {
     auth()
     .signInWithEmailAndPassword(Email, password)
     .then(async() => {
-      console.log('User account signed in!');
      let usersRef = database().ref('users').orderByChild('email').equalTo(Email);
      usersRef.once('value', snapshot => {
       if (snapshot.exists()) {
@@ -50,6 +49,7 @@ export default function Login({navigation}) {
             const user = userSnapshot.val();
         // const user = snapshot.val()
         console.log('user first name:', user);
+        console.log('User account signed in!');
       dispatch(setUser(user))
       dispatch(setIsAunthenticated(true));
       }

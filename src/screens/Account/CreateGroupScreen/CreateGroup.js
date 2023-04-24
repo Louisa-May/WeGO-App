@@ -58,7 +58,7 @@ export default function CreateGroup({navigation}) {
          const currentAddedMembers = adhocUsers.filter((item,ItemIndex)=>{
           console.log(index, ItemIndex);
             // return index !== ItemIndex;
-            return item.clicked === true
+            return item.clicked === true;
          });
          setGroupMembers(groupMembers = currentAddedMembers);
          console.log('false',groupMembers);
