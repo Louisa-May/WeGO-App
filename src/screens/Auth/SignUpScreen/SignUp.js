@@ -77,7 +77,7 @@ export default function SignUp({navigation}) {
         return;
       }
       console.log(error);
-      setIsError('error')
+      setIsError(error.code)
       setIsloading(false);
     })
   };

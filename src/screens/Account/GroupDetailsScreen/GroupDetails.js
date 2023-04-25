@@ -26,23 +26,21 @@ export default function GroupDetails({route, navigation}) {
     (state) => state.user.user,
   );
   const [currentGroupUser, setCurrentGroupUser] = useState([]);
-  const [paymentHistory, setPaymentHistory] = useState([])
-  const [totalAmount, setTotalAmount] = useState(0)
+  let [paymentHistory, setPaymentHistory] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
   const getGroupMembers = () => {
     const presentUser = groupMembers.filter((member) => {
-      console.log(member.id, user.id);
-      return member.id === user.id
-    })
-    console.log(presentUser);
+      return member.id === user.id;
+    });
+    // console.log(presentUser);
     setCurrentGroupUser(presentUser);
-  }
+  };
 
   const goBack = () => {
-    navigation.goBack()
+    navigation.goBack();
   };
 
   const getPaymentHistory = () => {
-   
     transactionReference
       .orderByChild('contributor_id')
       .equalTo(user.id)
@@ -50,32 +48,33 @@ export default function GroupDetails({route, navigation}) {
       // .equalTo(group.groupName)
       .on('value', (snapshot) => {
         const paymentHistoryList = snapshot.val();
-        console.log(paymentHistoryList);
+        // console.log(paymentHistoryList);
         if (paymentHistoryList) {
           const restructuredPaymentHistoryList = Object.values(paymentHistoryList);
         const restructuredPaymentHistoryListbyGroupName = restructuredPaymentHistoryList.filter((payment) =>{
-          console.log(payment.groupName,group.item.groupName);
           return payment.groupName === group.item.groupName;
-        })
-        console.log('group',group);
-        console.log(restructuredPaymentHistoryListbyGroupName);
-        setPaymentHistory(restructuredPaymentHistoryListbyGroupName)
+        });
+        // console.log('group',group);
+        // console.log(restructuredPaymentHistoryListbyGroupName);
+        setPaymentHistory(restructuredPaymentHistoryListbyGroupName);
         const total = paymentHistory.reduce((prev, current) => {
+          console.log(current.amount);
           return Number(prev) + Number(current.amount);
         }, 0);
-       setTotalAmount(total) 
+        console.log('total',total);
+       setTotalAmount(total);
         } else {
-          return
+          return;
         }
       } 
-  )
-}
+  );
+};
 
 
   useEffect(() => {
+    getPaymentHistory();
     getGroupMembers();
-    getPaymentHistory()
-  }, [])
+  }, [totalAmount]);
 
   return (
     <SafeAreaView style={styles.container}>

@@ -71,6 +71,7 @@ export default function Login({navigation}) {
         setIsloading(false);
         return;
       }
+      setIsError(error.code)
       console.error(error);
     });
 
