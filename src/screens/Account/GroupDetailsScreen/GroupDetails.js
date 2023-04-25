@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable prettier/prettier */
 import {
   View,
@@ -44,8 +45,6 @@ export default function GroupDetails({route, navigation}) {
     transactionReference
       .orderByChild('contributor_id')
       .equalTo(user.id)
-      // .orderByChild('groupName')
-      // .equalTo(group.groupName)
       .on('value', (snapshot) => {
         const paymentHistoryList = snapshot.val();
         // console.log(paymentHistoryList);
@@ -56,7 +55,7 @@ export default function GroupDetails({route, navigation}) {
         });
         // console.log('group',group);
         // console.log(restructuredPaymentHistoryListbyGroupName);
-        setPaymentHistory(restructuredPaymentHistoryListbyGroupName);
+        setPaymentHistory(paymentHistory = restructuredPaymentHistoryListbyGroupName);
         const total = paymentHistory.reduce((prev, current) => {
           console.log(current.amount);
           return Number(prev) + Number(current.amount);
