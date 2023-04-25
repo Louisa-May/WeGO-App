@@ -31,18 +31,22 @@ export default function Login({navigation}) {
     navigation.navigate('SignUp');
   };
   const handleClick =  () => {
-    console.log(Email, password);
+    setIsError('')
     setIsloading(true);
     if (Email  === '' || password === '') {
       Alert.alert("Kindly input your email and password!");
       setIsloading(false);
       return;
     }
+    const email = Email.toLowerCase()
+    console.log(email);
     auth()
-    .signInWithEmailAndPassword(Email, password)
+    .signInWithEmailAndPassword(email, password)
     .then(async() => {
-     let usersRef = database().ref('users').orderByChild('email').equalTo(Email);
+     let usersRef = database().ref('users').orderByChild('email').equalTo(email);
+    console.log(usersRef);
      usersRef.once('value', snapshot => {
+      console.log('snapshot', snapshot);
       if (snapshot.exists()) {
         snapshot.forEach(userSnapshot => {
           if (userSnapshot.val().email === Email) {
@@ -59,6 +63,8 @@ export default function Login({navigation}) {
      )}})
   })
     .catch(error => {
+      
+      setIsloading(false);
       if (error.code === 'auth/invalid-email') {
         console.log('That email address is invalid!');
         setIsError("That email address is invalid!");
@@ -71,7 +77,8 @@ export default function Login({navigation}) {
         setIsloading(false);
         return;
       }
-      setIsError(error.code)
+      setIsloading(false);
+      setIsError(error.message)
       console.error(error);
     });
 
