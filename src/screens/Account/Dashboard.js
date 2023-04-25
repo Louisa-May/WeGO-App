@@ -31,9 +31,9 @@ export default function Dashboard({navigation}) {
   );
   const [amount, setAmount] = useState(0);
   const [isLoading, setIsloading] = useState(false);
-  const [groupName, setGroup] = useState('')
+  const [groupName, setGroup] = useState('');
   const [isError, setIsError] = useState('');
-  let [availableGroups, setAvailableGroups] = useState([])
+  let [availableGroups, setAvailableGroups] = useState([]);
   const groupReference = database().ref('groups');
   const transactionReference = database().ref('transactions');
 
@@ -47,9 +47,10 @@ export default function Dashboard({navigation}) {
         return {
           label: item.groupName,
           value: item.groupName,
-          id: item.id
-        }
-      })
+          id: item.id,
+          contributionAmount: item.contributionAmount,
+        };
+      });
       setAvailableGroups(availableGroups = Object.values(finalRestructuredGroups));
    console.log('groups', availableGroups);
    console.log('user',user);
@@ -70,16 +71,30 @@ export default function Dashboard({navigation}) {
     contributor: `${user.first_name} ${user.last_name}`,
     contributor_id: user.id,
     status:'Pending',
-   }
+   };
    let newTransaction = transactionReference.push();
       transactionData.id = newTransaction.key;
       newTransaction.set(transactionData);
     // dispatch(resetGroupMembers());
     Alert.alert('Payment made successfully!');
     setIsloading(false);
-  }
+  };
 
-  
+  const chooseGroup = (text) => {
+    console.log(text);
+    groupReference
+    .orderByChild('groupName')
+    .equalTo(text)
+    .on('value', (snapshot) => {
+      if (snapshot.exists()) {
+        const selectedGroup = snapshot.val();
+        const restructuredSelectedGroup = Object.values(selectedGroup);
+        console.log(restructuredSelectedGroup[0].contributionAmount);
+        setGroup(text);
+        setAmount(restructuredSelectedGroup[0].contributionAmount);
+      }
+    });
+  };
   useEffect(()=>{
     getGroups();
    },[]);
@@ -145,7 +160,7 @@ export default function Dashboard({navigation}) {
         <View style={styles.inputSelect}>
           <RNPickerSelect
                 style={pickerSelectStyles}
-                onValueChange={(text) => setGroup(text)}
+                onValueChange={(text) => chooseGroup(text)}
                 placeholder={{ label: 'Select group to pay to', value: null }}
                 items={availableGroups}
                 Icon={() => {
@@ -159,16 +174,17 @@ export default function Dashboard({navigation}) {
                 }}
             />
         </View>
-       
-        <View style={{width:'100%', marginTop:5}}>
-          <CustomInput
+        <View style={{width:'100%', marginTop:10}}>
+          {/* <CustomInput
             placeholder="Enter Amount"
             value={amount}
-            keyboardType = 'number-pad'
-            onChangeText={(text) => setAmount(text)}
-          />
+            keyboardType = 'number-pad' */}
+           {/* onChangeText={(text) => setAmount(text)} */}
+          {/* > */}
+          <View style={{width:'100%',height:45, backgroundColor:colors.grey}}>
+            <Text style={{color:colors.black, fontSize:20, paddingLeft:15, paddingTop:10}}>£ {amount}</Text>
+          </View>
         </View>
-       
 
         {isError  &&  (
             <Text style={{ textAlign: 'center', fontSize:15, color:'red', fontWeight:'500' }}> {isError}</Text>

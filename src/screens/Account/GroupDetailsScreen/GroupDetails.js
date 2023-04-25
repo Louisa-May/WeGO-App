@@ -65,7 +65,7 @@ export default function GroupDetails({route, navigation}) {
         } else {
           return;
         }
-      } 
+      }
   );
 };
 
