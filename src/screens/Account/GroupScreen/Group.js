@@ -40,10 +40,10 @@ export default function Group({navigation}) {
     groupReference
     .on('value', snapshot => {
       const groupList = snapshot.val();
-      console.log("groupslist",groupList);
+      // console.log("groupslist",groupList);
       const restructuredGroup = Object.values(groupList);
       setGroups(groups = Object.values(restructuredGroup));
-   console.log('groups', groups);
+  //  console.log('groups', groups);
     });
   };
 
@@ -73,17 +73,17 @@ useEffect(()=>{
         setValue={setSearchInput}
       /> */}
       <Text style={styles.mainText}>Available Groups</Text>
-      <View style={{width:'100%',  justifyContent: 'center', alignItems: 'center', alignContent:"center"}}>
+      <View style={{width:'100%',  justifyContent: 'center',paddingHorizontal:10, alignItems: 'center', alignContent:"center"}}>
        {
         groups.length > 0 ?
       <FlatList
         data={groups}
-        contentContainerStyle={styles.mainGroup}
+        // contentContainerStyle={styles.mainGroup}
         vertical
         keyExtractor={(item) => item.id}
         renderItem={({item, index})=> {
         return  (
-          <Card >
+          // <Card >
           <View style={styles.groupCardRow}>
             <Image
               source={require('../../../assets/images/groupImage1.png')}
@@ -99,7 +99,7 @@ useEffect(()=>{
               }}
             />
           </View>
-        </Card>
+        // </Card>
       );
           }  }
       /> : <Text style={styles.mainText}> No created groups at the moment</Text>

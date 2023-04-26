@@ -1,3 +1,4 @@
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable prettier/prettier */
 import {View, StatusBar, SafeAreaView, Text, Image, ScrollView, TouchableOpacity, FlatList, Alert, ActivityIndicator, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
@@ -8,12 +9,9 @@ import Card from '../../../components/card';
 import CustomSearch from '../../../components/customSearch';
 import CustomButton from '../../../components/customButton';
 import database from '@react-native-firebase/database';
-import { useEffect } from 'react';
-import UserImage from '../../../assets/svgs/images/userProfileImage.svg';
-import Checkmark from '../../../assets/svgs/icons/icons8-checkmark.svg';
 import CustomInput from '../../../components/customInput';
 import RNPickerSelect from 'react-native-picker-select';
-import moment from 'moment';
+// import moment from 'moment';
 import DropDownIcon from '../../../assets/svgs/icons/drop-down.svg'
 import { useDispatch, useSelector } from 'react-redux';
 import { resetGroupMembers } from '../../../../redux-store/userAuth';
@@ -32,7 +30,7 @@ export default function CreateGroupForm({navigation}) {
 
 
   const groupMembers = useSelector(
-    (state) => state.user.groupMembers,
+    (state) => state.user.groupMembers.flat(),
   );
 
   const handleClick = () => {
@@ -42,6 +40,24 @@ export default function CreateGroupForm({navigation}) {
     navigation.goBack();
   };
 
+  function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+  
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+  
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+    // console.log('array', array);
+    return array;
+  }
+
   const createGroup = () => {
     setIsloading(true);
     if (contributionAmount  === '' ||  groupName === '' || paymentFrequency === '' || collectionMethod === '' ) {
@@ -49,16 +65,25 @@ export default function CreateGroupForm({navigation}) {
       setIsloading(false);
       return;
     }
+    let payoutOrder = []
     console.log('group members', groupMembers);
-    console.log(contributionAmount, paymentFrequency,groupName);
+    if (collectionMethod === 'Random' ) {
+      // Alert.alert('hey mtf')
+      payoutOrder = shuffle(groupMembers);
+    } else {
+      payoutOrder = groupMembers
+    }
+    console.log('payout order',payoutOrder);
    let groupData = {
     contributionAmount: contributionAmount,
     groupName: groupName,
     paymentFrequency: paymentFrequency,
     members_list: groupMembers,
     collectionMethod: collectionMethod,
-    paymentAmount: contributionAmount * groupMembers.length
-   }
+    paymentAmount: contributionAmount * groupMembers.length,
+    payoutOrder: payoutOrder,
+   };
+   console.log('groupData',groupData);
    let newGroup = groupReference;
       groupData.id = newGroup.key;
       newGroup.set(groupData);

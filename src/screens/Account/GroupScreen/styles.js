@@ -42,9 +42,13 @@ export const styles = StyleSheet.create({
   groupCardRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',
+    width: '96%',
     paddingHorizontal: 10,
-    paddingTop: 5,
+    paddingTop: 20,
+    height:80,
+    backgroundColor:colors.grey,
+    marginTop:20,
+    borderRadius:20
   },
   mainGroup:{width:'95%'},
   groupText: {

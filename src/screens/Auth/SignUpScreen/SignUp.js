@@ -43,14 +43,16 @@ export default function SignUp({navigation}) {
       setIsloading(false);
       return;
     }
+    const Email = email.toLowerCase()
+    console.log('Email',Email);
     auth()
-    .createUserWithEmailAndPassword(email, password)
+    .createUserWithEmailAndPassword(Email, password)
     .then(() => {
       console.log('User account created & signed in!');
       let userData = {
         first_name: firstName,
         last_name: lastName,
-        email: email,
+        email: Email,
         role: 'user',
         clciked:false,
         wallet_amount:0,

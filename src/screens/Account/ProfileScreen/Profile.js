@@ -18,7 +18,7 @@ import Card from '../../../components/card';
 import LogoutIcon from '../../../assets/svgs/icons/log-out-icon.svg'
 import { useSelector } from 'react-redux';
 import auth from '@react-native-firebase/auth';
-import { resetUser } from '../../../../redux-store/userAuth';
+import { resetGroupMembers, resetUser } from '../../../../redux-store/userAuth';
 import { useDispatch } from 'react-redux';
 
 export default function Profile({navigation}) {
@@ -36,6 +36,7 @@ export default function Profile({navigation}) {
   {
     console.log('User signed out!')
     dispatch(resetUser())
+    dispatch(resetGroupMembers());
     console.log('user',user);
   }
   )

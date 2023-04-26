@@ -45,13 +45,12 @@ export default function Login({navigation}) {
     .then(async() => {
      let usersRef = database().ref('users').orderByChild('email').equalTo(email);
     console.log(usersRef);
-     usersRef.once('value', snapshot => {
+     usersRef.on('value', snapshot => {
       console.log('snapshot', snapshot);
       if (snapshot.exists()) {
         snapshot.forEach(userSnapshot => {
           if (userSnapshot.val().email === Email) {
             const user = userSnapshot.val();
-        // const user = snapshot.val()
         console.log('user first name:', user);
         console.log('User account signed in!');
       dispatch(setUser(user))
@@ -60,10 +59,16 @@ export default function Login({navigation}) {
       }
       setIsloading(false);
     }
-     )}})
+     )}else{
+      setIsloading(false);
+      setIsError('An error occured while signing you in, check back later please')
+     }
+    
+    }
+     
+     )
   })
     .catch(error => {
-      
       setIsloading(false);
       if (error.code === 'auth/invalid-email') {
         console.log('That email address is invalid!');

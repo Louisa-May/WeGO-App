@@ -96,7 +96,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'semiBold',
     paddingVertical: 10,
-    textAlign:'center',
+    textAlign:'right',
     textTransform: 'capitalize'
   },
   cardPadding: {
@@ -105,9 +105,12 @@ export const styles = StyleSheet.create({
     width:'100%'
   },
   cardPadding1: {
-    paddingVertical: 30,
-    marginTop:10,
-    width:'90%'
+    paddingVertical: 10,
+    width:'100%',
+  },
+  mainGroup: {
+    // height:400
+
   },
   scheduleCover: {
     width:'100%',
@@ -141,17 +144,24 @@ export const styles = StyleSheet.create({
   },
   repaymentStatusRow: {
     paddingTop: 20,
+    // width:'30%'
+  },
+  paymentScheduleRow: {
+    paddingTop: 20,
+    width:'30%'
   },
   repaymentSmallText: {
     color: colors.black,
     fontSize: 14,
     fontWeight: 'semiBold',
     paddingTop: 50,
+    textAlign:'center'
   },
   repaymentStausText: {
     color: colors.green,
     fontSize: 14,
     fontWeight: 'semiBold',
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
+    textAlign:'center'
   },
 });

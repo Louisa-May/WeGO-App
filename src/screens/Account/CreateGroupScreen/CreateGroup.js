@@ -30,8 +30,10 @@ export default function CreateGroup({navigation}) {
     if (!groupMembers.length) {
       return Alert.alert("No group member selected!");
     }
-    groupMembers.push(user);
-    dispatch(setGroupMembersRedux(groupMembers));
+    // groupMembers.push(user);
+    const flatenedMmembers = groupMembers[groupMembers.length-1].flat()
+    console.log('groupMemmbers', flatenedMmembers);
+    dispatch(setGroupMembersRedux(flatenedMmembers));
     navigation.navigate('CreateGroupForm');
   };
   const goBack = () => {
@@ -56,7 +58,7 @@ export default function CreateGroup({navigation}) {
       if (newAdhocUsers[index].clicked) {
           newAdhocUsers[index].clicked = false;
          const currentAddedMembers = adhocUsers.filter((item,ItemIndex)=>{
-          console.log(index, ItemIndex);
+          // console.log(index, ItemIndex);
             // return index !== ItemIndex;
             return item.clicked === true;
          });
@@ -71,9 +73,9 @@ export default function CreateGroup({navigation}) {
             // return index !== ItemIndex;
             return item.clicked === true
          });
-        console.log('true',groupMembers);
         // setGroupMembers( groupMembers = [...groupMembers, newAdhocUsers[index]]);
-        setGroupMembers( groupMembers = [...groupMembers, currentAddedMembers]);
+        setGroupMembers(groupMembers = [...groupMembers, currentAddedMembers]);
+        console.log('true',groupMembers);
         setAdhocUsers(newAdhocUsers);
         return;
       }

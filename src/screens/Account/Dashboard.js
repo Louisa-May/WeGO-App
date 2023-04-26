@@ -9,7 +9,7 @@ import {
   ScrollView,
   ActivityIndicator,
   StyleSheet,
-  Alert
+  Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import RNPickerSelect from 'react-native-picker-select';
@@ -33,27 +33,44 @@ export default function Dashboard({navigation}) {
   const [isLoading, setIsloading] = useState(false);
   const [groupName, setGroup] = useState('');
   const [isError, setIsError] = useState('');
+  const [haveUserGroup, setHaveUserGroup] = useState(false)
   let [availableGroups, setAvailableGroups] = useState([]);
   const groupReference = database().ref('groups');
   const transactionReference = database().ref('transactions');
+
 
   const getGroups =  () => {
     groupReference
     .on('value', snapshot => {
       const groupList = snapshot.val();
-      console.log("groupslist",groupList);
+      // console.log('groupslist',groupList);
       const restructuredGroup = Object.values(groupList);
-      const finalRestructuredGroups = restructuredGroup.map((item) => {
-        return {
-          label: item.groupName,
-          value: item.groupName,
-          id: item.id,
-          contributionAmount: item.contributionAmount,
-        };
-      });
-      setAvailableGroups(availableGroups = Object.values(finalRestructuredGroups));
-   console.log('groups', availableGroups);
-   console.log('user',user);
+     const currentUserGroups = restructuredGroup.filter((group) => {
+        
+     return group.members_list.flat().filter((member) => {
+          // console.log(member.id, user.id);
+          return member.id === user.id;
+        })
+      })
+      // console.log('current user groups',currentUserGroups);
+      if (currentUserGroups.length > 0) {
+        setHaveUserGroup(true);
+        const finalRestructuredGroups = currentUserGroups.map((item) => {
+          return {
+            label: item.groupName,
+            value: item.groupName,
+            id: item.id,
+            contributionAmount: item.contributionAmount,
+          };
+        });
+        setAvailableGroups(availableGroups = Object.values(finalRestructuredGroups));
+        // console.log('groups', availableGroups);
+        // console.log('user',user);
+       
+      } else {
+        setHaveUserGroup(false)
+      }
+     
 
     });
   };
@@ -81,7 +98,6 @@ export default function Dashboard({navigation}) {
   };
 
   const chooseGroup = (text) => {
-    console.log(text);
     groupReference
     .orderByChild('groupName')
     .equalTo(text)
@@ -89,7 +105,6 @@ export default function Dashboard({navigation}) {
       if (snapshot.exists()) {
         const selectedGroup = snapshot.val();
         const restructuredSelectedGroup = Object.values(selectedGroup);
-        console.log(restructuredSelectedGroup[0].contributionAmount);
         setGroup(text);
         setAmount(restructuredSelectedGroup[0].contributionAmount);
       }
@@ -100,9 +115,9 @@ export default function Dashboard({navigation}) {
    },[]);
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={{width:'100%',}}>
+      <ScrollView style={{width:'100%'}}>
           <View style={styles.userImageCover}>
-            <View></View>
+            <View />
             <View style={styles.WelometextDiv}>
               <View style={styles.welcomeTextCover}>
                 <Text style={styles.mediumText}>Welcome back,</Text>
@@ -151,7 +166,9 @@ export default function Dashboard({navigation}) {
         </View>
       </View>
 
-      <View style={styles.makeDepositView}>
+      {
+        haveUserGroup? 
+        <View style={styles.makeDepositView}>
         <View style={{width:'100%'}}>
           <Text style={{color:'black', fontWeight:'bold', fontSize:25}}>
               Quick Transfer
@@ -197,7 +214,12 @@ export default function Dashboard({navigation}) {
               <ActivityIndicator color="purple" animating={true} />
             )
         }
+      </View> : 
+      <View style={styles.makeDepositView}>
+          <Text style={{color:colors.black, fontSize:20, textAlign:'center'}}>You have not been added to a group.</Text>
       </View>
+      }
+      
     </ScrollView>
     </SafeAreaView>
   );
