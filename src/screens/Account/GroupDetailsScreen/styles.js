@@ -45,6 +45,18 @@ export const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: 'bold',
   },
+  bigTextCenter: {
+    color: colors.black,
+    fontSize: 26,
+    fontWeight: 'bold',
+    textAlign:'center'
+  },
+  bigTextRight: {
+    color: colors.black,
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginLeft:85
+  },
   cardRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -52,7 +64,7 @@ export const styles = StyleSheet.create({
     width: 320,
   },
   pushLeft: {
-    left: 30,
+    // left: 30,
     paddingVertical: 5,
     color:colors.black
   },
@@ -62,10 +74,9 @@ export const styles = StyleSheet.create({
     color:colors.black
   },
   pushRight2: {
-    right: 55,
+    // right: 55,
     paddingVertical: 5,
     color:colors.black,
-    
   },
   payoutAmount: {
     paddingVertical: 50,
@@ -79,11 +90,26 @@ export const styles = StyleSheet.create({
   },
   cardInnerRow: {
     flexDirection: 'row',
-    alignItems:'center',
-    justifyContent:'center',
+    // alignItems:'center',
+    // justifyContent:'center',
     width:'50%',
-    textAlign:'center'
-    
+    textAlign:'left'
+  },
+  cardInnerRightRow: {
+    flexDirection: 'row',
+    // alignItems:'center',
+    // justifyContent:'center',
+    width:'50%',
+    textAlign:'right'
+  },
+  walletBalanceView: {
+    width:'100%',
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center'
+  },
+  walletBalance: {
+    width: 150,
   },
   summaryText: {
     color: colors.black,
@@ -110,7 +136,6 @@ export const styles = StyleSheet.create({
   },
   mainGroup: {
     // height:400
-
   },
   scheduleCover: {
     width:'100%',

@@ -16,6 +16,8 @@ import DropDownIcon from '../../../assets/svgs/icons/drop-down.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetGroupMembers } from '../../../../redux-store/userAuth';
 import moment from 'moment';
+import { useToast } from 'react-native-toast-notifications';
+
 
 
 
@@ -28,6 +30,7 @@ export default function CreateGroupForm({navigation}) {
   let [paymentFrequency, setPaymentFrequency] = useState(new Date());
   const dispatch = useDispatch();
   const groupReference = database().ref('/groups').push();
+  const toast = useToast();
 
 
   const groupMembers = useSelector(
@@ -106,7 +109,24 @@ export default function CreateGroupForm({navigation}) {
         };
       });
       
-    } else if (paymentFrequency === '1 month') {
+    } else if (paymentFrequency === 'daily') {
+      console.log(date);
+      restructuredMembers = groupMembers.map((member) => {
+        date = date.add(1, 'days');
+        console.log(date);
+        return {
+          clicked: member.clciked,
+          email: member.email,
+          id: member.id,
+          first_name: member.first_name,
+          last_name: member.last_name,
+          role: member.role,
+          wallet_amount: member.wallet_amount,
+          payOutDate: moment(date).format('MMMM Do, YYYY'),
+        };
+      });
+    }     
+    else if (paymentFrequency === '1 month') {
       console.log(date);
       restructuredMembers = groupMembers.map((member) => {
         date = date.add(1, 'month');
@@ -150,14 +170,20 @@ export default function CreateGroupForm({navigation}) {
     collectionMethod: collectionMethod,
     paymentAmount: contributionAmount * groupMembers.length,
     payoutOrder: restructuredPayoutOrder,
-    wallet_amount:0,
+    wallet_balance:0,
    };
    console.log('groupData',groupData);
    let newGroup = groupReference;
       groupData.id = newGroup.key;
       newGroup.set(groupData);
     dispatch(resetGroupMembers());
-    Alert.alert('group created successfully!');
+    toast.show('group created successfully!', {
+      type: 'success',
+      placement: 'bottom',
+      duration: 4000,
+      offset: 30,
+      animationType: 'zoom-in',
+    });
     setIsloading(false);
     navigation.navigate('GroupStackNavigator');
   };
@@ -172,12 +198,12 @@ export default function CreateGroupForm({navigation}) {
         </View>
         <View style={styles.form}>
           <CustomInput
-            placeholder="Group Name"
+            placeholder='Group Name'
             value={groupName}
             onChangeText={(text) => setGroupName(text)}
           />
           <CustomInput
-            placeholder="Contribution Amount in pounds"
+            placeholder='Contribution Amount in pounds'
             value={contributionAmount}
             keyboardType = 'number-pad'
             onChangeText={(text) => setContributionAmount(text)}
@@ -208,9 +234,10 @@ export default function CreateGroupForm({navigation}) {
               onValueChange={(text) => setPaymentFrequency(text)}
               placeholder={{ label: ' Select Contribution Frequency', value: null }}
               items={[
+              { label: 'Daily', value: '1 day'},
               { label: '2 weeks', value: '2 weeks' },
               { label: '1 month', value: '1 month' },
-              { label: '2 months', value: '2 months' },
+              { label: '2 months', value: '2 month' },
               ]}
               Icon={() => {
                 return (

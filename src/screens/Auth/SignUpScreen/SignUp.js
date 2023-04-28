@@ -55,7 +55,7 @@ export default function SignUp({navigation}) {
         email: Email,
         role: 'user',
         // clciked:false,
-        wallet_amount:0,
+        wallet_balance:0,
     }
       let newUser = reference.push();
       userData.id = newUser.key;

@@ -46,15 +46,15 @@ export const styles = StyleSheet.create({
   noColorText: {
     fontSize: 14,
     fontWeight: 'semiBold',
-    left: 105,
     color: colors.black,
+    textAlign:'center'
   },
   bigText: {
     color: colors.black,
     fontSize: 26,
     fontWeight: 'bold',
-    left: 90,
     padding: 10,
+    textAlign:'center'
   },
   bigText2: {
     color: colors.black,

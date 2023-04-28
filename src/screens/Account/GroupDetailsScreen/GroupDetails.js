@@ -5,10 +5,10 @@ import {
   StatusBar,
   SafeAreaView,
   Text,
-  Image,
   ScrollView,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 import React from 'react';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
@@ -18,23 +18,30 @@ import Card from '../../../components/card';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import database from '@react-native-firebase/database';
+import moment from 'moment';
+import { useToast } from 'react-native-toast-notifications';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../../../redux-store/userAuth';
 
 export default function GroupDetails({route, navigation}) {
   const transactionReference = database().ref('transactions');
+  const reference = database()
   const group = route.params;
   const groupMembers = group.item.members_list.flat()
   console.log('group',groupMembers);
   const user = useSelector(
     (state) => state.user.user,
   );
-  const [currentGroupUser, setCurrentGroupUser] = useState([]);
+  const dispatch = useDispatch()
+  let [currentGroupUser, setCurrentGroupUser] = useState([]);
   let [paymentHistory, setPaymentHistory] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const toast = useToast()
   const getGroupMembers = () => {
     const presentUser = groupMembers.filter((member) => {
       return member.id === user.id;
     });
-    setCurrentGroupUser(presentUser);
+    setCurrentGroupUser(currentGroupUser = presentUser);
   };
 
   const goBack = () => {
@@ -53,14 +60,14 @@ export default function GroupDetails({route, navigation}) {
         const restructuredPaymentHistoryListbyGroupName = restructuredPaymentHistoryList.filter((payment) =>{
           return payment.groupName === group.item.groupName;
         });
-        console.log('group',group);
+        // console.log('group',group);
         // console.log(restructuredPaymentHistoryListbyGroupName);
         setPaymentHistory(paymentHistory = restructuredPaymentHistoryListbyGroupName);
         const total = paymentHistory.reduce((prev, current) => {
           console.log(current.amount);
           return Number(prev) + Number(current.amount);
         }, 0);
-        console.log('total',total);
+        // console.log('total',total);
        setTotalAmount(total);
         } else {
           return;
@@ -69,10 +76,63 @@ export default function GroupDetails({route, navigation}) {
   );
 };
 
+const checkForContributionDate = () => {
+  const checkPaymentDate = group.item.members_list.filter((member) => {
+    return member.payOutDate === moment(new Date()).format('MMMM Do, YYYY');
+  });
+  console.log('checkDate',checkPaymentDate);
+  if (checkPaymentDate.length > 0) {
+    toast.show("Kindly pay your contribution to the group", {
+      type: "warning",
+      placement: "bottom",
+      duration: 4000,
+      offset: 30,
+      animationType: "zoom-in",
+    });
+  }
+};
+
+const payOutUser = () => {
+  console.log('wallet balance',Math.floor(group.item.wallet_balance),Math.floor(totalAmount));
+  if ( Number(group.item.wallet_balance) > 0 && Number(group.item.wallet_balance) === Number(totalAmount) ) { 
+    console.log('wallet balance1',group.item.wallet_balance,totalAmount);
+    reference.ref(`users/${user.id}`).update({
+    wallet_balance: Number(user.wallet_balance) + Number(group.item.wallet_balance)
+    });
+    console.log(group.item.id);
+    reference.ref(`groups/${group.item.id}`).update({
+      wallet_balance: Number(group.item.wallet_balance) - Number(group.item.wallet_balance)
+      });
+
+      toast.show(`Payment of £${group.item.wallet_balance} to you is successful!`, {
+        type: 'success',
+        placement: 'bottom',
+        duration: 4000,
+        offset: 30,
+        animationType: 'zoom-in',
+      });
+
+      let usersRef = database().ref('users').orderByChild('email').equalTo(user.email);
+      console.log(usersRef);
+       usersRef.on('value', snapshot => {
+        console.log('snapshot', snapshot);
+        if (snapshot.exists()) {
+          snapshot.forEach(userSnapshot => {
+            if (userSnapshot.val().email === user.email) {
+              const user = userSnapshot.val();
+              dispatch(setUser(user))
+            }
+          })
+        }
+      })
+    }    
+  }
 
   useEffect(() => {
     getPaymentHistory();
     getGroupMembers();
+    checkForContributionDate();
+    payOutUser();
   }, [totalAmount]);
 
   return (
@@ -91,14 +151,29 @@ export default function GroupDetails({route, navigation}) {
 
       <ScrollView>
         {/* Payout Amount*/}
-          <View style={styles.payoutAmount}>
-            <View style={styles.cardRow}>
-              <Text style={styles.bigText}>May 24, 2023</Text>
-              <Text style={styles.bigText}>£{group.item.paymentAmount}</Text>
+          <View style={{flexDirection:'column', backgroundColor:colors.grey, borderRadius:20, paddingBottom:20}}>
+            <View style={styles.payoutAmount}>
+              <View style={styles.cardRow}>
+              {currentGroupUser.length > 0 ?
+               <View style={{width:100}}>
+                  <Text style={styles.bigText}>{currentGroupUser[0]?.payOutDate}</Text>;
+               </View> :
+              <View style={{width:100}}>
+                <Text style={styles.pushLeft}>You are not a member of this group</Text>
+              </View>
+               } 
+                <Text style={styles.bigText}>£{group.item.paymentAmount}</Text>
+              </View>
+              <View style={styles.cardRow}>
+                <Text style={styles.pushLeft}>Your payout date</Text>
+                <Text style={styles.pushRight}>Payout amount</Text>
+              </View>
             </View>
-            <View style={styles.cardRow}>
-              <Text style={styles.pushLeft}>Your payout date</Text>
-              <Text style={styles.pushRight}>Payout amount</Text>
+            <View style={styles.walletBalanceView}>
+              <View style={styles.walletBalance}>
+                  <Text style={styles.bigTextCenter}> £{group.item.wallet_balance}</Text>
+                  <Text style={styles.pushRight}>Group Wallet Balance</Text>
+              </View>
             </View>
           </View>
         {/* Payout Summary*/}
@@ -112,8 +187,8 @@ export default function GroupDetails({route, navigation}) {
                   <Text style={styles.bigText}>£{totalAmount}</Text>
                   <Text style={styles.noColorText}>/£{group.item.paymentAmount}</Text>
                 </View>
-                <View style={styles.cardInnerRow}>
-                  <Text style={styles.bigText}>£{group.item.contributionAmount}</Text>
+                <View style={styles.cardInnerRightRow}>
+                  <Text style={styles.bigTextRight}>£{group.item.contributionAmount}</Text>
                   <Text style={styles.noColorText}> X {groupMembers.length}</Text>
                 </View>
               </View>
@@ -129,7 +204,7 @@ export default function GroupDetails({route, navigation}) {
               </View>
               <View style={styles.cardRow}>
                 <Text style={styles.summaryText}>Total Payment</Text>
-                <View style={{width:200}}>
+                <View>
                 {currentGroupUser.length > 0 ?  <Text style={styles.summarySmallText}>£{totalAmount}</Text>
                 : <Text style={styles.summarySmallText}>You are not a current member of this group</Text>}
                 </View>

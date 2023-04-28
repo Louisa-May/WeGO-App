@@ -24,6 +24,7 @@ import CustomButton from '../../components/customButton';
 import DropDownIcon from '../../assets/svgs/icons/drop-down.svg';
 import database from '@react-native-firebase/database';
 import moment from 'moment';
+import { useToast } from 'react-native-toast-notifications';
 
 export default function Dashboard({navigation}) {
   const user = useSelector(
@@ -36,7 +37,9 @@ export default function Dashboard({navigation}) {
   const [haveUserGroup, setHaveUserGroup] = useState(false)
   let [availableGroups, setAvailableGroups] = useState([]);
   const groupReference = database().ref('groups');
+  const reference = database()
   const transactionReference = database().ref('transactions');
+  const toast = useToast()
 
 
   const getGroups =  () => {
@@ -44,7 +47,6 @@ export default function Dashboard({navigation}) {
     .on('value', snapshot => {
       const groupList = snapshot.val(); 
       if (groupList) {
-        
       const restructuredGroup = Object.values(groupList);
       // console.log('groupslist',restructuredGroup);
      const currentUserGroups = restructuredGroup.filter((group) => {
@@ -64,6 +66,7 @@ export default function Dashboard({navigation}) {
             value: item.groupName,
             id: item.id,
             contributionAmount: item.contributionAmount,
+            wallet_balance: item.wallet_balance
           };
         });
         setAvailableGroups(availableGroups = Object.values(finalRestructuredGroups));
@@ -93,11 +96,23 @@ export default function Dashboard({navigation}) {
     contributor_id: user.id,
     status:'Pending',
    };
+   const selectedGroup  = availableGroups.filter((group) => {
+    return group.label === groupName
+   })
+   console.log(selectedGroup[0].wallet_balance);
    let newTransaction = transactionReference.push();
       transactionData.id = newTransaction.key;
       newTransaction.set(transactionData);
-    // dispatch(resetGroupMembers());
-    Alert.alert('Payment made successfully!');
+      reference.ref(`groups/${selectedGroup[0].id}`).update({
+        wallet_balance: Number(selectedGroup[0].wallet_balance) + Number(amount)
+      })
+    toast.show(`Payment of £${amount} to ${transactionData.groupName} successful!`, {
+      type: 'success',
+      placement: 'bottom',
+      duration: 4000,
+      offset: 30,
+      animationType: 'zoom-in',
+    });
     setIsloading(false);
   };
 
@@ -132,6 +147,17 @@ export default function Dashboard({navigation}) {
                 style={styles.userImage}
               />
             </View>
+          </View>
+          <View style={styles.wallet_balance_view}>
+              <View style={{width:'100%',height:30}}>
+                <Text style={{color: colors.black, textAlign:'center'}}>
+                  Funds from your savings
+                </Text>
+              </View>
+              <View>
+                <Text style={styles.noColorText}>Available balance </Text>
+                <Text style={styles.bigText2}>£{user.wallet_balance}</Text>
+              </View>
           </View>
       <View style={styles.cardCover}>
             <Image

@@ -76,7 +76,7 @@ export default function Profile({navigation}) {
                 <Text style={styles.profileText}>Email : {user.email}  </Text>
           </View>
       </View>
-      <TouchableOpacity style={{width:'100%', justifyContent:'center', alignItems:'center',alignContent:'center', marginTop:20}}>
+      {/* <TouchableOpacity style={{width:'100%', justifyContent:'center', alignItems:'center',alignContent:'center', marginTop:20}}>
         <View style={{width:'90%', height:100, backgroundColor:colors.grey, borderRadius:20, padding:20, paddingTop:30, flexDirection:'row', justifyContent:'space-around'}}>
            <FontAwesomeIcon name="bank" size={32} color={colors.black} />
           <Text style={styles.profileText1}>Payment Details</Text>
@@ -101,7 +101,7 @@ export default function Profile({navigation}) {
             style={styles.chevron}
             />
           </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity onPress={onSignOut} style={{width:'100%', justifyContent:'center', alignItems:'center',alignContent:'center', marginTop:20}}>
         <View style={{width:'90%', height:100, backgroundColor:colors.grey, borderRadius:20, padding:20, paddingTop:30, flexDirection:'row', justifyContent:'space-around'}}>
         <View style={styles.profileCardRow}>

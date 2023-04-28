@@ -37,8 +37,8 @@ export default function GroupDetails({navigation}) {
       {/* <Card> */}
         <View style={styles.cardPadding}>
           <Text style={styles.bigText}>Book your trip</Text>
-          <Text style={styles.noColorText}>Available balance £{user.wallet_amount}</Text>
-          <Text style={styles.bigText2}>£1,200</Text>
+          <Text style={styles.noColorText}>Available balance </Text>
+          <Text style={styles.bigText2}>£{user.wallet_balance}</Text>
           {/* <Image source={require('../../../assets/images/metric.png')} /> */}
 
           {/* Choose Trip Button Section */}

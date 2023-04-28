@@ -33,6 +33,10 @@ import { useNavigation } from '@react-navigation/native';
         navigation.navigate('approvePayments');
     };
 
+    const viewUsers = () => {
+      navigation.navigate('users');
+  };
+
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
@@ -76,7 +80,7 @@ import { useNavigation } from '@react-navigation/native';
               style={styles.chevron}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tripCardRow}>
+          <TouchableOpacity onPress={viewUsers} style={styles.tripCardRow}>
             <ProfileIcon width={35} height={35} style={styles.tripImageCover}  />
             <View style={styles.tripInnerRow}>
               <Text style={styles.tripText}>View Users</Text>

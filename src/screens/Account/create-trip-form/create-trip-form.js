@@ -1,6 +1,6 @@
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable prettier/prettier */
-import {View, StatusBar, SafeAreaView, Text, Alert, ActivityIndicator, StyleSheet} from 'react-native';
+import {View, StatusBar, SafeAreaView, Text, Alert, ActivityIndicator, StyleSheet, Button} from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
 import {colors} from '../../../constants/colors';
@@ -9,6 +9,9 @@ import CustomSearch from '../../../components/customSearch';
 import CustomButton from '../../../components/customButton';
 import database from '@react-native-firebase/database';
 import CustomInput from '../../../components/customInput';
+import moment from 'moment';
+import DatePicker from 'react-native-date-picker'
+
 
 
 
@@ -19,6 +22,8 @@ export default function CreateTripForm({navigation}) {
   const [tripCost, setTripCost] = useState(0);
   const [TripName, setTripName] = useState('')
   const TripReference = database().ref('/Trips').push();
+  const [date, setDate] = useState(new Date())
+  const [open, setOpen] = useState(false)
 
   const createTrip = () => {
     setIsloading(true);
@@ -30,7 +35,9 @@ export default function CreateTripForm({navigation}) {
    
    let TripData = {
     TripName: TripName,
-    tripCost: tripCost
+    tripCost: tripCost,
+    tripMmebers:[],
+    date: moment()
    };
    let newTrip = TripReference;
       TripData.id = newTrip.key;
@@ -59,6 +66,19 @@ export default function CreateTripForm({navigation}) {
             value={tripCost}
             keyboardType = 'number-pad'
             onChangeText={(text) => setTripCost(text)}
+          />
+          <Button title="Open" onPress={() => setOpen(true)} />
+          <DatePicker
+            modal
+            open={open}
+            date={date}
+            onConfirm={(date) => {
+              setOpen(false)
+              setDate(date)
+            }}
+            onCancel={() => {
+              setOpen(false)
+            }}
           />
         </View>
          {isError  &&  (

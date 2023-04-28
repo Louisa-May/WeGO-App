@@ -90,6 +90,25 @@ export const styles = StyleSheet.create({
   DepositSmallView:{
 
   },
+  noColorText: {
+    fontSize: 26,
+    fontWeight: '900',
+    color: colors.black,
+    textAlign:'center'
+  },
+  bigText2: {
+    color: colors.black,
+    fontSize: 26,
+    fontWeight: 'bold',
+   textAlign:'center'
+  },
+  wallet_balance_view:{height:150,
+    width:'100%',
+    marginBottom:20,
+    borderRadius:15,
+    backgroundColor:colors.deepGrey,
+    justifyContent:'center'
+  },
   makeDepositView:{
     width:'100%',
     borderRadius:10,
