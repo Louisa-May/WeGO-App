@@ -6,115 +6,119 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  ScrollView,
+  FlatList
 } from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {styles} from './styles';
 import {colors} from '../../../constants/colors';
-import Card from '../../../components/card';
+import database from '@react-native-firebase/database';
+import TravelIcon from '../../../assets/svgs/icons/travel-icon.svg'
+import { useSelector } from 'react-redux';
+
 
 export default function Trip({navigation}) {
-  
+  const tripReference = database().ref('Trips');
+  let [trips, setTrips] = useState([]);
   const goBack = () => {
-    navigation.navigate('Dashboard');
+    navigation.goBack();
   };
 
+  const createtrip = () => {
+    navigation.navigate('createTripForm');
+  }
+ 
+  const user = useSelector(
+    (state) => state.user.user,
+  );
+  const gettrips =  () => {
+    tripReference
+    .on('value', snapshot => {
+      const tripList = snapshot.val();
+      if (tripList) {
+        const restructuredtrip = Object.values(tripList);
+      console.log("tripslist",restructuredtrip);
+        setTrips(trips = Object.values(restructuredtrip));
+      } else {
+        return
+      }
+    });
+  };
+
+useEffect(()=>{
+  gettrips()
+},[])
+
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
+    <View style={styles.container}>
       {/* Header */}
-      <View style={styles.row}>
+     <View style={{width:'100%'}}>
+     <View style={styles.row}>
         <EntypoIcon
           name="chevron-left"
           size={32}
+          style={{marginTop:7}}
           color={colors.black}
           onPress={goBack}
         />
-        <Text style={styles.headerText}>Trip</Text>
+        <Text style={styles.headerText}>Trips</Text>
       </View>
-      <Text style={styles.mainText}>Choose your trip</Text>
-
-      {/* Trip list */}
-      <Card>
-        <View style={styles.tripCardRow}>
-          <Image
-            source={require('../../../assets/images/groupImage1.png')}
-            style={styles.tripImageCover}
-          />
-          <View style={styles.tripInnerRow}>
-            <Text style={styles.tripText}>Premium Travels</Text>
-            <Text style={styles.tripText}>£5,000 - £10,000</Text>
+      {/* <Text style={styles.searchText}>Search or select savings trip</Text> */}
+      {/* Search Bar */}
+      {/* <CustomSearch
+        placeholder="Search trip"
+        value={searchInput}
+        setValue={setSearchInput}
+      /> */}
+      <Text style={styles.mainText}>Available Trips</Text>
+      <View style={{width:'100%',  justifyContent: 'center',paddingHorizontal:10, alignItems: 'center', alignContent:"center"}}>
+       {
+        trips.length > 0 ?
+      <FlatList
+        data={trips}
+        // contentContainerStyle={styles.maintrip}
+        vertical
+        keyExtractor={(item) => item.id}
+        renderItem={({item, index})=> {
+        return  (
+          // <Card >
+          <View style={styles.tripCardRow}>
+            <TravelIcon 
+              width={35}
+              height={35}
+              style={styles.tripImageCover}
+            />
+            <View style={styles.maintrip}>
+              <Text style={styles.tripTextBold}>{item.TripName}</Text>
+              <Text style={styles.tripText}>£{item.tripCost}</Text>
+            </View>
+            <EntypoIcon
+              name="chevron-right"
+              size={32}
+              color={colors.black}
+              onPress={() => {
+                navigation.navigate('tripDetails', {item})
+              }}
+            />
           </View>
+        // </Card>
+      );
+          }  }
+      /> : <Text style={styles.mainText}> No created trips at the moment</Text>
+       }
+      </View>
 
-          <EntypoIcon
-            name="chevron-right"
-            size={32}
-            color={colors.black}
-            onPress={''}
-            style={styles.chevron}
-          />
-        </View>
-      </Card>
-      <Card>
-        <View style={styles.tripCardRow}>
-          <Image
-            source={require('../../../assets/images/groupImage1.png')}
-            style={styles.tripImageCover}
-          />
-          <View style={styles.tripInnerRow}>
-            <Text style={styles.tripText}>Standard Travels</Text>
-            <Text style={styles.tripText}>£2,000 - £5,000</Text>
-          </View>
-
-          <EntypoIcon
-            name="chevron-right"
-            size={32}
-            color={colors.black}
-            onPress={''}
-            style={styles.chevron}
-          />
-        </View>
-      </Card>
-      <Card>
-        <View style={styles.tripCardRow}>
-          <Image
-            source={require('../../../assets/images/groupImage1.png')}
-            style={styles.tripImageCover}
-          />
-          <View style={styles.tripInnerRow}>
-            <Text style={styles.tripText}>Regular Travels</Text>
-            <Text style={styles.tripText}>Below £5,000</Text>
-          </View>
-
-          <EntypoIcon
-            name="chevron-right"
-            size={32}
-            color={colors.black}
-            onPress={''}
-            style={styles.chevron}
-          />
-        </View>
-      </Card>
-      <Card>
-        <View style={styles.tripCardRow}>
-          <Image
-            source={require('../../../assets/images/groupImage1.png')}
-            style={styles.tripImageCover}
-          />
-          <View style={styles.tripInnerRow}>
-            <Text style={styles.tripText}>Short Trips</Text>
-            <Text style={styles.tripText}>Less than £,1000</Text>
-          </View>
-
-          <EntypoIcon
-            name="chevron-right"
-            size={32}
-            color={colors.black}
-            onPress={''}
-            style={styles.chevron}
-          />
-        </View>
-      </Card>
-    </SafeAreaView>
+     </View>
+      {/* Create trip */}
+     {
+      user.role === 'admin' ?
+      ( <TouchableOpacity style={styles.plusIcon} onPress={createtrip}>
+       <FeatherIcon name="plus-circle" size={45} color={colors.green} />
+     </TouchableOpacity> ) :
+      ( null)
+     }
+    </View>
   );
 }

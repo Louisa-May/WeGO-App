@@ -31,7 +31,7 @@ export default function CreateGroup({navigation}) {
       return Alert.alert("No group member selected!");
     }
     // groupMembers.push(user);
-    const flatenedMmembers = groupMembers[groupMembers.length-1].flat()
+    const flatenedMmembers = groupMembers[groupMembers.length - 1].flat()
     console.log('groupMemmbers', flatenedMmembers);
     dispatch(setGroupMembersRedux(flatenedMmembers));
     navigation.navigate('CreateGroupForm');

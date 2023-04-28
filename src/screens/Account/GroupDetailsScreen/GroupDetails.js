@@ -168,7 +168,7 @@ export default function GroupDetails({route, navigation}) {
                       </View>
                       <View style={styles.paymentScheduleRow}>
                         <Text style={styles.repaymentStausText}>Payout Date</Text>
-                        {/* <Text style={styles.summarySmallText}>£{item.amount}</Text> */}
+                        <Text style={styles.summarySmallText}>{item.payOutDate}</Text>
                       </View>
                 </TouchableOpacity>
               );

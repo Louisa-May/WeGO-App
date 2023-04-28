@@ -69,7 +69,7 @@ function AppNavigator() {
           shadowRadius: 15,
           elevation: 3,
           borderTopColor: 'transparent',
-          backgroundColor: colors.black,
+          backgroundColor: colors.white,
           height: 65,
         },
       })}>

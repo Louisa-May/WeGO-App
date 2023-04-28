@@ -6,16 +6,22 @@ export const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    // flex: 1,
     backgroundColor: colors.white,
-    position: 'relative',
+    height:'100%'
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     width: '100%',
-    paddingHorizontal: 10,
-    marginTop:20
+    marginTop:150,
+
+
+  },
+  cardPadding1: {
+    width:'90%',
+    marginTop:-30,
+    height:400
   },
   headerText: {
     color: colors.black,
@@ -24,6 +30,9 @@ export const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 20,
   },
+//   flatlist:{
+//     height:400,
+//   },
   smallText: {
     color: colors.black,
     fontSize: 14,
@@ -96,7 +105,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'semiBold',
     paddingVertical: 10,
-    textAlign:'center',
+    textAlign:'right',
     textTransform: 'capitalize'
   },
   cardPadding: {
@@ -104,10 +113,7 @@ export const styles = StyleSheet.create({
     marginTop:10,
     width:'100%'
   },
-  cardPadding1: {
-    paddingVertical: 10,
-    width:'100%',
-  },
+  
   mainGroup: {
     // height:400
 

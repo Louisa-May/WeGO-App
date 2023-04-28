@@ -40,10 +40,14 @@ export default function Group({navigation}) {
     groupReference
     .on('value', snapshot => {
       const groupList = snapshot.val();
-      // console.log("groupslist",groupList);
+      console.log(groupList);
+      if (groupList) {
       const restructuredGroup = Object.values(groupList);
       setGroups(groups = Object.values(restructuredGroup));
   //  console.log('groups', groups);
+      } else {
+        return
+      }
     });
   };
 
@@ -84,7 +88,9 @@ useEffect(()=>{
         renderItem={({item, index})=> {
         return  (
           // <Card >
-          <View style={styles.groupCardRow}>
+          <TouchableOpacity style={styles.groupCardRow}  onPress={() => {
+            navigation.navigate('GroupDetails', {item})
+          }}>
             <Image
               source={require('../../../assets/images/groupImage1.png')}
               style={styles.groupImageCover}
@@ -94,11 +100,8 @@ useEffect(()=>{
               name="chevron-right"
               size={32}
               color={colors.black}
-              onPress={() => {
-                navigation.navigate('GroupDetails', {item})
-              }}
             />
-          </View>
+          </TouchableOpacity>
         // </Card>
       );
           }  }

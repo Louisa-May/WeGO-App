@@ -12,9 +12,10 @@ import database from '@react-native-firebase/database';
 import CustomInput from '../../../components/customInput';
 import RNPickerSelect from 'react-native-picker-select';
 // import moment from 'moment';
-import DropDownIcon from '../../../assets/svgs/icons/drop-down.svg'
+import DropDownIcon from '../../../assets/svgs/icons/drop-down.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetGroupMembers } from '../../../../redux-store/userAuth';
+import moment from 'moment';
 
 
 
@@ -23,8 +24,8 @@ export default function CreateGroupForm({navigation}) {
   const [isError, setIsError] = useState('');
   const [contributionAmount, setContributionAmount] = useState(0);
   const [collectionMethod, setCollectionMethod] = useState(0);
-  const [groupName, setGroupName] = useState('')
-  const [paymentFrequency, setPaymentFrequency] = useState(new Date())
+  const [groupName, setGroupName] = useState('');
+  let [paymentFrequency, setPaymentFrequency] = useState(new Date());
   const dispatch = useDispatch();
   const groupReference = database().ref('/groups').push();
 
@@ -59,29 +60,97 @@ export default function CreateGroupForm({navigation}) {
   }
 
   const createGroup = () => {
-    setIsloading(true);
+    // setIsloading(true);
     if (contributionAmount  === '' ||  groupName === '' || paymentFrequency === '' || collectionMethod === '' ) {
       Alert.alert('one or more of the input fields are empty!');
       setIsloading(false);
       return;
     }
-    let payoutOrder = []
+    let payoutOrder = [];
     console.log('group members', groupMembers);
     if (collectionMethod === 'Random' ) {
       // Alert.alert('hey mtf')
       payoutOrder = shuffle(groupMembers);
     } else {
-      payoutOrder = groupMembers
+      payoutOrder = groupMembers;
     }
-    console.log('payout order',payoutOrder);
+
+    const restructuredPayoutOrder = payoutOrder.map((member) => {
+      return {
+        clicked: member.clciked,
+        email: member.email,
+        id: member.id,
+        first_name: member.first_name,
+        last_name: member.last_name,
+        role: member.role,
+        wallet_amount: member.wallet_amount,
+        payOutDate: moment(date).format('MMMM Do, YYYY'),
+      };
+    });
+    let restructuredMembers = []
+    let date = moment(new Date());
+    if (paymentFrequency === '2 weeks') {
+      console.log(date);
+      restructuredMembers = groupMembers.map((member) => {
+        date = date.add(2, 'weeks');
+        console.log(date);
+        return {
+          clicked: member.clciked,
+          email: member.email,
+          id: member.id,
+          first_name: member.first_name,
+          last_name: member.last_name,
+          role: member.role,
+          wallet_amount: member.wallet_amount,
+          payOutDate: moment(date).format('MMMM Do, YYYY'),
+        };
+      });
+      
+    } else if (paymentFrequency === '1 month') {
+      console.log(date);
+      restructuredMembers = groupMembers.map((member) => {
+        date = date.add(1, 'month');
+        console.log(date);
+        return {
+          clicked: member.clciked,
+          email: member.email,
+          id: member.id,
+          first_name: member.first_name,
+          last_name: member.last_name,
+          role: member.role,
+          wallet_amount: member.wallet_amount,
+          payOutDate: moment(date).format('MMMM Do, YYYY'),
+        };
+      });
+      
+    } else {
+      console.log(date);
+      restructuredMembers = groupMembers.map((member) => {
+        date = date.add(2, 'month');
+        console.log(date);
+        return {
+          clicked: member.clciked,
+          email: member.email,
+          id: member.id,
+          first_name: member.first_name,
+          last_name: member.last_name,
+          role: member.role,
+          wallet_amount: member.wallet_amount,
+          payOutDate: moment(date).format('MMMM Do, YYYY'),
+        };
+      });
+    }
+
+    console.log('group members',restructuredMembers);
    let groupData = {
     contributionAmount: contributionAmount,
     groupName: groupName,
     paymentFrequency: paymentFrequency,
-    members_list: groupMembers,
+    members_list: restructuredMembers,
     collectionMethod: collectionMethod,
     paymentAmount: contributionAmount * groupMembers.length,
-    payoutOrder: payoutOrder,
+    payoutOrder: restructuredPayoutOrder,
+    wallet_amount:0,
    };
    console.log('groupData',groupData);
    let newGroup = groupReference;

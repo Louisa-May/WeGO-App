@@ -42,17 +42,20 @@ export default function Dashboard({navigation}) {
   const getGroups =  () => {
     groupReference
     .on('value', snapshot => {
-      const groupList = snapshot.val();
-      // console.log('groupslist',groupList);
-      const restructuredGroup = Object.values(groupList);
-     const currentUserGroups = restructuredGroup.filter((group) => {
+      const groupList = snapshot.val(); 
+      if (groupList) {
         
-     return group.members_list.flat().filter((member) => {
-          // console.log(member.id, user.id);
-          return member.id === user.id;
-        })
-      })
-      // console.log('current user groups',currentUserGroups);
+      const restructuredGroup = Object.values(groupList);
+      // console.log('groupslist',restructuredGroup);
+     const currentUserGroups = restructuredGroup.filter((group) => {
+      // console.log(group.members_list);
+        return group.members_list.some((members) => {
+            // console.log(members.first_name, user.first_name );
+            return members.id === user.id;
+          }
+        )
+      });
+      console.log('current user groups',currentUserGroups);
       if (currentUserGroups.length > 0) {
         setHaveUserGroup(true);
         const finalRestructuredGroups = currentUserGroups.map((item) => {
@@ -66,11 +69,12 @@ export default function Dashboard({navigation}) {
         setAvailableGroups(availableGroups = Object.values(finalRestructuredGroups));
         // console.log('groups', availableGroups);
         // console.log('user',user);
-       
       } else {
         setHaveUserGroup(false)
       }
-     
+      } else {
+        return null
+      }
 
     });
   };

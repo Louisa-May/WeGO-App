@@ -4,18 +4,22 @@ import {colors} from '../../../constants/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // flex: 1,
     backgroundColor: colors.white,
-    height:'100%'
+    // position: 'relative',
+    height: '100%',
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
+    textAlign:'center',
     width: '100%',
     paddingHorizontal: 10,
-    marginTop:20,
-   
+    // backgroundColor:'red',
+    height:200,
+    marginTop:-100
   },
   headerText: {
     color: colors.black,
@@ -34,59 +38,45 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: '100%',
     padding: 20,
-    fontSize: 20,
-    color: colors.black,
-    marginBottom:-20,
-    fontWeight:'bold'
+    fontSize: 22,
   },
   tripCardRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '91%',
+    width: '90%',
     paddingHorizontal: 10,
-    paddingTop: 20,
-    height:80,
-    // backgroundColor:colors.grey,
+    paddingTop: 5,
+    borderRadius: 15,
+    backgroundColor:colors.grey,
     marginTop:20,
-    borderRadius:20,
-    borderWidth:0.5,
+    height:70
+  },
+  tripInnerRow: {
+    width: '80%',
+    // backgroundColor:'red',
+    justifyContent:'center',
+    alignItems:'center'
 
 
   },
-
-  maintrip:{
-  width:'50%',
-  paddingBottom:30
-},
   tripText: {
     justifyContent: 'flex-start',
-    width: '100%',
-    color: colors.black,
-    fontSize: 15,
-    fontWeight: 'semiBold',
-    // paddingTop: 5,
-
-    // backgroundColor:'red'
-  },
-  tripTextBold: {
-    justifyContent: 'flex-start',
-    width: '100%',
+    width: '80%',
     color: colors.black,
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: 'semiBold',
     // paddingTop: 5,
-
-    // backgroundColor:'red'
+  },
+  tripImageCover: {
+    marginTop: 15,
+  },
+  chevron: {
+    marginTop: 20,
   },
   mediumText: {
     color: colors.black,
     fontSize: 22,
     fontWeight: 'semiBold',
-  },
-  plusIcon: {
-    position: 'absolute',
-    bottom:10,
-    right:20
   },
   footer: {
     flexDirection: 'row',

@@ -10,19 +10,41 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
     position: 'relative',
   },
+  mainGroup: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    width: '100%',
+    // flex: 1,
+    // flexWrap: 'wrap',
+  },
+  flex:{
+    width:'90%'
+  },
+  inputSelect:{
+    height: 50,
+    width: '100%',
+    backgroundColor: colors.grey,
+    // borderWidth: 1,
+    marginTop: 8,
+  },
+  container2:{
+  },
   row: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: '100%',
     paddingHorizontal: 10,
-    marginTop:20
   },
   headerText: {
     color: colors.black,
     fontSize: 30,
     fontWeight: 'bold',
-    paddingBottom: 10,
-    paddingLeft: 20,
+  },
+  headerSubText:{
+    color: colors.black,
+    fontSize: 18,
+    fontWeight: 'normal',
+    marginBottom:10
   },
   smallText: {
     color: colors.black,
@@ -38,7 +60,6 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     paddingTop: 10,
-    color:colors.black
   },
   bigText: {
     color: colors.black,
@@ -48,42 +69,26 @@ export const styles = StyleSheet.create({
   cardRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // paddingHorizontal: 10,
+    paddingHorizontal: 10,
     width: 320,
   },
   pushLeft: {
     left: 30,
     paddingVertical: 5,
-    color:colors.black
   },
   pushRight: {
     right: -10,
     paddingVertical: 5,
-    color:colors.black
   },
   pushRight2: {
-    right: 55,
+    right: 20,
     paddingVertical: 5,
-    color:colors.black,
-    
   },
   payoutAmount: {
     paddingVertical: 50,
-    paddingHorizontal:20,
-    shadowColor:'black',
-    shadowOffset: { width: 20, height: 20},
-    shadowOpacity:0.5,
-    // shadowRadius:20,
-    backgroundColor:colors.grey,
-    borderRadius:20
   },
   cardInnerRow: {
     flexDirection: 'row',
-    alignItems:'center',
-    justifyContent:'center',
-    width:'50%',
-    textAlign:'center'
-    
   },
   summaryText: {
     color: colors.black,
@@ -96,33 +101,12 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'semiBold',
     paddingVertical: 10,
-    textAlign:'center',
-    textTransform: 'capitalize'
   },
   cardPadding: {
     paddingVertical: 30,
-    marginTop:10,
-    width:'100%'
-  },
-  cardPadding1: {
-    paddingVertical: 10,
-    width:'100%',
-  },
-  mainGroup: {
-    // height:400
-
   },
   scheduleCover: {
-    width:'100%',
-  },
-  nohistoryText:{
-    color: colors.black,
-  },
-  nohistoryView: {
-    backgroundColor:colors.grey,
-    width: '98%',
-    paddingHorizontal: 20,
-    paddingVertical:10
+    marginHorizontal: 30,
   },
   paymentToday: {
     backgroundColor: colors.grey,
@@ -133,35 +117,18 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: 280,
   },
-  repaymentRow1: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: colors.grey,
-    borderRadius:15,
-    paddingHorizontal:20,
-    marginTop:15,
-    // paddingVertical:20
-  },
   repaymentStatusRow: {
     paddingTop: 20,
-    // width:'30%'
-  },
-  paymentScheduleRow: {
-    paddingTop: 20,
-    width:'30%'
   },
   repaymentSmallText: {
     color: colors.black,
     fontSize: 14,
     fontWeight: 'semiBold',
     paddingTop: 50,
-    textAlign:'center'
   },
   repaymentStausText: {
     color: colors.green,
     fontSize: 14,
     fontWeight: 'semiBold',
-    textTransform: 'capitalize',
-    textAlign:'center'
   },
 });
