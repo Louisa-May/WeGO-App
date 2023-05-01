@@ -6,9 +6,12 @@ export const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    // flex: 1,
+    width: '100%',
     backgroundColor: colors.white,
-    position: 'relative',
+    // position: 'relative',
+    height:'100%',
+    // paddingHorizontal:10
   },
   row: {
     flexDirection: 'row',
@@ -125,6 +128,14 @@ export const styles = StyleSheet.create({
     textAlign:'center',
     textTransform: 'capitalize'
   },
+  summarySmallTextLeft: {
+    color: colors.black,
+    fontSize: 14,
+    fontWeight: 'semiBold',
+    paddingVertical: 10,
+    textAlign:'left',
+    textTransform: 'capitalize'
+  },
   cardPadding: {
     paddingVertical: 30,
     marginTop:10,
@@ -159,6 +170,15 @@ export const styles = StyleSheet.create({
     width: 280,
   },
   repaymentRow1: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    backgroundColor: colors.grey,
+    borderRadius:15,
+    paddingHorizontal:20,
+    marginTop:15,
+    // paddingVertical:20
+  },
+  repaymentRow2: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: colors.grey,
@@ -171,6 +191,10 @@ export const styles = StyleSheet.create({
     paddingTop: 20,
     // width:'30%'
   },
+  repaymentStatusRow1: {
+    paddingTop: 20,
+    width:'30%'
+  },
   paymentScheduleRow: {
     paddingTop: 20,
     width:'30%'
@@ -182,11 +206,32 @@ export const styles = StyleSheet.create({
     paddingTop: 50,
     textAlign:'center'
   },
+  summarySmallTextRight:{
+    color: colors.black,
+    fontSize: 14,
+    fontWeight: 'semiBold',
+    paddingTop: 14,
+    textAlign:'right',
+  },
   repaymentStausText: {
     color: colors.green,
     fontSize: 14,
     fontWeight: 'semiBold',
     textTransform: 'capitalize',
-    textAlign:'center'
+    textAlign:'center',
+  },
+  repaymentStausTextLeft: {
+    color: colors.green,
+    fontSize: 14,
+    fontWeight: 'semiBold',
+    textTransform: 'capitalize',
+    textAlign:'left',
+  },
+  repaymentStausTextRight:{
+    color: colors.green,
+    fontSize: 14,
+    fontWeight: 'semiBold',
+    textTransform: 'capitalize',
+    textAlign:'right',
   },
 });

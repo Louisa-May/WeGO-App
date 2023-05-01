@@ -36,10 +36,6 @@ export default function CreateGroupForm({navigation}) {
   const groupMembers = useSelector(
     (state) => state.user.groupMembers.flat(),
   );
-
-  const handleClick = () => {
-    navigation.navigate('CreateGroupForm');
-  };
   const goBack = () => {
     navigation.goBack();
   };
@@ -69,6 +65,20 @@ export default function CreateGroupForm({navigation}) {
       setIsloading(false);
       return;
     }
+
+    const paymentsEachPayoutDates = groupMembers.map((member) => {
+      const paymentsObjects=[]
+      paymentsObjects.push({paid:false,id: member.id,
+        first_name: member.first_name,
+        last_name: member.last_name})
+      return {
+        email: member.email,
+        id: member.id,
+        first_name: member.first_name,
+        last_name: member.last_name,
+        paid:false
+      }
+    })
     let payoutOrder = [];
     console.log('group members', groupMembers);
     if (collectionMethod === 'Random' ) {
@@ -79,15 +89,17 @@ export default function CreateGroupForm({navigation}) {
     }
 
     const restructuredPayoutOrder = payoutOrder.map((member) => {
+      
       return {
-        clicked: member.clciked,
+        clicked: member.clicked,
         email: member.email,
         id: member.id,
         first_name: member.first_name,
         last_name: member.last_name,
         role: member.role,
-        wallet_amount: member.wallet_amount,
-        payOutDate: moment(date).format('MMMM Do, YYYY'),
+        wallet_balance: member.wallet_balance,
+        payOutDate: moment(date).format('MMMM Do, YYYY'), 
+        payments: paymentsEachPayoutDates,
       };
     });
     let restructuredMembers = []
@@ -98,14 +110,15 @@ export default function CreateGroupForm({navigation}) {
         date = date.add(2, 'weeks');
         console.log(date);
         return {
-          clicked: member.clciked,
+          clicked: member.clicked,
           email: member.email,
           id: member.id,
           first_name: member.first_name,
           last_name: member.last_name,
           role: member.role,
-          wallet_amount: member.wallet_amount,
+          wallet_balance: member.wallet_balance,
           payOutDate: moment(date).format('MMMM Do, YYYY'),
+          // payments: paymentsEachPayoutDates
         };
       });
       
@@ -115,13 +128,14 @@ export default function CreateGroupForm({navigation}) {
         date = date.add(1, 'days');
         console.log(date);
         return {
-          clicked: member.clciked,
+          clicked: member.clicked,
           email: member.email,
           id: member.id,
           first_name: member.first_name,
           last_name: member.last_name,
           role: member.role,
-          wallet_amount: member.wallet_amount,
+          wallet_balance: member.wallet_balance,
+          // payments: paymentsEachPayoutDates,
           payOutDate: moment(date).format('MMMM Do, YYYY'),
         };
       });
@@ -132,13 +146,14 @@ export default function CreateGroupForm({navigation}) {
         date = date.add(1, 'month');
         console.log(date);
         return {
-          clicked: member.clciked,
+          clicked: member.clicked,
           email: member.email,
           id: member.id,
           first_name: member.first_name,
           last_name: member.last_name,
           role: member.role,
-          wallet_amount: member.wallet_amount,
+          wallet_balance: member.wallet_balance,
+          // payments: paymentsEachPayoutDates,
           payOutDate: moment(date).format('MMMM Do, YYYY'),
         };
       });
@@ -149,14 +164,15 @@ export default function CreateGroupForm({navigation}) {
         date = date.add(2, 'month');
         console.log(date);
         return {
-          clicked: member.clciked,
+          clicked: member.clicked,
           email: member.email,
           id: member.id,
           first_name: member.first_name,
           last_name: member.last_name,
           role: member.role,
-          wallet_amount: member.wallet_amount,
+          wallet_balance: member.wallet_balance,
           payOutDate: moment(date).format('MMMM Do, YYYY'),
+          // payments: paymentsEachPayoutDates,
         };
       });
     }
@@ -234,7 +250,7 @@ export default function CreateGroupForm({navigation}) {
               onValueChange={(text) => setPaymentFrequency(text)}
               placeholder={{ label: ' Select Contribution Frequency', value: null }}
               items={[
-              { label: 'Daily', value: '1 day'},
+              { label: 'Daily', value: 'daily'},
               { label: '2 weeks', value: '2 weeks' },
               { label: '1 month', value: '1 month' },
               { label: '2 months', value: '2 month' },
@@ -255,7 +271,7 @@ export default function CreateGroupForm({navigation}) {
          )}
           { !isLoading ? (
              <View style={styles.button}>
-             <CustomButton  text="Craete Group" onPress={createGroup} />
+             <CustomButton  text="Create Group" onPress={createGroup} />
            </View>
             ) : (
               <ActivityIndicator color="purple" animating={true} />

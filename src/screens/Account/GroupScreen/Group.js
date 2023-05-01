@@ -80,7 +80,7 @@ useEffect(()=>{
       <View style={{width:'100%',  justifyContent: 'center',paddingHorizontal:10, alignItems: 'center', alignContent:"center"}}>
        {
         groups.length > 0 ?
-      <FlatList
+      <FlatList 
         data={groups}
         // contentContainerStyle={styles.mainGroup}
         vertical

@@ -51,8 +51,8 @@ export default function Login({navigation}) {
         snapshot.forEach(userSnapshot => {
           if (userSnapshot.val().email === Email) {
             const user = userSnapshot.val();
-        console.log('user first name:', user);
-        console.log('User account signed in!');
+        // console.log('user first name:', user);
+        // console.log('User account signed in!');
       dispatch(setUser(user))
       dispatch(setIsAunthenticated(true));
       setIsloading(false);

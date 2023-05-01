@@ -11,6 +11,7 @@ import database from '@react-native-firebase/database';
 import CustomInput from '../../../components/customInput';
 import moment from 'moment';
 import DatePicker from 'react-native-date-picker'
+import { useToast } from 'react-native-toast-notifications';
 
 
 
@@ -24,6 +25,7 @@ export default function CreateTripForm({navigation}) {
   const TripReference = database().ref('/Trips').push();
   const [date, setDate] = useState(new Date())
   const [open, setOpen] = useState(false)
+  const toast = useToast()
 
   const createTrip = () => {
     setIsloading(true);
@@ -37,13 +39,19 @@ export default function CreateTripForm({navigation}) {
     TripName: TripName,
     tripCost: tripCost,
     tripMmebers:[],
-    date: moment()
+    date: moment(date).format('MMMM Do, YYYY')
    };
    let newTrip = TripReference;
       TripData.id = newTrip.key;
       newTrip.set(TripData);
-    Alert.alert('Trip created successfully!');
     setIsloading(false);
+    toast.show(`${TripData.TripName} created successfully!`, {
+      type: 'success',
+      placement: 'bottom',
+      duration: 10000,
+      offset: 30,
+      animationType: 'zoom-in',
+    });
     navigation.navigate('Trips');
   };
 
@@ -62,12 +70,12 @@ export default function CreateTripForm({navigation}) {
             onChangeText={(text) => setTripName(text)}
           />
           <CustomInput
-            placeholder="Contribution Amount in pounds"
+            placeholder="Cost of Trip in Pounds"
             value={tripCost}
-            keyboardType = 'number-pad'
+            keyboardType = "number-pad"
             onChangeText={(text) => setTripCost(text)}
           />
-          <Button title="Open" onPress={() => setOpen(true)} />
+          <CustomButton text="Select Date of Trip" onPress={() => setOpen(true)} />
           <DatePicker
             modal
             open={open}
@@ -86,7 +94,7 @@ export default function CreateTripForm({navigation}) {
          )}
           { !isLoading ? (
              <View style={styles.button}>
-             <CustomButton  text="Craete Trip" onPress={createTrip} />
+             <CustomButton  text="Create Trip" onPress={createTrip} />
            </View>
             ) : (
               <ActivityIndicator color="purple" animating={true} />

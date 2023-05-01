@@ -1,3 +1,5 @@
+/* eslint-disable no-labels */
+/* eslint-disable semi */
 /* eslint-disable prettier/prettier */
 import {
   View,
@@ -25,6 +27,9 @@ import DropDownIcon from '../../assets/svgs/icons/drop-down.svg';
 import database from '@react-native-firebase/database';
 import moment from 'moment';
 import { useToast } from 'react-native-toast-notifications';
+import objectUnfreeze from 'object-unfreeze'
+import { setUser } from '../../../redux-store/userAuth';
+import { useDispatch } from 'react-redux';
 
 export default function Dashboard({navigation}) {
   const user = useSelector(
@@ -36,16 +41,34 @@ export default function Dashboard({navigation}) {
   const [isError, setIsError] = useState('');
   const [haveUserGroup, setHaveUserGroup] = useState(false)
   let [availableGroups, setAvailableGroups] = useState([]);
+  let [membersPayout, setMembersPayout] = useState([])
   const groupReference = database().ref('groups');
   const reference = database()
   const transactionReference = database().ref('transactions');
   const toast = useToast()
+  const dispatch = useDispatch()
 
-
+const getBalance = () => {
+  const email = user.email
+  let usersRef = database().ref('users').orderByChild('email').equalTo(email);
+   usersRef.on('value', snapshot => {
+    if (snapshot.exists()) {
+      snapshot.forEach(userSnapshot => {
+        if (userSnapshot.val().email === email) {
+          const user = userSnapshot.val();
+      // console.log('user first name:', user);
+      // console.log('User account signed in!');
+    dispatch(setUser(user))
+    }
+    })
+  }
+  })
+}
   const getGroups =  () => {
+   
     groupReference
     .on('value', snapshot => {
-      const groupList = snapshot.val(); 
+      const groupList = snapshot.val();
       if (groupList) {
       const restructuredGroup = Object.values(groupList);
       // console.log('groupslist',restructuredGroup);
@@ -57,7 +80,7 @@ export default function Dashboard({navigation}) {
           }
         )
       });
-      console.log('current user groups',currentUserGroups);
+      // console.log('current user groups',currentUserGroups);
       if (currentUserGroups.length > 0) {
         setHaveUserGroup(true);
         const finalRestructuredGroups = currentUserGroups.map((item) => {
@@ -66,7 +89,7 @@ export default function Dashboard({navigation}) {
             value: item.groupName,
             id: item.id,
             contributionAmount: item.contributionAmount,
-            wallet_balance: item.wallet_balance
+            wallet_balance: item.wallet_balance,
           };
         });
         setAvailableGroups(availableGroups = Object.values(finalRestructuredGroups));
@@ -82,7 +105,7 @@ export default function Dashboard({navigation}) {
     });
   };
   const createTransaction = () => {
-    setIsloading(true);
+    // setIsloading(true);
     if (  amount === '' ||  groupName === '' ) {
       Alert.alert('one or more of the input fields are empty!');
       setIsloading(false);
@@ -97,23 +120,84 @@ export default function Dashboard({navigation}) {
     status:'Pending',
    };
    const selectedGroup  = availableGroups.filter((group) => {
-    return group.label === groupName
+    console.log(groupName, group.label);
+    return group.label === groupName;
    })
-   console.log(selectedGroup[0].wallet_balance);
-   let newTransaction = transactionReference.push();
-      transactionData.id = newTransaction.key;
-      newTransaction.set(transactionData);
-      reference.ref(`groups/${selectedGroup[0].id}`).update({
-        wallet_balance: Number(selectedGroup[0].wallet_balance) + Number(amount)
-      })
-    toast.show(`Payment of £${amount} to ${transactionData.groupName} successful!`, {
-      type: 'success',
-      placement: 'bottom',
-      duration: 4000,
-      offset: 30,
-      animationType: 'zoom-in',
-    });
-    setIsloading(false);
+   console.log(selectedGroup);
+      reference.ref(`groups/${selectedGroup[0].id}`).on('value', snapshot => {
+        const group = snapshot.val();
+        if (group) {
+       const groupMembersPayout = group.payoutOrder;
+      setMembersPayout(membersPayout = groupMembersPayout);
+      outerloop:   for (let index = 0; index < membersPayout.length; index++) {
+            for (let index1 = 0; index1 < membersPayout.length; index1++) {
+              // index1 += 1;
+            console.log('menu loop function');
+            console.log(membersPayout[index].payments[index1], membersPayout.length);
+            if (membersPayout[index].payments[index1].id === user.id && membersPayout[index].payments[index1].paid === false ) {
+                    let newTransaction = transactionReference.push();
+                        newTransaction.set(transactionData);
+                        reference.ref(`groups/${selectedGroup[0].id}`).update({
+                        wallet_balance: Number(selectedGroup[0].wallet_balance) + Number(amount),
+                    });
+                    const groupChildRef = database().ref('groups').child(selectedGroup[0].id);
+                    groupChildRef.once('value', ( snapshot ) => {
+                      // console.log('snapshot',snapshot);
+                        if (snapshot.val().id === selectedGroup[0].id){
+                            groupChildRef.update({
+                              wallet_balance: Number(selectedGroup[0].wallet_balance) + Number(amount),
+                            });
+                        }
+                    });
+                    console.log(index,index1);
+                      const unfreezeMemberPayout = objectUnfreeze(membersPayout);
+                      setMembersPayout((prev) => {
+                        unfreezeMemberPayout[index].payments[index1].paid = true;
+                        return unfreezeMemberPayout;
+                      })
+                    const childRef = database().ref('groups').child(selectedGroup[0].id);
+                    childRef.once('value', ( snapshot ) => {
+                    console.log('snapshot',snapshot);
+                      if (snapshot.val().id === selectedGroup[0].id){
+                          childRef.update({
+                            payoutOrder: membersPayout,
+                          });
+                      }
+                  });
+                      toast.show(`Payment of £${amount} to ${transactionData.groupName} 
+                      for contribution payment ${index + 1} successful!`, {
+                      type: 'success',
+                      placement: 'bottom',
+                      duration: 5000,
+                      offset: 30,
+                      animationType: 'slide-in',
+                    });
+                    setIsloading(false);
+                    console.log('paid');
+                    break outerloop;
+                    // return;
+                } else if (membersPayout[index].payments[index1].id === user.id && membersPayout[index].payments[index1].paid === true && index === membersPayout.length - 1 ) {
+                  toast.show(`Payment of £${amount} to ${transactionData.groupName} for contribution payment was unsuccessful because you have completed payments!`, {
+                    type: 'warning',
+                    placement: 'bottom',
+                    duration: 5000,
+                    offset: 30,
+                    animationType: 'slide-in',
+                  });
+                  setIsloading(false);
+                  // break;
+                  break outerloop;
+                  // return;
+                }
+                 else {
+                   console.log('continue loop');
+                //  break;
+                }
+            }
+          }
+        }
+  // }
+  });
   };
 
   const chooseGroup = (text) => {
@@ -131,6 +215,7 @@ export default function Dashboard({navigation}) {
   };
   useEffect(()=>{
     getGroups();
+    getBalance()
    },[]);
   return (
     <SafeAreaView style={styles.container}>
@@ -197,7 +282,7 @@ export default function Dashboard({navigation}) {
       </View>
 
       {
-        haveUserGroup? 
+        haveUserGroup ?
         <View style={styles.makeDepositView}>
         <View style={{width:'100%'}}>
           <Text style={{color:'black', fontWeight:'bold', fontSize:25}}>
@@ -244,12 +329,12 @@ export default function Dashboard({navigation}) {
               <ActivityIndicator color="purple" animating={true} />
             )
         }
-      </View> : 
+      </View> :
       <View style={styles.makeDepositView}>
           <Text style={{color:colors.black, fontSize:20, textAlign:'center'}}>You have not been added to a group.</Text>
       </View>
       }
-      
+
     </ScrollView>
     </SafeAreaView>
   );

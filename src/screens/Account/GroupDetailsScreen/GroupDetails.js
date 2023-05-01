@@ -36,7 +36,8 @@ export default function GroupDetails({route, navigation}) {
   let [currentGroupUser, setCurrentGroupUser] = useState([]);
   let [paymentHistory, setPaymentHistory] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
-  const toast = useToast()
+  const toast = useToast();
+  const [alGroupPayments, setGroupPayments] = useState([])
   const getGroupMembers = () => {
     const presentUser = groupMembers.filter((member) => {
       return member.id === user.id;
@@ -44,6 +45,14 @@ export default function GroupDetails({route, navigation}) {
     setCurrentGroupUser(currentGroupUser = presentUser);
   };
 
+  const getPymentsHistoryByAllMembers = () => {
+    const groupHistory = group.item.payoutOrder
+    .map((member)=>{
+      return member.payments
+    });
+    console.log('history',groupHistory);
+    setGroupPayments(groupHistory);
+  }
   const goBack = () => {
     navigation.goBack();
   };
@@ -133,6 +142,7 @@ const payOutUser = () => {
     getGroupMembers();
     checkForContributionDate();
     payOutUser();
+    getPymentsHistoryByAllMembers()
   }, [totalAmount]);
 
   return (
@@ -155,13 +165,13 @@ const payOutUser = () => {
             <View style={styles.payoutAmount}>
               <View style={styles.cardRow}>
               {currentGroupUser.length > 0 ?
-               <View style={{width:100}}>
-                  <Text style={styles.bigText}>{currentGroupUser[0]?.payOutDate}</Text>;
+               <View style={{width:200}}>
+                  <Text style={styles.bigText}>{currentGroupUser[0]?.payOutDate}</Text>
                </View> :
               <View style={{width:100}}>
                 <Text style={styles.pushLeft}>You are not a member of this group</Text>
               </View>
-               } 
+               }
                 <Text style={styles.bigText}>£{group.item.paymentAmount}</Text>
               </View>
               <View style={styles.cardRow}>
@@ -232,18 +242,18 @@ const payOutUser = () => {
                 keyExtractor={(item,index) => index}
                 renderItem={({item, index})=> {
                 return  (
-                  <TouchableOpacity  style={styles.repaymentRow1}>
+                  <TouchableOpacity  style={styles.repaymentRow2}>
                       <View style={styles.paymentScheduleRow}>
-                          <Text style={styles.repaymentStausText}>Name</Text>
-                          <Text style={styles.summarySmallText}>{item.first_name} {item.last_name}</Text>
+                          <Text style={styles.repaymentStausTextLeft}>Name</Text>
+                          <Text style={styles.summarySmallTextLeft}>{item.first_name} {item.last_name}</Text>
                       </View>
                       <View style={styles.paymentScheduleRow}>
                         <Text style={styles.repaymentStausText}>Payment No</Text>
                         <Text style={styles.summarySmallText}>Payment {index + 1} </Text>
                       </View>
                       <View style={styles.paymentScheduleRow}>
-                        <Text style={styles.repaymentStausText}>Payout Date</Text>
-                        <Text style={styles.summarySmallText}>{item.payOutDate}</Text>
+                        <Text style={styles.repaymentStausTextRight}>Payout Date</Text>
+                        <Text style={styles.summarySmallTextRight}>{item.payOutDate}</Text>
                       </View>
                 </TouchableOpacity>
               );
@@ -256,7 +266,7 @@ const payOutUser = () => {
               }
           </View>
           <View style={styles.cardPadding1}>
-          <Text style={styles.summaryText}>Payment History</Text>
+              <Text style={styles.summaryText}>Payment History</Text>
               {
                 paymentHistory.length > 0 ?
                 <FlatList
@@ -266,7 +276,7 @@ const payOutUser = () => {
                 keyExtractor={(item) => item.id}
                 renderItem={({item, index})=> {
                 return  (
-                  <TouchableOpacity  style={styles.repaymentRow1}>
+                  <TouchableOpacity  style={styles.repaymentRow2}>
                       <View style={styles.repaymentStatusRow}>
                           <Text style={styles.repaymentStausText}>Date</Text>
                           <Text style={styles.summarySmallText}>{item.date}</Text>
@@ -291,10 +301,50 @@ const payOutUser = () => {
               </TouchableOpacity>
 
               }
-             
+          </View>
+
+          <View style={styles.cardPadding1}>
+              <Text style={styles.summaryText}>Payment History by Members</Text>
+              {
+                alGroupPayments.length > 0 ?
+                <FlatList
+                data={alGroupPayments}
+                // contentContainerStyle={styles.mainGroup}
+                vertical
+                keyExtractor={(item, index) => index}
+                renderItem={({item, index} )=> {
+                return  ( 
+                  <TouchableOpacity  style={styles.repaymentRow1}>
+                    {
+                      item.map((payments,index2) => {
+                        return (
+                         <View style={{flexDirection:'row', justifyContent:'space-between'}} >
+                           <View style={styles.repaymentStatusRow1}>
+                              <Text style={styles.repaymentStausTextLeft}>Name</Text>
+                              <Text style={styles.summarySmallTextLeft}>{payments.first_name} {payments.last_name}</Text>
+                          </View>
+                          <View style={styles.repaymentStatusRow1}>
+                            <Text style={styles.repaymentStausText}>Payment No</Text>
+                            <Text style={styles.summarySmallText}>Payment {Number(index) + 1} </Text>
+                          </View>
+                          <View style={styles.repaymentStatusRow1}>
+                            <Text style={styles.repaymentStausTextRight}>Status</Text>
+                            <Text style={styles.summarySmallTextRight}>{payments.paid ? 'paid' : 'Unpaid'}</Text>
+                          </View>
+                         </View>
+                        )
+                      })
+                    }
+                </TouchableOpacity>
+              );
+                  }  }
+              /> : <TouchableOpacity style={styles.nohistoryView}>
+                <Text style={styles.nohistoryText}> You are not a member of this group hence you do not have a payment history with them</Text>
+              </TouchableOpacity>
+
+              }
           </View>
         </ScrollView>
-     
     </SafeAreaView>
   );
 }

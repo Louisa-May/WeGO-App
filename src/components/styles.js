@@ -22,6 +22,7 @@ export const styles = StyleSheet.create({
     borderColor:  colors.white,
     borderWidth: 1,
     borderRadius: 5,
+    color:colors.white
   },
   buttonText: {
     fontWeight: 'semiBold',
