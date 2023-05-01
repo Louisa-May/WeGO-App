@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 
 export default function GroupDetails({navigation}) {
   const handleClick = () => {
-    navigation.navigate('Trip');
+    navigation.navigate('chooseTRIP');
   };
   const goBack = () => {
     navigation.navigate('Dashboard');

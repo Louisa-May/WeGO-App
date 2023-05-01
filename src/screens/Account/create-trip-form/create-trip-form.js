@@ -38,7 +38,7 @@ export default function CreateTripForm({navigation}) {
    let TripData = {
     TripName: TripName,
     tripCost: tripCost,
-    tripMmebers:[],
+    tripMembers:[],
     date: moment(date).format('MMMM Do, YYYY')
    };
    let newTrip = TripReference;

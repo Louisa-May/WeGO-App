@@ -3,6 +3,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Group from '../screens/Account/GroupScreen/Group';
 import Trip from '../screens/Account/TripScreen/Trip';
+import TripPayment from '../screens/Account/tripPayment/tripPaymentForm';
 
 const TripStackNavigator = createNativeStackNavigator();
 
@@ -15,6 +16,7 @@ function TripNavigation() {
         //   CardStyleInterpolators.forRevealFromBottomAndroid,
       }}>
       <TripStackNavigator.Screen name="TripStackNavigator" component={Trip} />
+      <TripStackNavigator.Screen name='chooseTrip' component={TripPayment} />
     </TripStackNavigator.Navigator>
   );
 }

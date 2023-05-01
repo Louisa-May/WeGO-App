@@ -92,7 +92,10 @@ useEffect(()=>{
             />
             <View style={styles.maintrip}>
               <Text style={styles.tripTextBold}>{item.TripName}</Text>
+              <View style={{flexDirection:'row',width:150, justifyContent:'space-between'}}>
               <Text style={styles.tripText}>£{item.tripCost}</Text>
+              <Text style={styles.tripText1}>{item.date}</Text>
+              </View>
             </View>
             <EntypoIcon
               name="chevron-right"

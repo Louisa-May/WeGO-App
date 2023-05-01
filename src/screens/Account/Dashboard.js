@@ -44,7 +44,7 @@ export default function Dashboard({navigation}) {
   let [membersPayout, setMembersPayout] = useState([])
   const groupReference = database().ref('groups');
   const reference = database()
-  const transactionReference = database().ref('transactions');
+  const transactionReference = database().ref('transactions').push();
   const toast = useToast()
   const dispatch = useDispatch()
 
@@ -135,22 +135,25 @@ const getBalance = () => {
             console.log('menu loop function');
             console.log(membersPayout[index].payments[index1], membersPayout.length);
             if (membersPayout[index].payments[index1].id === user.id && membersPayout[index].payments[index1].paid === false ) {
-                    let newTransaction = transactionReference.push();
-                        newTransaction.set(transactionData);
+                    let newTransaction = transactionReference;
+                    transactionData.id = newTransaction.key;
+                    let transactionDataClone = {...transactionData, id: newTransaction.key}
+                    newTransaction.set(transactionDataClone);
                         reference.ref(`groups/${selectedGroup[0].id}`).update({
                         wallet_balance: Number(selectedGroup[0].wallet_balance) + Number(amount),
                     });
-                    const groupChildRef = database().ref('groups').child(selectedGroup[0].id);
-                    groupChildRef.once('value', ( snapshot ) => {
-                      // console.log('snapshot',snapshot);
-                        if (snapshot.val().id === selectedGroup[0].id){
-                            groupChildRef.update({
-                              wallet_balance: Number(selectedGroup[0].wallet_balance) + Number(amount),
-                            });
-                        }
-                    });
-                    console.log(index,index1);
+                    // const groupChildRef = database().ref('groups').child(selectedGroup[0].id);
+                    // groupChildRef.once('value', ( snapshot ) => {
+                    //   // console.log('snapshot',snapshot);
+                    //     if (snapshot.val().id === selectedGroup[0].id){
+                    //         groupChildRef.update({
+                    //           wallet_balance: Number(selectedGroup[0].wallet_balance) + Number(amount),
+                    //         });
+                    //     }
+                    // });
+                  //   console.log(index,index1);
                       const unfreezeMemberPayout = objectUnfreeze(membersPayout);
+                      console.log(unfreezeMemberPayout);
                       setMembersPayout((prev) => {
                         unfreezeMemberPayout[index].payments[index1].paid = true;
                         return unfreezeMemberPayout;

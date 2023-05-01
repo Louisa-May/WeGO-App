@@ -103,7 +103,7 @@ const checkForContributionDate = () => {
 
 const payOutUser = () => {
   console.log('wallet balance',Math.floor(group.item.wallet_balance),Math.floor(totalAmount));
-  if ( Number(group.item.wallet_balance) > 0 && Number(group.item.wallet_balance) === Number(totalAmount) ) { 
+  if ( Number(group.item.wallet_balance) > 0 && Number(group.item.wallet_balance) >= Number(totalAmount) ) { 
     console.log('wallet balance1',group.item.wallet_balance,totalAmount);
     reference.ref(`users/${user.id}`).update({
     wallet_balance: Number(user.wallet_balance) + Number(group.item.wallet_balance)
