@@ -18,14 +18,16 @@ import {useSelector} from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setIsAunthenticated, setUser } from '../../../../redux-store/userAuth';
 import database from '@react-native-firebase/database';
+
+
+
 export default function Login({navigation}) {
 
   const [Email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsloading] = useState(false);
   const [isError, setIsError] = useState('');
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const onSignUpPressed = () => {
     navigation.navigate('SignUp');
