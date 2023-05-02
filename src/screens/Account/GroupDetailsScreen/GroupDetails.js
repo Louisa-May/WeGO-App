@@ -1,3 +1,5 @@
+/* eslint-disable no-labels */
+/* eslint-disable no-shadow */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable prettier/prettier */
 import {
@@ -8,7 +10,7 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
-  Alert
+  Alert,
 } from 'react-native';
 import React from 'react';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
@@ -25,19 +27,19 @@ import { setUser } from '../../../../redux-store/userAuth';
 
 export default function GroupDetails({route, navigation}) {
   const transactionReference = database().ref('transactions');
-  const reference = database()
+  const reference = database();
   const group = route.params;
-  const groupMembers = group.item.members_list.flat()
+  const groupMembers = group.item.members_list.flat();
   console.log('group',groupMembers);
   const user = useSelector(
     (state) => state.user.user,
   );
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   let [currentGroupUser, setCurrentGroupUser] = useState([]);
   let [paymentHistory, setPaymentHistory] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const toast = useToast();
-  const [alGroupPayments, setGroupPayments] = useState([])
+  const [alGroupPayments, setGroupPayments] = useState([]);
   const getGroupMembers = () => {
     const presentUser = groupMembers.filter((member) => {
       return member.id === user.id;
@@ -48,11 +50,11 @@ export default function GroupDetails({route, navigation}) {
   const getPymentsHistoryByAllMembers = () => {
     const groupHistory = group.item.payoutOrder
     .map((member)=>{
-      return member.payments
+      return member.payments;
     });
     console.log('history',groupHistory);
     setGroupPayments(groupHistory);
-  }
+  };
   const goBack = () => {
     navigation.goBack();
   };
@@ -91,58 +93,74 @@ const checkForContributionDate = () => {
   });
   console.log('checkDate',checkPaymentDate);
   if (checkPaymentDate.length > 0) {
-    toast.show("Kindly pay your contribution to the group", {
-      type: "warning",
-      placement: "bottom",
+    toast.show('Kindly pay your contribution to the group', {
+      type: 'warning',
+      placement: 'bottom',
       duration: 4000,
       offset: 30,
-      animationType: "zoom-in",
+      animationType: 'zoom-in',
     });
   }
 };
 
 const payOutUser = () => {
   console.log('wallet balance',Math.floor(group.item.wallet_balance),Math.floor(totalAmount));
-  if ( Number(group.item.wallet_balance) > 0 && Number(group.item.wallet_balance) >= Number(totalAmount) ) { 
-    console.log('wallet balance1',group.item.wallet_balance,totalAmount);
-    reference.ref(`users/${user.id}`).update({
-    wallet_balance: Number(user.wallet_balance) + Number(group.item.wallet_balance)
-    });
-    console.log(group.item.id);
-    reference.ref(`groups/${group.item.id}`).update({
-      wallet_balance: Number(group.item.wallet_balance) - Number(group.item.wallet_balance)
-      });
+  if ( Number(group.item.wallet_balance) > 0 && Number(group.item.wallet_balance) >= Number(totalAmount)) {
+  loop: for (let index = 0; index < groupMembers.length; index++) {
+      console.log(groupMembers[index].id, user.id, groupMembers[index].payOutDate, moment(new Date()).format('MMMM Do, YYYY'));
+      if (groupMembers[index].id === user.id && groupMembers[index].payOutDate === moment(new Date()).format('MMMM Do, YYYY')) {
+        console.log('wallet balance1',group.item.wallet_balance,totalAmount);
+        reference.ref(`users/${user.id}`).update({
+        wallet_balance: Number(user.wallet_balance) + Number(group.item.wallet_balance),
+        });
+        console.log(group.item.id);
+        reference.ref(`groups/${group.item.id}`).update({
+          wallet_balance: Number(group.item.wallet_balance) - Number(group.item.wallet_balance),
+          });
 
-      toast.show(`Payment of £${group.item.wallet_balance} to you is successful!`, {
-        type: 'success',
-        placement: 'bottom',
-        duration: 4000,
-        offset: 30,
-        animationType: 'zoom-in',
-      });
+          toast.show(`Payment of £${group.item.wallet_balance} to you is successful!`, {
+            type: 'success',
+            placement: 'bottom',
+            duration: 4000,
+            offset: 30,
+            animationType: 'zoom-in',
+          });
 
-      let usersRef = database().ref('users').orderByChild('email').equalTo(user.email);
-      console.log(usersRef);
-       usersRef.on('value', snapshot => {
-        console.log('snapshot', snapshot);
-        if (snapshot.exists()) {
-          snapshot.forEach(userSnapshot => {
-            if (userSnapshot.val().email === user.email) {
-              const user = userSnapshot.val();
-              dispatch(setUser(user))
+          let usersRef = database().ref('users').orderByChild('email').equalTo(user.email);
+          console.log(usersRef);
+           usersRef.once('value', snapshot => {
+            console.log('snapshot', snapshot);
+            if (snapshot.exists()) {
+              snapshot.forEach(userSnapshot => {
+                if (userSnapshot.val().email === user.email) {
+                  const user = userSnapshot.val();
+                  dispatch(setUser(user));
+                }
+              });
             }
-          })
-        }
-      })
-    }    
+          });
+      } else {
+        toast.show('Today is not your payout date', {
+          type: 'warning',
+          placement: 'bottom',
+          duration: 4000,
+          offset: 30,
+          animationType: 'zoom-in',
+        });
+        break loop;
+      }
+    }
+
   }
+
+};
 
   useEffect(() => {
     getPaymentHistory();
     getGroupMembers();
     checkForContributionDate();
     payOutUser();
-    getPymentsHistoryByAllMembers()
+    // getPymentsHistoryByAllMembers();
   }, [totalAmount]);
 
   return (
@@ -258,7 +276,7 @@ const payOutUser = () => {
                 </TouchableOpacity>
               );
                   }  }
-              /> 
+              />
               : <TouchableOpacity style={styles.nohistoryView}>
                 <Text style={styles.nohistoryText}> You are not a member of this group hence you do not have a payment history with them</Text>
               </TouchableOpacity>
@@ -303,7 +321,7 @@ const payOutUser = () => {
               }
           </View>
 
-          <View style={styles.cardPadding1}>
+          {/* <View style={styles.cardPadding1}>
               <Text style={styles.summaryText}>Payment History by Members</Text>
               {
                 alGroupPayments.length > 0 ?
@@ -313,7 +331,7 @@ const payOutUser = () => {
                 vertical
                 keyExtractor={(item, index) => index}
                 renderItem={({item, index} )=> {
-                return  ( 
+                return  (
                   <TouchableOpacity  style={styles.repaymentRow1}>
                     {
                       item.map((payments,index2) => {
@@ -332,7 +350,7 @@ const payOutUser = () => {
                             <Text style={styles.summarySmallTextRight}>{payments.paid ? 'paid' : 'Unpaid'}</Text>
                           </View>
                          </View>
-                        )
+                        );
                       })
                     }
                 </TouchableOpacity>
@@ -343,7 +361,7 @@ const payOutUser = () => {
               </TouchableOpacity>
 
               }
-          </View>
+          </View> */}
         </ScrollView>
     </SafeAreaView>
   );
