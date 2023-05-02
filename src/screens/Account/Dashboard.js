@@ -43,6 +43,8 @@ export default function Dashboard({navigation}) {
   const [haveUserGroup, setHaveUserGroup] = useState(false)
   let [availableGroups, setAvailableGroups] = useState([]);
   let [membersPayout, setMembersPayout] = useState([])
+  let [chosenGroup, setChosenGroup] = useState({})
+  let [payments, setPayments] = useState([])
   const groupReference = database().ref('groups');
   const reference = database()
   const transactionReference = database().ref('transactions').push();
@@ -106,102 +108,95 @@ const getBalance = () => {
     });
   };
   const createTransaction = () => {
-    // setIsloading(true);
+    setIsloading(true);
     if (  amount === '' ||  groupName === '' ) {
       Alert.alert('one or more of the input fields are empty!');
       setIsloading(false);
       return;
     }
-   let transactionData = {
-    amount: amount,
-    groupName: groupName,
-    date: moment().format('MMMM Do, YYYY'),
-    contributor: `${user.first_name} ${user.last_name}`,
-    contributor_id: user.id,
-    status:'Pending',
-   };
-   const selectedGroup  = availableGroups.filter((group) => {
-    console.log(groupName, group.label);
-    return group.label === groupName;
-   })
-   console.log(selectedGroup);
-      reference.ref(`groups/${selectedGroup[0].id}`).on('value', snapshot => {
-        const group = snapshot.val();
-        if (group) {
-       const groupMembersPayout = group.payoutOrder;
-      setMembersPayout(membersPayout = groupMembersPayout);
-      outerloop:   for (let index = 0; index < membersPayout.length; index++) {
-            for (let index1 = 0; index1 < membersPayout.length; index1++) {
-              // index1 += 1;
-            console.log('menu loop function');
-            console.log(membersPayout[index].payments[index1], membersPayout.length);
-            if (membersPayout[index].payments[index1].id === user.id && membersPayout[index].payments[index1].paid === false ) {
-                    let newTransaction = transactionReference;
-                    transactionData.id = newTransaction.key;
-                    let transactionDataClone = {...transactionData, id: newTransaction.key}
-                    newTransaction.set(transactionDataClone);
-                        reference.ref(`groups/${selectedGroup[0].id}`).update({
-                        wallet_balance: Number(selectedGroup[0].wallet_balance) + Number(amount),
-                    });
-                    // const groupChildRef = database().ref('groups').child(selectedGroup[0].id);
-                    // groupChildRef.once('value', ( snapshot ) => {
-                    //   // console.log('snapshot',snapshot);
-                    //     if (snapshot.val().id === selectedGroup[0].id){
-                    //         groupChildRef.update({
-                    //           wallet_balance: Number(selectedGroup[0].wallet_balance) + Number(amount),
-                    //         });
-                    //     }
-                    // });
-                  //   console.log(index,index1);
-                      const unfreezeMemberPayout = objectUnfreeze(membersPayout);
-                      console.log(unfreezeMemberPayout);
-                      setMembersPayout((prev) => {
-                        unfreezeMemberPayout[index].payments[index1].paid = true;
-                        return unfreezeMemberPayout;
-                      })
-                    const childRef = database().ref('groups').child(selectedGroup[0].id);
-                    childRef.once('value', ( snapshot ) => {
-                    console.log('snapshot',snapshot);
-                      if (snapshot.val().id === selectedGroup[0].id){
-                          childRef.update({
-                            payoutOrder: membersPayout,
-                          });
-                      }
-                  });
-                      toast.show(`Payment of £${amount} to ${transactionData.groupName} 
-                      for contribution payment ${index + 1} successful!`, {
-                      type: 'success',
-                      placement: 'bottom',
-                      duration: 5000,
-                      offset: 30,
-                      animationType: 'slide-in',
-                    });
-                    setIsloading(false);
-                    console.log('paid');
-                    break outerloop;
-                    // return;
-                } else if (membersPayout[index].payments[index1].id === user.id && membersPayout[index].payments[index1].paid === true && index === membersPayout.length - 1 ) {
-                  toast.show(`Payment of £${amount} to ${transactionData.groupName} for contribution payment was unsuccessful because you have completed payments!`, {
-                    type: 'warning',
-                    placement: 'bottom',
-                    duration: 5000,
-                    offset: 30,
-                    animationType: 'slide-in',
-                  });
-                  setIsloading(false);
-                  // break;
-                  break outerloop;
-                  // return;
-                }
-                 else {
-                   console.log('continue loop');
-                //  break;
-                }
-            }
+    groupReference
+    .orderByChild('groupName')
+    .equalTo(groupName)
+    .once('value', (snapshot) => {
+      if (snapshot.exists()) {
+        const restructuredSelectedGroup = Object.values(snapshot.val());
+        setChosenGroup(chosenGroup = restructuredSelectedGroup[0])
+        console.log('members1',chosenGroup);
+        reference.ref('transactions')
+        .orderByChild('groupName')
+        .equalTo(groupName)
+        .once('value', (snapshot) => {
+          if (snapshot.exists()) {
+           console.log( snapshot.val());
+            const paymentsByUser = Object.values(snapshot.val());
+            setPayments(payments = paymentsByUser)
           }
+        });
+        console.log('members', chosenGroup);
+        // console.log('group paymnts',payments, );
+    
+        let transactionData = {
+          amount: amount,
+          groupName: groupName,
+          date: moment().format('MMMM Do, YYYY'),
+          contributor: `${user.first_name} ${user.last_name}`,
+          contributor_id: user.id,
+          status:'Pending',
+         };
+    
+        if ( payments.length >= chosenGroup.members_list.length  ) {
+           toast.show(`Payment of £${amount} to ${transactionData.groupName} for contribution payment was unsuccessful because you have completed payments!`, {
+            type: 'warning',
+            placement: 'bottom',
+            duration: 5000,
+            offset: 30,
+            animationType: 'slide-in',
+          });
+          setIsloading(false);
+          return
+        } else {
+           const selectedGroup  = availableGroups.filter((group) => {
+            console.log(groupName, group.label);
+            return group.label === groupName;
+           })
+              reference.ref(`groups/${selectedGroup[0].id}`).once('value', snapshot => {
+                const group = snapshot.val();
+                if (group) {
+               const groupMembersPayout = group.payoutOrder;
+                setMembersPayout(membersPayout = groupMembersPayout);
+                let newTransaction = transactionReference;
+                transactionData.id = newTransaction.key;
+                let transactionDataClone = {...transactionData, id: newTransaction.key}
+                newTransaction.set(transactionDataClone);
+                reference.ref(`groups/${selectedGroup[0].id}`).update({
+                wallet_balance: Number(selectedGroup[0].wallet_balance) + Number(amount),
+             });
+                const groupChildRef = database().ref('groups').child(selectedGroup[0].id);
+                groupChildRef.once('value', ( snapshot ) => {
+                  // console.log('snapshot',snapshot);
+                    if (snapshot.val().id === selectedGroup[0].id){
+                        groupChildRef.update({
+                          wallet_balance: Number(selectedGroup[0].wallet_balance) + Number(amount),
+                        });
+                    }
+                });
+                  toast.show(`Payment of £${amount} to ${transactionData.groupName} 
+                  for contribution payment ${payments.length + 1} successful!`, {
+                  type: 'success',
+                  placement: 'bottom',
+                  duration: 5000,
+                  offset: 30,
+                  animationType: 'slide-in',
+                });
+                setIsloading(false);
+                console.log('paid');
+                  return;
+               }
+          });
         }
-  // }
-  });
+      }
+    });
+  
   };
 
   const chooseGroup = (text) => {
