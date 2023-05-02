@@ -7,7 +7,8 @@ import {
     Image,
     TouchableOpacity,
     ScrollView,
-    FlatList
+    FlatList,
+    Alert
   } from 'react-native';
   import React, {useState, useEffect} from 'react';
   import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -19,21 +20,20 @@ import {
   import { useSelector } from 'react-redux';
   import Checkmark from "../../../assets/svgs/icons/icons8-checkmark.svg";
   import { useToast } from 'react-native-toast-notifications';
-  
-  
+  import moment from 'moment';
+
   export default function TripPayment({navigation}) {
     const tripReference = database().ref('Trips');
     let [trips, setTrips] = useState([]);
-    const toast = useToast()
-    const reference = database()
+    const toast = useToast();
+    const reference = database();
+    const tripTransactionReference = database().ref('tripTransactions').push()
     const goBack = () => {
       navigation.goBack();
     };
-  
     const createtrip = () => {
       navigation.navigate('createTripForm');
-    }
-   
+    };
     const user = useSelector(
       (state) => state.user.user,
     );
@@ -43,7 +43,7 @@ import {
         const tripList = snapshot.val();
         if (tripList) {
           const restructuredtrip = Object.values(tripList);
-        console.log("tripslist",restructuredtrip);
+        // console.log("tripslist",restructuredtrip);
           setTrips(trips = Object.values(restructuredtrip));
         } else {
           return
@@ -52,8 +52,68 @@ import {
     };
 
     const payForTrips = (item) => {
-        console.log(item);
-        const userRef= reference.ref('users').orderByChild('id').equalTo(user.id);
+        // console.log(item);
+        reference.ref('tripTransactions').orderByChild('payer_id').equalTo(user.id)
+        .once('value', snapshot => {
+          if (snapshot.exists()) {
+          const paidTrips = Object.values(snapshot.val());
+          console.log('paid trips',paidTrips);
+          const paidForPresentTrip = paidTrips.filter(trip => trip.tripName === item.TripName )
+          if (paidForPresentTrip.length > 0) {
+            toast.show(`Payment for this trip isnt successful as you have paid for this trip before`, {
+              type: 'danger',
+              placement: 'bottom',
+              duration: 5000,
+              offset: 30,
+              animationType: 'slide-in',
+            });
+            return
+          } 
+          const userRef= reference.ref('users').orderByChild('id').equalTo(user.id);
+          userRef.once('value', snapshot => {
+          if (snapshot.exists()) {
+              const User = snapshot.val();
+              const currentUser = Object.values(User)
+              console.log(Number(currentUser[0].wallet_balance), Number(item.tripCost));
+              if (Number(currentUser[0].wallet_balance) >= Number(item.tripCost)) {
+                  reference.ref(`users/${user.id}`).update({
+                      wallet_balance: Number(currentUser[0].wallet_balance) - Number(item.tripCost),
+                  });
+  
+                  let transactionData = {
+                    amount: Number(item.tripCost),
+                    tripName: item.TripName,
+                    date: moment().format('MMMM Do, YYYY'),
+                    payer: `${user.first_name} ${user.last_name}`,
+                    payer_id: user.id,
+                    status:'Pending',
+                   };
+                  let newTransaction = tripTransactionReference;
+                  transactionData.id = newTransaction.key;
+                  let transactionDataClone = {...transactionData, id: newTransaction.key}
+                  newTransaction.set(transactionDataClone);
+                  toast.show(`Payment of £${item.tripCost} for the ${item.TripName} trip payment is successful!`, {
+                  type: 'success',
+                  placement: 'bottom',
+                  duration: 5000,
+                  offset: 30,
+                  animationType: 'slide-in',
+                });
+              } 
+              else {
+                  toast.show(`Payment of £${item.tripCost} for the ${item.TripName} trip payment wasnt successful as you do not have enough money in your wallet!`, {
+                  type: 'danger',
+                  placement: 'bottom',
+                  duration: 5000,
+                  offset: 30,
+                  animationType: 'slide-in',
+                });
+                return
+              }    
+          }
+      })
+        } else {
+           const userRef= reference.ref('users').orderByChild('id').equalTo(user.id);
         userRef.once('value', snapshot => {
         if (snapshot.exists()) {
             const User = snapshot.val();
@@ -63,6 +123,19 @@ import {
                 reference.ref(`users/${user.id}`).update({
                     wallet_balance: Number(currentUser[0].wallet_balance) - Number(item.tripCost),
                 });
+
+                let transactionData = {
+                  amount: Number(item.tripCost),
+                  tripName: item.TripName,
+                  date: moment().format('MMMM Do, YYYY'),
+                  payer: `${user.first_name} ${user.last_name}`,
+                  payer_id: user.id,
+                  status:'Pending',
+                 };
+                let newTransaction = tripTransactionReference;
+                transactionData.id = newTransaction.key;
+                let transactionDataClone = {...transactionData, id: newTransaction.key}
+                newTransaction.set(transactionDataClone);
                 toast.show(`Payment of £${item.tripCost} for the ${item.TripName} trip payment is successful!`, {
                 type: 'success',
                 placement: 'bottom',
@@ -83,7 +156,8 @@ import {
             }    
         }
     })
-        
+        }
+      })      
     }
   
   useEffect(()=>{
