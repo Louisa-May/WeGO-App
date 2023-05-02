@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Group from '../screens/Account/GroupScreen/Group';
 import Trip from '../screens/Account/TripScreen/Trip';
 import TripPayment from '../screens/Account/tripPayment/tripPaymentForm';
+import TripDetails from '../screens/Account/GroupDetailsScreen/tripDetail';
 
 const TripStackNavigator = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ function TripNavigation() {
       }}>
       <TripStackNavigator.Screen name="TripStackNavigator" component={Trip} />
       <TripStackNavigator.Screen name='chooseTrip' component={TripPayment} />
+      <TripStackNavigator.Screen name='tripDetails' component={TripDetails} />
     </TripStackNavigator.Navigator>
   );
 }

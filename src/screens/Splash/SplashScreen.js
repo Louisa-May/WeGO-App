@@ -21,7 +21,6 @@ export default function SplashScreen({navigation}) {
     // }
   }, [mainSplash]);
   const handleClick = () => {
-    console.log('heoloo bro');
     navigation.navigate('Login');
   };
   return (

@@ -113,6 +113,7 @@ export const styles = StyleSheet.create({
   },
   walletBalance: {
     width: 150,
+    marginBottom:30
   },
   summaryText: {
     color: colors.black,
