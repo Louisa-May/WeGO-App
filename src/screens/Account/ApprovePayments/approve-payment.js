@@ -70,13 +70,14 @@ import database from '@react-native-firebase/database';
                     navigation.navigate('paymentDetailsApproval', {item})
                   }}  style={styles.repaymentRow1}>
                       <View style={styles.repaymentStatusRow}>
+                        <Text style={styles.repaymentStausText}>Name</Text>
+                        <Text style={styles.summarySmallText}>{item.payer} </Text>
+                      </View>
+                      <View style={styles.repaymentStatusRow}>
                           <Text style={styles.repaymentStausText}>Date</Text>
                           <Text style={styles.summarySmallText}>{item.date}</Text>
                       </View>
-                      <View style={styles.repaymentStatusRow}>
-                        <Text style={styles.repaymentStausText}>Trip</Text>
-                        <Text style={styles.summarySmallText}>{item.tripName} </Text>
-                      </View>
+                    
                       <View style={styles.repaymentStatusRow}>
                         <Text style={styles.repaymentStausText}>Amount</Text>
                         <Text style={styles.summarySmallText}>£{item.amount}</Text>

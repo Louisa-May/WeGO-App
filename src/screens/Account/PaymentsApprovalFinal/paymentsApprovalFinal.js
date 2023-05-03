@@ -11,19 +11,21 @@ import {
     FlatList,
     TouchableOpacity,
     Alert,
+    Platform,
   } from 'react-native';
   import React from 'react';
   import EntypoIcon from 'react-native-vector-icons/Entypo';
   import {styles} from './styles';
   import {colors} from '../../../constants/colors';
-  import Card from '../../../components/card';
   import { useSelector } from 'react-redux';
-  import { useEffect, useState } from 'react';
+//   import { useEffect, useState } from 'react';
   import database from '@react-native-firebase/database';
-  import moment from 'moment';
+//   import moment from 'moment';
   import { useToast } from 'react-native-toast-notifications';
-  import { useDispatch } from 'react-redux';
-  import { setUser } from '../../../../redux-store/userAuth';
+//   import { useDispatch } from 'react-redux';
+//   import { setUser } from '../../../../redux-store/userAuth';
+
+
   export default function PaymentsApprovalFinal({route, navigation}) {
     const transactionReference = database().ref('transactions');
     const reference = database();
@@ -32,13 +34,14 @@ import {
       (state) => state.user.user,
     );
     console.log(payments);
-    const dispatch = useDispatch();
-    let [paymentHistory, setPaymentHistory] = useState([]);
+    // const dispatch = useDispatch();
+    // let [paymentHistory, setPaymentHistory] = useState([]);
     const toast = useToast();
 
     const goBack = () => {
       navigation.goBack();
     };
+
     const declinePayment = () => {
         const tripTransactionRef = database().ref('tripTransactions').child(payments[0].id);
                 tripTransactionRef.once('value', ( snapshot ) => {
@@ -46,6 +49,14 @@ import {
                     tripTransactionRef.update({status: 'Declined'});
                 }
             });
+            toast.show(`Payment by ${payments[0].payer} has been declined by the ${user.first_name} who is an administrator!`, {
+                type: 'success',
+                placement: 'bottom',
+                duration: 10000,
+                offset: 30,
+                animationType: 'zoom-in',
+              });
+            navigation.navigate('approvePayments');
     }
 
     const approvePayment = () => {
@@ -55,6 +66,14 @@ import {
             tripTransactionRef.update({status: 'Approved'});
         }
     });
+    toast.show(`Payment by ${payments[0].payer} has been approved by the ${user.first_name} who is an administrator!`, {
+        type: 'success',
+        placement: 'bottom',
+        duration: 10000,
+        offset: 30,
+        animationType: 'zoom-in',
+      });
+    navigation.navigate('approvePayments');
     }
   return (
       <SafeAreaView style={styles.container}>

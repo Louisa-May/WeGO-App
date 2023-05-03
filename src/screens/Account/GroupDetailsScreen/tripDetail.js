@@ -10,7 +10,7 @@ import {
     ScrollView,
     FlatList,
     TouchableOpacity,
-    Alert,
+    Image
   } from 'react-native';
   import React from 'react';
   import EntypoIcon from 'react-native-vector-icons/Entypo';
@@ -24,11 +24,11 @@ import {
   import { useToast } from 'react-native-toast-notifications';
   import { useDispatch } from 'react-redux';
   import { setUser } from '../../../../redux-store/userAuth';
-  
   export default function TripDetails({route, navigation}) {
     const transactionReference = database().ref('transactions');
     const reference = database();
     const trip = route.params;
+    console.log(trip.item);
     let [ApprovedtripMembers, setApprovedTripMembers] = useState([])
     const user = useSelector(
       (state) => state.user.user,
@@ -36,7 +36,6 @@ import {
     const dispatch = useDispatch();
     let [paymentHistory, setPaymentHistory] = useState([]);
     const toast = useToast();
-
     const goBack = () => {
       navigation.goBack();
     };
@@ -55,9 +54,6 @@ import {
                   setApprovedTripMembers(ApprovedtripMembers=Approvedmmebers)
                   console.log('approved members', ApprovedtripMembers);
             }})
-
-           
-      
     }
     useEffect(() => {
         getTripMembers()
@@ -77,15 +73,17 @@ import {
           <Text style={styles.headerText}>Trip Details</Text>
         </View>
   
-        <ScrollView>
-          {/* Payout Amount*/}
-            <View style={{flexDirection:'column', backgroundColor:colors.grey, borderRadius:20, paddingBottom:20}}>
-              <View style={styles.payoutAmount}>
-                    <View style={styles.walletBalanceView}>
-                        <View style={styles.walletBalance}>
-                            <Text style={styles.bigTextCenter}>{trip.item.TripName}</Text>
-                        </View>
-                    </View>
+        <ScrollView style={{width:'90%'}}>
+            <View style={{flexDirection:'column', borderWidth:0.5, borderColor:'grey',width:'100%',marginTop:20, borderRadius:10, paddingBottom:20}}>
+              <View style={styles.payoutAmountTrip}>
+                    <Image
+                        source={{ uri: trip.item.image._parts.flat()[1].uri }}
+                        style={{ width: '100%', height: 300, borderRadius:1, resizeMode: 'contain' }}
+                        />
+                <View style={{width:'100%',  justifyContent:'center', alignItems:'center', marginTop:20}}>
+                    <Text style={styles.bigText}>{trip.item.TripName} Trip</Text>
+                    <Text style={styles.pushRight}>Event</Text>
+                </View>
                 <View style={styles.cardRow}>
                    
                  <View style={{width:200}}>
@@ -93,11 +91,19 @@ import {
                  </View>
                   <Text style={styles.bigText}>£{trip.item.tripCost}</Text>
                 </View>
-                <View style={styles.cardRow}>
+                <View style={styles.cardRowText}>
                   <Text style={styles.pushLeft}>The Trip date</Text>
                   <Text style={styles.pushRight}>Trip Cost</Text>
                 </View>
               </View>
+            </View>
+            <View style={styles.cardPadding1}>
+                <Text style={styles.summaryText}>Trip Description</Text>
+                <View style={styles.descriptionText}> 
+                    <Text style={{color:colors.black}}>
+                        {trip.item.description}
+                    </Text>
+                </View>
             </View>
             <View style={styles.cardPadding1}>
                 <Text style={styles.summaryText}>List of Members for the trip</Text>
@@ -114,10 +120,6 @@ import {
                         <View style={styles.repaymentStatusRow}>
                             <Text style={styles.repaymentStausText}>name</Text>
                             <Text style={styles.summarySmallText}>{item.payer}</Text>
-                        </View>
-                        <View style={styles.repaymentStatusRow}>
-                          <Text style={styles.repaymentStausText}>Payment No</Text>
-                          <Text style={styles.summarySmallText}>Payment {index + 1} </Text>
                         </View>
                         <View style={styles.repaymentStatusRow}>
                           <Text style={styles.repaymentStausText}>Amount</Text>

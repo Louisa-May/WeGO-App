@@ -4,11 +4,13 @@ import {colors} from '../../../constants/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    height:'100%',
     backgroundColor: colors.white,
     position: 'relative',
+    // paddingHorizontal:16
+    paddingVertical:20,
+    // backgroundColor:'red'
   },
   mainGroup: {
     flexDirection: 'column',
@@ -17,8 +19,14 @@ export const styles = StyleSheet.create({
     // flex: 1,
     // flexWrap: 'wrap',
   },
+  descriptionText:{
+    borderColor:'grey',
+    borderWidth:0.1,
+    paddingVertical:10,
+    paddingHorizontal:10
+  },
   flex:{
-    width:'90%'
+    width:'100%',
   },
   inputSelect:{
     height: 50,

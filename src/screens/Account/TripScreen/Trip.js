@@ -83,29 +83,30 @@ useEffect(()=>{
         keyExtractor={(item) => item.id}
         renderItem={({item, index})=> {
         return  (
-          // <Card >
-          <View style={styles.tripCardRow}>
-            <TravelIcon 
-              width={35}
-              height={35}
-              style={styles.tripImageCover}
-            />
+          <TouchableOpacity onPress={() => {
+            navigation.navigate('tripDetails', {item})
+          }}  style={styles.tripCardRow}  >
+            <View style={{ justifyContent:'center',  marginTop:-20, alignItems:'center' }}>
+              <Image
+                  source={{ uri: item.image._parts.flat()[1].uri }}
+                  style={{ width: 55, height:55, borderRadius:10, resizeMode: 'contain' }}
+                />
+            </View>
+          
             <View style={styles.maintrip}>
               <Text style={styles.tripTextBold}>{item.TripName}</Text>
               <View style={{flexDirection:'row',width:150, justifyContent:'space-between'}}>
-              <Text style={styles.tripText}>£{item.tripCost}</Text>
-              <Text style={styles.tripText1}>{item.date}</Text>
+                <Text style={styles.tripText}>£{item.tripCost}</Text>
+                <Text style={styles.tripText1}>{item.date}</Text>
               </View>
             </View>
             <EntypoIcon
               name="chevron-right"
               size={32}
               color={colors.black}
-              onPress={() => {
-                navigation.navigate('tripDetails', {item})
-              }}
+              
             />
-          </View>
+          </TouchableOpacity>
         // </Card>
       );
           }  }

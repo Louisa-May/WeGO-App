@@ -14,8 +14,6 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {styles} from './styles';
 import {colors} from '../../../constants/colors';
-import Card from '../../../components/card';
-import CustomSearch from '../../../components/customSearch';
 import { useEffect } from 'react';
 import database from '@react-native-firebase/database';
 

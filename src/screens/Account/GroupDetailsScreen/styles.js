@@ -63,17 +63,24 @@ export const styles = StyleSheet.create({
   cardRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // paddingHorizontal: 10,
-    width: 320,
+   paddingHorizontal: 20, 
+    marginTop:10,
+    width: '100%',
+  },
+  cardRowText:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    width: '100%',
   },
   pushLeft: {
     // left: 30,
-    paddingVertical: 5,
+    // paddingVertical: 5,
     color:colors.black
   },
   pushRight: {
-    right: -10,
-    paddingVertical: 5,
+    right: 0,
+    // paddingVertical: 5,
     color:colors.black
   },
   pushRight2: {
@@ -82,14 +89,28 @@ export const styles = StyleSheet.create({
     color:colors.black,
   },
   payoutAmount: {
-    paddingVertical: 50,
-    paddingHorizontal:20,
+    // paddingHorizontal:20,
+    width:'100%',
     shadowColor:'black',
     shadowOffset: { width: 20, height: 20},
     shadowOpacity:0.5,
     // shadowRadius:20,
+    borderRadius:20,
     backgroundColor:colors.grey,
-    borderRadius:20
+    padding:20
+
+  },
+  payoutAmountTrip: {
+    // paddingHorizontal:20,
+    width:'100%',
+    shadowColor:'black',
+    shadowOffset: { width: 20, height: 20},
+    shadowOpacity:0.5,
+    // shadowRadius:20,
+    borderRadius:20,
+    backgroundColor:colors.white,
+    // padding:20
+
   },
   cardInnerRow: {
     flexDirection: 'row',

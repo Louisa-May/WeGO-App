@@ -255,7 +255,7 @@ const getBalance = () => {
               style={styles.cardImage}
             />
       </View>
-      <View style={styles.depositView}>
+      {/* <View style={styles.depositView}>
         <View style={styles.DepositSmallView}>
               <Image
                 source={require('../../assets/images/deposit-icon.jpg')}
@@ -284,7 +284,7 @@ const getBalance = () => {
               />
               <Text style={styles.DepositText}>More</Text>
         </View>
-      </View>
+      </View> */}
 
       {
         haveUserGroup ?
