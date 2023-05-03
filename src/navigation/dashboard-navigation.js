@@ -7,6 +7,7 @@ import Trip from '../screens/Account/TripScreen/Trip';
 import CreateTripForm from '../screens/Account/create-trip-form/create-trip-form';
 import ApprovePaymentsScreen from '../screens/Account/ApprovePayments/approve-payment';
 import ViewUsers from '../screens/Account/ApprovePayments/ViewUsers';
+import PaymentsApprovalFinal from '../screens/Account/PaymentsApprovalFinal/paymentsApprovalFinal';
 
 const DasboardNavigator = createNativeStackNavigator();
 
@@ -24,6 +25,8 @@ function DasboardNavigation() {
       <DasboardNavigator.Screen name="createTripForm" component={CreateTripForm} />
       <DasboardNavigator.Screen name="users" component={ViewUsers} />
       <DasboardNavigator.Screen name="approvePayments" component={ApprovePaymentsScreen} />
+      <DasboardNavigator.Screen name="paymentDetailsApproval" component={PaymentsApprovalFinal} />
+      
     </DasboardNavigator.Navigator>
   );
 }

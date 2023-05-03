@@ -20,13 +20,13 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import database from '@react-native-firebase/database';
   export default function ApprovePaymentsScreen() {
-    const transactionReference = database().ref('transactions');
+    const triptransactionReference = database().ref('tripTransactions');
     let [paymentHistory, setPaymentHistory] = useState([]);
 
     const navigation = useNavigation();
 
     const getPaymentHistory = () => {
-        transactionReference
+        triptransactionReference
         //   .orderByChild('contributor_id')
         //   .equalTo(user.id)
           .on('value', (snapshot) => {
@@ -55,7 +55,7 @@ import database from '@react-native-firebase/database';
             <WegoLogo  width={200} height={200} />
         </View>
         <View style={styles.cardPadding1}>
-          <Text style={styles.summaryText}>Payment History</Text>
+          <Text style={styles.summaryText}>Payments</Text>
               {
                 paymentHistory.length > 0 ?
                 <FlatList
@@ -65,14 +65,17 @@ import database from '@react-native-firebase/database';
                 keyExtractor={(item) => item.id}
                 renderItem={({item, index})=> {
                 return  (
-                  <TouchableOpacity  style={styles.repaymentRow1}>
+                  <TouchableOpacity onPress={() => {
+                    // console.log(item);
+                    navigation.navigate('paymentDetailsApproval', {item})
+                  }}  style={styles.repaymentRow1}>
                       <View style={styles.repaymentStatusRow}>
                           <Text style={styles.repaymentStausText}>Date</Text>
                           <Text style={styles.summarySmallText}>{item.date}</Text>
                       </View>
                       <View style={styles.repaymentStatusRow}>
-                        <Text style={styles.repaymentStausText}>Payment No</Text>
-                        <Text style={styles.summarySmallText}>Payment {index + 1} </Text>
+                        <Text style={styles.repaymentStausText}>Trip</Text>
+                        <Text style={styles.summarySmallText}>{item.tripName} </Text>
                       </View>
                       <View style={styles.repaymentStatusRow}>
                         <Text style={styles.repaymentStausText}>Amount</Text>

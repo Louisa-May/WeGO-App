@@ -29,20 +29,40 @@ import {
     const transactionReference = database().ref('transactions');
     const reference = database();
     const trip = route.params;
+    let [ApprovedtripMembers, setApprovedTripMembers] = useState([])
     const user = useSelector(
       (state) => state.user.user,
     );
     const dispatch = useDispatch();
     let [paymentHistory, setPaymentHistory] = useState([]);
     const toast = useToast();
-  
-    
+
     const goBack = () => {
       navigation.goBack();
     };
-  
-  
-  
+
+
+    const getTripMembers = () => {
+        const tripTransactionRef = database().ref('tripTransactions').orderByChild('tripName').equalTo(trip.item.TripName);
+        tripTransactionRef.once('value', (snapshot) => {
+            if (snapshot.exists()) {
+                    const payedMembersList = Object.values(snapshot.val())
+                    console.log(payedMembersList);
+                  const Approvedmmebers = payedMembersList.filter((member) => {
+                    console.log(member.status, 'Approved');
+                   return member.status === 'Approved';
+                  })
+                  setApprovedTripMembers(ApprovedtripMembers=Approvedmmebers)
+                  console.log('approved members', ApprovedtripMembers);
+            }})
+
+           
+      
+    }
+    useEffect(() => {
+        getTripMembers()
+    },[])
+
   return (
       <SafeAreaView style={styles.container}>
         <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
@@ -80,11 +100,11 @@ import {
               </View>
             </View>
             <View style={styles.cardPadding1}>
-                <Text style={styles.summaryText}>Payment History</Text>
+                <Text style={styles.summaryText}>List of Members for the trip</Text>
                 {
-                  paymentHistory.length > 0 ?
+                  ApprovedtripMembers.length > 0 ?
                   <FlatList
-                  data={paymentHistory}
+                  data={ApprovedtripMembers}
                   // contentContainerStyle={styles.mainGroup}
                   vertical
                   keyExtractor={(item) => item.id}
@@ -92,8 +112,8 @@ import {
                   return  (
                     <TouchableOpacity  style={styles.repaymentRow2}>
                         <View style={styles.repaymentStatusRow}>
-                            <Text style={styles.repaymentStausText}>Date</Text>
-                            <Text style={styles.summarySmallText}>{item.date}</Text>
+                            <Text style={styles.repaymentStausText}>name</Text>
+                            <Text style={styles.summarySmallText}>{item.payer}</Text>
                         </View>
                         <View style={styles.repaymentStatusRow}>
                           <Text style={styles.repaymentStausText}>Payment No</Text>
@@ -111,7 +131,7 @@ import {
                 );
                     }  }
                 /> : <TouchableOpacity style={styles.nohistoryView}>
-                  <Text style={styles.nohistoryText}> You are not a member of this group hence you do not have a payment history with them</Text>
+                  <Text style={styles.nohistoryText}> There are no members yet on this trip</Text>
                 </TouchableOpacity>
   
                 }

@@ -108,7 +108,7 @@ const getBalance = () => {
     });
   };
   const createTransaction = () => {
-    setIsloading(true);
+    // setIsloading(true);
     if (  amount === '' ||  groupName === '' ) {
       Alert.alert('one or more of the input fields are empty!');
       setIsloading(false);
@@ -128,7 +128,13 @@ const getBalance = () => {
         .once('value', (snapshot) => {
           if (snapshot.exists()) {
            console.log( snapshot.val());
-            const paymentsByUser = Object.values(snapshot.val());
+            const paymentsByMmebers = Object.values(snapshot.val());
+            console.log('allMembers',paymentsByMmebers);
+            const paymentsByUser = paymentsByMmebers.filter((member) => {
+              return member.contributor_id === user.id
+            })
+            console.log('user payemnts',paymentsByUser);
+
             setPayments(payments = paymentsByUser)
           }
         });
@@ -143,7 +149,7 @@ const getBalance = () => {
           contributor_id: user.id,
           status:'Pending',
          };
-    
+         console.log('payemnts',payments.length,'members', chosenGroup.members_list.length);
         if ( payments.length >= chosenGroup.members_list.length  ) {
            toast.show(`Payment of £${amount} to ${transactionData.groupName} for contribution payment was unsuccessful because you have completed payments!`, {
             type: 'warning',

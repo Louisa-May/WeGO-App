@@ -315,7 +315,7 @@ const payOutUser = () => {
               );
                   }  }
               /> : <TouchableOpacity style={styles.nohistoryView}>
-                <Text style={styles.nohistoryText}> You are not a member of this group hence you do not have a payment history with them</Text>
+                <Text style={styles.nohistoryText}> You have not made any payments with this group</Text>
               </TouchableOpacity>
 
               }
