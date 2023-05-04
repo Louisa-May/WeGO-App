@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
   tripCardRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '91%',
+    width: '94%',
     paddingHorizontal: 10,
     paddingTop: 20,
     height:80,

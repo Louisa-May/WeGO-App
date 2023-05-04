@@ -198,11 +198,12 @@ import {
           return  (
             // <Card >
             <TouchableOpacity onPress={() => payForTrips(item)} style={styles.tripCardRow}>
-              <TravelIcon 
-                width={35}
-                height={35}
-                style={styles.tripImageCover}
-              />
+              <View style={{ justifyContent:'center',  marginTop:-20, alignItems:'center' }}>
+              <Image
+                  source={{ uri: item.image._parts.flat()[1].uri }}
+                  style={{ width: 55, height:55, borderRadius:10, resizeMode: 'contain' }}
+                />
+            </View>
               <View style={styles.maintrip}>
                 <Text style={styles.tripTextBold}>{item.TripName}</Text>
                 <View style={{flexDirection:'row',width:150, justifyContent:'space-between'}}>
