@@ -20,6 +20,21 @@ export const styles = StyleSheet.create({
   //   width: '100%',
   //   justifyContent:'space-between',
   // },
+  tripCardRow: {
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // width: '70%',
+    marginHorizontal:20,
+    // backgroundColor:'red',
+    paddingTop: 20,
+    // height:80,
+    // backgroundColor:colors.grey,
+    marginTop:20,
+    borderRadius:11,
+    borderWidth:0.70,
+
+
+  },
   userImageCover: {
     // justifyContent: 'space-between',
     alignItems: 'center',
@@ -169,4 +184,35 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     width: '100%',
   },
+  maintrip:{
+    width:'100%',
+    paddingBottom:30,
+    paddingHorizontal:30
+  },
+    tripText: {
+      justifyContent: 'flex-start',
+      color: colors.black,
+      fontSize: 15,
+      fontWeight: 'semiBold',
+      // paddingTop: 5,
+  
+      // backgroundColor:'red'
+    },
+    tripText1: {
+      justifyContent: 'flex-start',
+      color: 'gray',
+      fontSize: 15,
+      fontWeight: 'bold',
+     
+    },
+    tripTextBold: {
+      justifyContent: 'flex-start',
+      width: '100%',
+      color: colors.black,
+      fontSize: 20,
+      fontWeight: 'bold',
+      // paddingTop: 5,
+  
+      // backgroundColor:'red'
+    },
 });

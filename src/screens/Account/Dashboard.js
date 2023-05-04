@@ -13,6 +13,7 @@ import {
   ActivityIndicator,
   StyleSheet,
   Alert,
+  FlatList,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import RNPickerSelect from 'react-native-picker-select';
@@ -44,12 +45,29 @@ export default function Dashboard({navigation}) {
   let [availableGroups, setAvailableGroups] = useState([]);
   let [membersPayout, setMembersPayout] = useState([])
   let [chosenGroup, setChosenGroup] = useState({})
+  let [trips, setTrips] = useState([]);
   let [payments, setPayments] = useState([])
   const groupReference = database().ref('groups');
+  const tripReference = database().ref('Trips');
   const reference = database()
   const transactionReference = database().ref('transactions').push();
   const toast = useToast()
   const dispatch = useDispatch()
+
+
+  const gettrips =  () => {
+    tripReference
+    .on('value', snapshot => {
+      const tripList = snapshot.val();
+      if (tripList) {
+        const restructuredtrip = Object.values(tripList);
+      console.log("tripslist",restructuredtrip);
+        setTrips(trips = Object.values(restructuredtrip));
+      } else {
+        return
+      }
+    });
+  };
 
 const getBalance = () => {
   const email = user.email
@@ -220,7 +238,8 @@ const getBalance = () => {
   };
   useEffect(()=>{
     getGroups();
-    getBalance()
+    getBalance();
+    gettrips()
    },[]);
   return (
     <SafeAreaView style={styles.container}>
@@ -249,42 +268,43 @@ const getBalance = () => {
                 <Text style={styles.bigText2}>£{user.wallet_balance}</Text>
               </View>
           </View>
-      <View style={styles.cardCover}>
-            <Image
-              source={require('../../assets/images/card-IMAGE.jpg')}
-              style={styles.cardImage}
-            />
+      <View  style={{width:'100%',}}>
+      {
+        trips.length > 0 ?
+      <FlatList
+        data={trips}
+        // contentContainerStyle={{width:'100%'}}
+        keyExtractor={(item) => item.id}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        renderItem={({item, index})=> {
+        return  (
+          <TouchableOpacity onPress={() => {
+            console.log(item);
+            // navigation.navigate('tripDetails', {item})
+          }}  style={styles.tripCardRow}  >
+            <View style={{ width:'100%',justifyContent:'center',  marginTop:-20, alignItems:'center' }}>
+              <Image
+                  source={{ uri: item.image._parts.flat()[1].uri }}
+                  style={{ width: '100%', height:200, borderTopLeftRadius:10, borderTopRightRadius:10, resizeMode: 'contain' }}
+                />
+            </View>
+          
+            <View style={styles.maintrip}>
+              <Text style={styles.tripTextBold}>{item.TripName}</Text>
+              <View style={{flexDirection:'row',width:150, justifyContent:'space-between'}}>
+                <Text style={styles.tripText}>£{item.tripCost}</Text>
+                <Text style={styles.tripText1}>{item.date}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        // </Card>
+      );
+          }  }
+      /> : <Text style={styles.mainText}> No created trips at the moment</Text>
+       }
       </View>
-      {/* <View style={styles.depositView}>
-        <View style={styles.DepositSmallView}>
-              <Image
-                source={require('../../assets/images/deposit-icon.jpg')}
-                style={styles.DepositIcon}
-              />
-              <Text style={styles.DepositText}>Deposit</Text>
-        </View>
-        <View style={styles.DepositSmallView}>
-              <Image
-                source={require('../../assets/images/transfer-icon.jpg')}
-                style={styles.DepositIcon}
-              />
-              <Text style={styles.DepositText}>Transfer</Text>
-        </View>
-        <View style={styles.DepositSmallView}>
-              <Image
-                source={require('../../assets/images/withdraw-icon.jpg')}
-                style={styles.DepositIcon}
-              />
-              <Text style={styles.DepositText}>Withdraw</Text>
-        </View>
-        <View style={styles.DepositSmallView}>
-              <Image
-                source={require('../../assets/images/more-icon.jpg')}
-                style={styles.DepositIcon}
-              />
-              <Text style={styles.DepositText}>More</Text>
-        </View>
-      </View> */}
+      
 
       {
         haveUserGroup ?

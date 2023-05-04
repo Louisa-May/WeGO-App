@@ -20,8 +20,8 @@ export default function CreateTripForm({navigation}) {
   const [isLoading, setIsloading] = useState(false);
   const [isError, setIsError] = useState('');
   const [tripCost, setTripCost] = useState(0);
-  const [TripName, setTripName] = useState('')
-  const [description, setDescription] = useState('')
+  const [TripName, setTripName] = useState('');
+  const [description, setDescription] = useState('');
   const TripReference = database().ref('/Trips').push();
   const [date, setDate] = useState(new Date())
   const [open, setOpen] = useState(false)
@@ -111,7 +111,7 @@ export default function CreateTripForm({navigation}) {
 
           <CustomInput
             placeholder="Description for the Trip"
-            value={tripCost}
+            value={description}
             multiline={true}
             numberOfLines={5}
             onChangeText={(text) => setDescription(text)}
@@ -131,7 +131,7 @@ export default function CreateTripForm({navigation}) {
             }}
           />
         </View>
-        <CustomButton text="Select Image for the trip" onPress={() => handleChoosePhoto()} />
+        <CustomButton text="Choose Image for the trip" onPress={() => handleChoosePhoto()} />
         {photo && (
         <>
         <View style={{width:'100%', justifyContent:'center', alignItems:'center' }}>
