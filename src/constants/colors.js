@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export const colors = {
   red: 'red',
   grey: '#E9F2FF',
@@ -6,4 +7,6 @@ export const colors = {
   orange: '#FCD110',
   black: '#00214E',
   deepGrey: '#F0F0F0',
+  lightGreen:'#ADDFAD',
+  lightBlue:'#0047ab'
 };

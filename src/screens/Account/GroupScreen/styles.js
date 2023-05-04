@@ -1,19 +1,21 @@
+/* eslint-disable prettier/prettier */
 import {StyleSheet} from 'react-native';
 import {colors} from '../../../constants/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: colors.white,
-    position: 'relative',
+    height:'100%'
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: '100%',
     paddingHorizontal: 10,
+    marginTop:20,
+   
   },
   headerText: {
     color: colors.black,
@@ -32,15 +34,23 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: '100%',
     padding: 20,
-    fontSize: 22,
+    fontSize: 20,
+    color: colors.black,
+    marginBottom:-20,
+    fontWeight:'bold'
   },
   groupCardRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',
+    width: '96%',
     paddingHorizontal: 10,
-    paddingTop: 5,
+    paddingTop: 20,
+    height:80,
+    backgroundColor:colors.grey,
+    marginTop:20,
+    borderRadius:20
   },
+  mainGroup:{width:'95%'},
   groupText: {
     justifyContent: 'flex-start',
     width: '70%',
@@ -55,8 +65,9 @@ export const styles = StyleSheet.create({
     fontWeight: 'semiBold',
   },
   plusIcon: {
-    paddingVertical: 15,
-    left: 140,
+    position: 'absolute',
+    bottom:10,
+    right:20
   },
   footer: {
     flexDirection: 'row',

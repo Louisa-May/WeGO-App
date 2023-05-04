@@ -1,12 +1,14 @@
+/* eslint-disable prettier/prettier */
 import {StyleSheet} from 'react-native';
 import {colors} from '../../../constants/colors';
 
 export const styles = StyleSheet.create({
   container: {
+    flex:1,
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
     backgroundColor: colors.white,
+    height:'100%',
   },
   logoCover: {
     resizeMode: 'contain',
@@ -43,7 +45,14 @@ export const styles = StyleSheet.create({
     padding: 10,
   },
   flex: {
-    flex: 1,
+    width:'100%',
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center',
+    height:400
+  },
+  form: {
+    width:350,
   },
   flexDirection: {
     flexDirection: 'row',
@@ -67,15 +76,23 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 10,
   },
+  headerSubText:{
+    color: colors.black,
+    fontSize: 15,
+    fontWeight: '400',
+    padding: 10,
+  },
   footerContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
-    marginTop: 25,
+    flexDirection:'row',
   },
   footerText: {
     color: colors.orange,
     fontWeight: 'bold',
-    marginTop: 50,
+    fontSize:15
   },
+  button: {
+    width:'100%',
+  }
 });

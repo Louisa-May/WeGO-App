@@ -1,25 +1,35 @@
+/* eslint-disable prettier/prettier */
 import {StyleSheet} from 'react-native';
 import {colors} from '../../../constants/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    flex: 1,
+    // flex: 1,
     backgroundColor: colors.white,
     position: 'relative',
+    height:'100%',
+    paddingTop:20,
+
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: '100%',
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
   headerText: {
     color: colors.black,
     fontSize: 30,
     fontWeight: 'bold',
     paddingBottom: 10,
+  },
+  bigText: {
+    color: colors.black,
+    fontSize: 26,
+    fontWeight: 'bold',
+    padding: 10,
   },
   searchText: {
     justifyContent: 'flex-start',
@@ -36,12 +46,12 @@ export const styles = StyleSheet.create({
   profileImageCover: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 150,
-    height: 150,
+    width: 110,
+    height: 110,
     backgroundColor: 'transparent',
     borderRadius: 75,
     borderColor: colors.deepGrey,
-    borderWidth: 2,
+    // borderWidth: 2,
   },
   profileImage: {
     resizeMode: 'contain',
@@ -52,11 +62,19 @@ export const styles = StyleSheet.create({
   profileCardRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
+    // width: '100%',
+    // paddingHorizontal: 10,
+    // paddingVertical: 10,
   },
   profileText: {
+    justifyContent: 'flex-start',
+    width: '100%',
+    color: colors.black,
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingTop: 5,
+  },
+  profileText1: {
     justifyContent: 'flex-start',
     width: '70%',
     color: colors.black,

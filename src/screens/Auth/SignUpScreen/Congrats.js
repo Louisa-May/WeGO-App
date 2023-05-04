@@ -1,17 +1,25 @@
+/* eslint-disable prettier/prettier */
 import {View, StatusBar, SafeAreaView, Text, Image} from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
 import {colors} from '../../../constants/colors';
 import CustomButton from '../../../components/customButton';
+import { setIsAunthenticated } from '../../../../redux-store/userAuth';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 export default function Congrats({navigation}) {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(
+    (state) => state.user.isAunthenticated,
+  );
   const onLoginPressed = () => {
     navigation.navigate('Login');
   };
   const handleClick = () => {
-    navigation.navigate('AppStack');
+    dispatch(setIsAunthenticated(true));
   };
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container1}>
       <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
 
       {/* Circle Section */}

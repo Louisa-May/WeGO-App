@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import SplashScreen from '../screens/Splash/SplashScreen';
 import SwipeUp from '../screens/Auth/LoginScreen/SwipeUp';
 import Login from '../screens/Auth/LoginScreen/Login';
@@ -13,15 +14,15 @@ import Trip from '../screens/Account/TripScreen/Trip';
 import Profile from '../screens/Account/ProfileScreen/Profile';
 import ProfileDetails from '../screens/Account/ProfileDetailsScreen/ProfileDetails';
 
-export const AuthStack = [
+export const AuthStackScreens = [
   {
     screen: SplashScreen,
     name: 'SplashScreen',
   },
-  {
-    screen: SwipeUp,
-    name: 'SwipeUp',
-  },
+  // {
+  //   screen: SwipeUp,
+  //   name: 'SwipeUp',
+  // },
   {
     screen: Login,
     name: 'Login',
@@ -36,7 +37,7 @@ export const AuthStack = [
   },
 ];
 
-export const AppStack = [
+export const AppStackScreens = [
   {
     screen: Dashboard,
     name: 'Dashboard',

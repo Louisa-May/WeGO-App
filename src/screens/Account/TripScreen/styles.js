@@ -1,19 +1,21 @@
+/* eslint-disable prettier/prettier */
 import {StyleSheet} from 'react-native';
 import {colors} from '../../../constants/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: colors.white,
-    position: 'relative',
+    height:'100%'
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: '100%',
     paddingHorizontal: 10,
+    marginTop:20,
+   
   },
   headerText: {
     color: colors.black,
@@ -32,41 +34,65 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: '100%',
     padding: 20,
-    fontSize: 22,
+    fontSize: 20,
+    color: colors.black,
+    marginBottom:-20,
+    fontWeight:'bold'
   },
   tripCardRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',
+    width: '96%',
     paddingHorizontal: 10,
-    paddingTop: 5,
-    borderColor: colors.green,
-    borderWidth: 2,
-    borderRadius: 15,
+    paddingTop: 20,
+    height:80,
+    // backgroundColor:colors.grey,
+    marginTop:20,
+    borderRadius:20,
+    borderWidth:0.5,
+
+
   },
-  tripInnerRow: {
-    width: '80%',
-    paddingLeft: 20,
-    paddingBottom: 10,
-  },
+
+  maintrip:{
+  width:'70%',
+  paddingBottom:30,
+},
   tripText: {
     justifyContent: 'flex-start',
-    width: '70%',
+    color: colors.black,
+    fontSize: 15,
+    fontWeight: 'semiBold',
+    // paddingTop: 5,
+
+    // backgroundColor:'red'
+  },
+  tripText1: {
+    justifyContent: 'flex-start',
+    color: 'gray',
+    fontSize: 15,
+    fontWeight: 'bold',
+   
+  },
+  tripTextBold: {
+    justifyContent: 'flex-start',
+    width: '100%',
     color: colors.black,
     fontSize: 20,
-    fontWeight: 'semiBold',
-    paddingTop: 5,
-  },
-  tripImageCover: {
-    marginTop: 15,
-  },
-  chevron: {
-    marginTop: 20,
+    fontWeight: 'bold',
+    // paddingTop: 5,
+
+    // backgroundColor:'red'
   },
   mediumText: {
     color: colors.black,
     fontSize: 22,
     fontWeight: 'semiBold',
+  },
+  plusIcon: {
+    position: 'absolute',
+    bottom:10,
+    right:20
   },
   footer: {
     flexDirection: 'row',

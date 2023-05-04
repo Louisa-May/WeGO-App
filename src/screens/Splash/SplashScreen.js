@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   View,
   Image,
@@ -20,7 +21,7 @@ export default function SplashScreen({navigation}) {
     // }
   }, [mainSplash]);
   const handleClick = () => {
-    navigation.navigate('SwipeUp');
+    navigation.navigate('Login');
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -47,7 +48,7 @@ export default function SplashScreen({navigation}) {
       </View>
 
       {/* Go botton */}
-      <TouchableOpacity onPress={handleClick}>
+      <TouchableOpacity onPress={handleClick()}>
         <View style={styles.border}>
           <View style={styles.button}>
             <Text style={styles.buttonText}>GO</Text>

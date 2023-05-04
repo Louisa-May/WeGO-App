@@ -1,4 +1,5 @@
-import {View, StatusBar, SafeAreaView, Text, Image} from 'react-native';
+/* eslint-disable prettier/prettier */
+import {View, StatusBar, SafeAreaView, Text, Image, ScrollView, TouchableOpacity, FlatList, Alert} from 'react-native';
 import React, {useState} from 'react';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {styles} from './styles';
@@ -6,20 +7,88 @@ import {colors} from '../../../constants/colors';
 import Card from '../../../components/card';
 import CustomSearch from '../../../components/customSearch';
 import CustomButton from '../../../components/customButton';
+import database from '@react-native-firebase/database';
+import { useEffect } from 'react';
+import UserImage from "../../../assets/svgs/images/userProfileImage.svg";
+import Checkmark from "../../../assets/svgs/icons/icons8-checkmark.svg";
+import { setGroupMembersRedux } from '../../../../redux-store/userAuth';
+import { useDispatch, useSelector } from 'react-redux';
+
+
 
 export default function CreateGroup({navigation}) {
+  const userReference = database().ref('users');
+  let [groupMembers, setGroupMembers] = useState([]);
+  let [adhocUsers, setAdhocUsers] = useState([]);
+  let [users, setUsers] = useState([]);
+  const dispatch = useDispatch();
+  const user = useSelector(
+    (state) => state.user.user,
+  );
+
   const handleClick = () => {
-    navigation.navigate('CompleteGroup');
+    if (!groupMembers.length) {
+      return Alert.alert("No group member selected!");
+    }
+    // groupMembers.push(user);
+    const flatenedMmembers = groupMembers[groupMembers.length - 1].flat()
+    console.log('groupMemmbers', flatenedMmembers);
+    dispatch(setGroupMembersRedux(flatenedMmembers));
+    navigation.navigate('CreateGroupForm');
   };
   const goBack = () => {
-    navigation.navigate('Group');
+    navigation.goBack();
   };
   const [searchInput, setSearchInput] = useState('');
 
+  const getUsers =  () => {
+    userReference
+    .on('value', snapshot => {
+      const usersList = snapshot.val();
+      setUsers(users = Object.values(usersList));
+      console.log("users", users);
+      setAdhocUsers(adhocUsers = Object.values(usersList));
+    });
+
+  };
+
+
+  const addMember = (index) => {
+    const newAdhocUsers = [...adhocUsers];
+      if (newAdhocUsers[index].clicked) {
+          newAdhocUsers[index].clicked = false;
+         const currentAddedMembers = adhocUsers.filter((item,ItemIndex)=>{
+          // console.log(index, ItemIndex);
+            // return index !== ItemIndex;
+            return item.clicked === true;
+         });
+         setGroupMembers(groupMembers = currentAddedMembers);
+         console.log('false',groupMembers);
+          setAdhocUsers(newAdhocUsers);
+          return;
+      } else {
+        newAdhocUsers[index].clicked = true;
+        const currentAddedMembers = adhocUsers.filter((item,ItemIndex)=>{
+          console.log(index, ItemIndex);
+            // return index !== ItemIndex;
+            return item.clicked === true
+         });
+        // setGroupMembers( groupMembers = [...groupMembers, newAdhocUsers[index]]);
+        setGroupMembers(groupMembers = [...groupMembers, currentAddedMembers]);
+        console.log('true',groupMembers);
+        setAdhocUsers(newAdhocUsers);
+        return;
+      }
+};
+
+  useEffect(()=>{
+    getUsers();
+   },[]);
+
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
       {/* Header */}
+      {/* <ScrollView style={{width:'90%', height:800, }}> */}
       <View style={styles.row}>
         <EntypoIcon
           name="chevron-left"
@@ -29,83 +98,51 @@ export default function CreateGroup({navigation}) {
         />
         <Text style={styles.headerText}>Create Group</Text>
       </View>
-      <Text style={styles.searchText}>Edit Members</Text>
+      {/* <Text style={styles.searchText}>Edit Members</Text> */}
       {/* Search Bar */}
-      <CustomSearch
+      {/* <CustomSearch
         placeholder="Search Contacts"
         value={searchInput}
         setValue={setSearchInput}
-      />
+      /> */}
 
       {/* Members list */}
-      <Card>
+      {/* <Card> */}
         <View style={styles.mainText}>
-          <Text>Available slots: 3/12</Text>
-          <Text>Hold and drag to reorder</Text>
+          <Text style={styles.searchText}>Group Members Added: {groupMembers.length}</Text>
+          {/* <Text style={styles.searchText}>Hold and drag to reorder</Text> */}
         </View>
-        <View style={styles.mainText}>
-          <View>
-            <View style={styles.member}>
-              <Image source={require('../../../assets/images/userImage.png')} />
-            </View>
-            <Text style={styles.memberNameText}>You</Text>
-            <Text style={styles.adminNameText}>Admin</Text>
-          </View>
-          <View>
-            <View style={styles.member} />
-            <Text style={styles.memberNameText}>Name</Text>
-          </View>
-          <View>
-            <View style={styles.member} />
-            <Text style={styles.memberNameText}>Name</Text>
-          </View>
-          <View>
-            <View style={styles.member} />
-            <Text style={styles.memberNameText}>Name</Text>
-          </View>
-        </View>
-        <View style={styles.mainText}>
-          <View>
-            <View style={styles.member} />
-            <Text style={styles.memberNameText}>Name</Text>
-          </View>
-          <View>
-            <View style={styles.member} />
-            <Text style={styles.memberNameText}>Name</Text>
-          </View>
-          <View>
-            <View style={styles.member} />
-            <Text style={styles.memberNameText}>Name</Text>
-          </View>
-          <View>
-            <View style={styles.member} />
-            <Text style={styles.memberNameText}>Name</Text>
-          </View>
-        </View>
-        <View style={styles.mainText}>
-          <View>
-            <View style={styles.member} />
-            <Text style={styles.memberNameText}>Name</Text>
-          </View>
-          <View>
-            <View style={styles.member} />
-            <Text style={styles.memberNameText}>Name</Text>
-          </View>
-          <View>
-            <View style={styles.member} />
-            <Text style={styles.memberNameText}>Name</Text>
-          </View>
-          <View>
-            <View style={styles.member} />
-            <Text style={styles.memberNameText}>Name</Text>
-          </View>
-        </View>
-
+            <FlatList
+             data={adhocUsers}
+             contentContainerStyle={styles.mainGroup}
+            numColumns={4}
+            key={'#'}
+             renderItem={({item, index})=> {
+            return  (
+              <TouchableOpacity  activeOpacity={0.8} onPress={() => addMember(index)} style={styles.individualUser}>
+                <View style={styles.member}>
+                 {
+                  item.clicked === true &&  <Checkmark style={{marginLeft:50}} />
+                 }
+                  <UserImage />
+                </View>
+                <Text style={styles.memberNameText}>
+                {item.first_name} {item.last_name}
+                 </Text>
+                <Text style={styles.adminNameText}>
+                  {item.role}
+                  </Text>
+              </TouchableOpacity>
+            );
+               }  }
+             keyExtractor={(user,index) => user}
+            />
         {/* Continue Button Section */}
         <View style={styles.button}>
           <CustomButton text="Continue" onPress={handleClick} />
         </View>
-      </Card>
+      {/* </Card> */}
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 }
