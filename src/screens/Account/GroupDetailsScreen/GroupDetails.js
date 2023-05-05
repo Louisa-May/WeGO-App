@@ -63,7 +63,7 @@ export default function GroupDetails({route, navigation}) {
     transactionReference
       .orderByChild('contributor_id')
       .equalTo(user.id)
-      .on('value', (snapshot) => {
+      .once('value', (snapshot) => {
         const paymentHistoryList = snapshot.val();
         // console.log(paymentHistoryList);
         if (paymentHistoryList) {
