@@ -36,7 +36,7 @@ export default function Group({navigation}) {
 
   const getGroups =  () => {
     groupReference
-    .on('value', snapshot => {
+    .once('value', snapshot => {
       const groupList = snapshot.val();
       console.log(groupList);
       if (groupList) {

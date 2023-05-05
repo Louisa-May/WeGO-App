@@ -24,16 +24,16 @@ export const styles = StyleSheet.create({
     // flexDirection: 'row',
     // justifyContent: 'space-between',
     // width: '70%',
-    marginHorizontal:20,
+    marginHorizontal:10,
     // backgroundColor:'red',
     paddingTop: 20,
     // height:80,
     // backgroundColor:colors.grey,
     marginTop:20,
     borderRadius:11,
-    borderWidth:0.70,
-
-
+    borderWidth:0.2,
+    borderColor:'grey',
+    marginBottom:20
   },
   userImageCover: {
     // justifyContent: 'space-between',

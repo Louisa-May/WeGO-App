@@ -32,8 +32,9 @@ import { useToast } from 'react-native-toast-notifications';
 import objectUnfreeze from 'object-unfreeze'
 import { setUser } from '../../../redux-store/userAuth';
 import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Dashboard({navigation}) {
+export default function Dashboard({}) {
   const user = useSelector(
     (state) => state.user.user,
   );
@@ -53,6 +54,8 @@ export default function Dashboard({navigation}) {
   const transactionReference = database().ref('transactions').push();
   const toast = useToast()
   const dispatch = useDispatch()
+  const navigation = useNavigation()
+
 
 
   const gettrips =  () => {
@@ -281,7 +284,7 @@ const getBalance = () => {
         return  (
           <TouchableOpacity onPress={() => {
             console.log(item);
-            // navigation.navigate('tripDetails', {item})
+            navigation.navigate('tripDetails', {item})
           }}  style={styles.tripCardRow}  >
             <View style={{ width:'100%',justifyContent:'center',  marginTop:-20, alignItems:'center' }}>
               <Image
