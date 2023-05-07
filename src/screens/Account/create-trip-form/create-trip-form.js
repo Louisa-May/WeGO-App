@@ -14,6 +14,7 @@ import DatePicker from 'react-native-date-picker'
 import { useToast } from 'react-native-toast-notifications';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker'
 import { ScrollView } from 'react-native-gesture-handler';
+import storage from '@react-native-firebase/storage';
 
 
 export default function CreateTripForm({navigation}) {
@@ -26,7 +27,9 @@ export default function CreateTripForm({navigation}) {
   const [date, setDate] = useState(new Date())
   const [open, setOpen] = useState(false)
   const [photo, setPhoto] = React.useState(null);
-  const toast = useToast()
+  let [downloadedImageUri, setDownloadedImageUri] = useState()
+  const toast = useToast();
+  const imageRef = storage().ref()
 
   const handleChoosePhoto = () => {
     launchImageLibrary({ noData: true }, (response) => {
@@ -56,35 +59,48 @@ export default function CreateTripForm({navigation}) {
     return data;
   };
 
-  const createTrip = () => {
-    // setIsloading(true);
+  const createTrip = async () => {
+    setIsloading(true);
     if (tripCost  === '' ||  TripName === '' || photo === '' || date === ''  ) {
       Alert.alert('one or more of the input fields are empty!');
       setIsloading(false);
       return;
     }
-   
-   let TripData = {
-    TripName: TripName,
-    tripCost: tripCost,
-    tripMembers:[],
-    description: description,
-    image: createFormData(photo),
-    date: moment(date).format('MMMM Do, YYYY')
-   };
-   console.log(TripData.image);
-   let newTrip = TripReference;
-      TripData.id = newTrip.key;
-      newTrip.set(TripData);
-    setIsloading(false);
-    toast.show(`${TripData.TripName} trip launched successfully!`, {
-      type: 'success',
-      placement: 'bottom',
-      duration: 10000,
-      offset: 30,
-      animationType: 'zoom-in',
-    });
-    navigation.navigate('Trips');
+
+    const photoUri = Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri
+
+   await storage().ref(TripName).putFile(photoUri)
+           .catch((error) => {
+              return setIsloading(false)
+            });
+  const result = await storage().ref(TripName).getDownloadURL();
+              console.log('result url',result);
+              setDownloadedImageUri(downloadedImageUri=result);   
+              console.log('downloaded url', downloadedImageUri);
+
+             if (downloadedImageUri) {
+                let TripData = {
+                  TripName: TripName,
+                  tripCost: tripCost,
+                  tripMembers:[],
+                  description: description,
+                  image: downloadedImageUri,
+                  date: moment(date).format('MMMM Do, YYYY')
+                };
+                console.log(TripData.image);
+                let newTrip = TripReference;
+                    TripData.id = newTrip.key;
+                    newTrip.set(TripData);
+                  setIsloading(false);
+                  toast.show(`${TripData.TripName} trip launched successfully!`, {
+                    type: 'success',
+                    placement: 'bottom',
+                    duration: 10000,
+                    offset: 30,
+                    animationType: 'zoom-in',
+                  });
+                  navigation.navigate('Trips');
+             }
   };
 
   return (

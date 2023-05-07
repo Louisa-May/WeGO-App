@@ -77,7 +77,7 @@ import {
             <View style={{flexDirection:'column', borderWidth:0.5, borderColor:'grey',width:'100%',marginTop:20, borderRadius:10, paddingBottom:20}}>
               <View style={styles.payoutAmountTrip}>
                     <Image
-                        source={{ uri: trip.item.image._parts.flat()[1].uri }}
+                        source={{ uri: trip.item.image}}
                         style={{ width: '100%', height: 300, borderRadius:1, resizeMode: 'contain' }}
                         />
                 <View style={{width:'100%',  justifyContent:'center', alignItems:'center', marginTop:20}}>

@@ -88,7 +88,7 @@ useEffect(()=>{
           }}  style={styles.tripCardRow}  >
             <View style={{ justifyContent:'center',  marginTop:-20, alignItems:'center' }}>
               <Image
-                  source={{ uri: item.image._parts.flat()[1].uri }}
+                  source={{ uri: item.image }}
                   style={{ width: 55, height:55, borderRadius:10, resizeMode: 'contain' }}
                 />
             </View>

@@ -288,7 +288,7 @@ const getBalance = () => {
           }}  style={styles.tripCardRow}  >
             <View style={{ width:'100%',justifyContent:'center',  marginTop:-20, alignItems:'center' }}>
               <Image
-                  source={{ uri: item.image._parts.flat()[1].uri }}
+                  source={{ uri: item.image }}
                   style={{ width: '100%', height:200, borderTopLeftRadius:10, borderTopRightRadius:10, resizeMode: 'contain' }}
                 />
             </View>
