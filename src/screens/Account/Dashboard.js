@@ -42,7 +42,7 @@ export default function Dashboard({}) {
   const [isLoading, setIsloading] = useState(false);
   const [groupName, setGroup] = useState('');
   const [isError, setIsError] = useState('');
-  const [haveUserGroup, setHaveUserGroup] = useState(false)
+  // const [haveUserGroup, setHaveUserGroup] = useState(false);
   let [availableGroups, setAvailableGroups] = useState([]);
   let [membersPayout, setMembersPayout] = useState([])
   let [chosenGroup, setChosenGroup] = useState({})
