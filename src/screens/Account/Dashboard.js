@@ -106,7 +106,7 @@ const getBalance = () => {
       });
       // console.log('current user groups',currentUserGroups);
       if (currentUserGroups.length > 0) {
-        setHaveUserGroup(true);
+        // setHaveUserGroup(true);
         const finalRestructuredGroups = currentUserGroups.map((item) => {
           return {
             label: item.groupName,
@@ -120,7 +120,7 @@ const getBalance = () => {
         // console.log('groups', availableGroups);
         // console.log('user',user);
       } else {
-        setHaveUserGroup(false)
+        return null
       }
       } else {
         return null
@@ -295,7 +295,7 @@ const getBalance = () => {
           
             <View style={styles.maintrip}>
               <Text style={styles.tripTextBold}>{item.TripName}</Text>
-              <View style={{flexDirection:'row',width:150, justifyContent:'space-between'}}>
+              <View style={{flexDirection:'row',width:'100%', justifyContent:'space-between'}}>
                 <Text style={styles.tripText}>£{item.tripCost}</Text>
                 <Text style={styles.tripText1}>{item.date}</Text>
               </View>
@@ -310,7 +310,7 @@ const getBalance = () => {
       
 
       {
-        haveUserGroup ?
+        availableGroups.length > 0 ?
         <View style={styles.makeDepositView}>
         <View style={{width:'100%'}}>
           <Text style={{color:'black', fontWeight:'bold', fontSize:25}}>

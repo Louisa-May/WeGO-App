@@ -185,9 +185,10 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
   maintrip:{
-    width:'100%',
-    paddingBottom:30,
-    paddingHorizontal:30
+    width:200,
+    paddingBottom:20,
+    paddingHorizontal:30,
+    marginTop:20
   },
     tripText: {
       justifyContent: 'flex-start',
@@ -203,7 +204,7 @@ export const styles = StyleSheet.create({
       color: 'gray',
       fontSize: 15,
       fontWeight: 'bold',
-     
+      marginLeft:10
     },
     tripTextBold: {
       justifyContent: 'flex-start',

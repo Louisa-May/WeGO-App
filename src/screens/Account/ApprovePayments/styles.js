@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
   cardPadding1: {
     width:'90%',
     marginTop:-30,
-    height:400
+    // height:400
   },
   headerText: {
     color: colors.black,
