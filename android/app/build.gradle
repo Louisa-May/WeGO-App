@@ -139,8 +139,8 @@ android {
 
     defaultConfig {
         applicationId "com.wego"
-        minSdkVersion rootProject.ext.minSdkVersion
-        // minSdkVersion 21
+        // minSdkVersion rootProject.ext.minSdkVersion
+        minSdkVersion 21
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
@@ -267,7 +267,8 @@ dependencies {
     
     implementation project(':react-native-vector-icons')
 
-    implementation 'com.android.support:multidex:2.0.1' //enter the latest multidex version
+    // implementation 'com.android.support:multidex:2.0.1' //enter the latest multidex version
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation platform('com.google.firebase:firebase-bom:31.5.0')
 
