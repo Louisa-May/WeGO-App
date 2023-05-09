@@ -10,17 +10,22 @@ import {
 import React from 'react';
 import {styles} from './styles';
 import {colors} from '../../constants/colors';
+import { LogBox } from 'react-native';
+// LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 export default function SplashScreen({navigation}) {
   const [mainSplash, setMainSplash] = React.useState(false);
   React.useEffect(() => {
     setTimeout(() => {
       setMainSplash(true);
     }, 3000);
-    // if (mainSplash) {
-    //   navigation.navigate('AppStack');
-    // }
+    // console.log(mainSplash);
+    if (mainSplash) {
+      navigation.navigate('Login');
+    }
   }, [mainSplash]);
   const handleClick = () => {
+    console.log('gooo');
     navigation.navigate('Login');
   };
   return (
@@ -48,7 +53,7 @@ export default function SplashScreen({navigation}) {
       </View>
 
       {/* Go botton */}
-      <TouchableOpacity onPress={handleClick()}>
+      <TouchableOpacity onPress={()=> handleClick()}>
         <View style={styles.border}>
           <View style={styles.button}>
             <Text style={styles.buttonText}>GO</Text>
