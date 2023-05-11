@@ -42,7 +42,7 @@ export default function Group({navigation}) {
       if (groupList) {
       const restructuredGroup = Object.values(groupList);
       setGroups(groups = Object.values(restructuredGroup));
-  //  console.log('groups', groups);
+   console.log('groups', groups);
       } else {
         return
       }
@@ -51,7 +51,7 @@ export default function Group({navigation}) {
 
 useEffect(()=>{
   getGroups()
-},[])
+},[groups])
 
   return (
     <View style={styles.container}>

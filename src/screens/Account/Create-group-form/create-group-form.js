@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { resetGroupMembers } from '../../../../redux-store/userAuth';
 import moment from 'moment';
 import { useToast } from 'react-native-toast-notifications';
+import SelectDropdown from 'react-native-select-dropdown';
 
 
 
@@ -225,7 +226,7 @@ export default function CreateGroupForm({navigation}) {
             onChangeText={(text) => setContributionAmount(text)}
           />
           <View style={styles.inputSelect}>
-          <RNPickerSelect
+          {/* <RNPickerSelect
               style={pickerSelectStyles}
               onValueChange={(text) => setCollectionMethod(text)}
               placeholder={{ label: 'Method of collecting Savings', value: null }}
@@ -242,10 +243,33 @@ export default function CreateGroupForm({navigation}) {
                   />
                 );
               }}
+          /> */}
+          <SelectDropdown
+             data={['First come, first serve', 'Random']}
+             onSelect={(selectedItem, index) => {
+              setCollectionMethod(selectedItem);
+            }}
+          defaultButtonText='Method of collecting Savings'
+            dropdownIconPosition='right'
+            renderDropdownIcon= {() => {
+              return (
+                <DropDownIcon
+                  width={20}
+                  height={20}
+                  style={{marginRight: 10}}
+                />
+              );
+            }}
+            buttonStyle={{
+              // backgroundColor: "white",
+              // position: "absolute",
+              // top: 40,
+              width: "100%",
+            }}
           />
         </View>
            <View style={styles.inputSelect} >
-          <RNPickerSelect
+          {/* <RNPickerSelect
               style={pickerSelectStyles}
               onValueChange={(text) => setPaymentFrequency(text)}
               placeholder={{ label: ' Select Contribution Frequency', value: null }}
@@ -264,6 +288,37 @@ export default function CreateGroupForm({navigation}) {
                   />
                 );
               }}
+          /> */}
+            {/* <SelectDropdown
+            data={['Daily', '2 weeks', '1 month','2 months']}
+            onSelect={(selectedItem, index) => {
+              setPaymentFrequency(selectedItem)
+            }}
+            searchPlaceHolder="Select Contribution Frequency"
+            dropdownStyle={{width:'100%', backgroundColor:colors.grey}}
+          /> */}
+           <SelectDropdown
+             data={['Daily', '2 weeks', '1 month','2 months']}
+             onSelect={(selectedItem, index) => {
+              setPaymentFrequency(selectedItem)
+            }}
+          defaultButtonText='Select Contribution Frequency'
+            dropdownIconPosition='right'
+            renderDropdownIcon= {() => {
+              return (
+                <DropDownIcon
+                  width={20}
+                  height={20}
+                  style={{marginRight: 10}}
+                />
+              );
+            }}
+            buttonStyle={{
+              // backgroundColor: "white",
+              // position: "absolute",
+              // top: 40,
+              width: "100%",
+            }}
           />
         </View>
          {isError  &&  (

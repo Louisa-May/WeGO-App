@@ -16,7 +16,7 @@ import {
   FlatList,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import RNPickerSelect from 'react-native-picker-select';
+// import RNPickerSelect from 'react-native-picker-select';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {styles} from './styles';
@@ -33,6 +33,9 @@ import objectUnfreeze from 'object-unfreeze'
 import { setUser } from '../../../redux-store/userAuth';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import SelectDropdown from 'react-native-select-dropdown'
+
+
 
 export default function Dashboard({}) {
   const user = useSelector(
@@ -105,9 +108,12 @@ const getBalance = () => {
         )
       });
       // console.log('current user groups',currentUserGroups);
+      const groupNames=[]
       if (currentUserGroups.length > 0) {
         // setHaveUserGroup(true);
         const finalRestructuredGroups = currentUserGroups.map((item) => {
+            
+            groupNames.push(item.groupName)
           return {
             label: item.groupName,
             value: item.groupName,
@@ -116,8 +122,11 @@ const getBalance = () => {
             wallet_balance: item.wallet_balance,
           };
         });
-        setAvailableGroups(availableGroups = Object.values(finalRestructuredGroups));
-        // console.log('groups', availableGroups);
+        setAvailableGroups(availableGroups = groupNames);
+
+        // console.log(finalRestructuredGroups);
+        // setAvailableGroups(availableGroups = Object.values(finalRestructuredGroups));
+        console.log('groups', availableGroups);
         // console.log('user',user);
       } else {
         return null
@@ -318,7 +327,7 @@ const getBalance = () => {
           </Text>
         </View>
         <View style={styles.inputSelect}>
-          <RNPickerSelect
+          {/* <RNPickerSelect
                 style={pickerSelectStyles}
                 onValueChange={(text) => chooseGroup(text)}
                 placeholder={{ label: 'Select group to pay to', value: null }}
@@ -332,7 +341,31 @@ const getBalance = () => {
                     />
                   );
                 }}
-            />
+            /> */}
+          <SelectDropdown
+            data={availableGroups}
+            onSelect={(selectedItem, index) => {
+              chooseGroup(selectedItem)
+              console.log(groupName);
+            }}
+          defaultButtonText='Select group to pay to'
+            dropdownIconPosition='right'
+            renderDropdownIcon= {() => {
+              return (
+                <DropDownIcon
+                  width={20}
+                  height={20}
+                  style={{marginRight: 10}}
+                />
+              );
+            }}
+            buttonStyle={{
+              // backgroundColor: "white",
+              // position: "absolute",
+              // top: 40,
+              width: "100%",
+            }}
+          />
         </View>
         <View style={{width:'100%', marginTop:10}}>
           {/* <CustomInput
