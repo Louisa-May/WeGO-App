@@ -16,7 +16,6 @@ import CustomInput from '../../../components/customInput';
 import CustomButton from '../../../components/customButton';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import RNPickerSelect from 'react-native-picker-select';
 import database from '@react-native-firebase/database';
 import { firebase } from '@react-native-firebase/database';
 import { setUser } from '../../../../redux-store/userAuth';

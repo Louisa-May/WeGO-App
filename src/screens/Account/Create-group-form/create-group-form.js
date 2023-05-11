@@ -10,7 +10,7 @@ import CustomSearch from '../../../components/customSearch';
 import CustomButton from '../../../components/customButton';
 import database from '@react-native-firebase/database';
 import CustomInput from '../../../components/customInput';
-import RNPickerSelect from 'react-native-picker-select';
+// import RNPickerSelect from 'react-native-picker-select';
 // import moment from 'moment';
 import DropDownIcon from '../../../assets/svgs/icons/drop-down.svg';
 import { useDispatch, useSelector } from 'react-redux';
