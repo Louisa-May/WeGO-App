@@ -123,10 +123,10 @@ export default function CreateGroupForm({navigation}) {
         };
       });
       
-    } else if (paymentFrequency === 'daily') {
+    } else if (paymentFrequency === 'Daily') {
       console.log(date);
       restructuredMembers = groupMembers.map((member) => {
-        date = date.add(1, 'days');
+        date = date.add(1, 'day');
         console.log(date);
         return {
           clicked: member.clicked,

@@ -50,8 +50,8 @@ export default function Group({navigation}) {
   };
 
 useEffect(()=>{
-  getGroups()
-},[groups])
+  getGroups();
+},[])
 
   return (
     <View style={styles.container}>
@@ -75,7 +75,7 @@ useEffect(()=>{
         setValue={setSearchInput}
       /> */}
       <Text style={styles.mainText}>Available Groups</Text>
-      <View style={{width:'100%',  justifyContent: 'center',paddingHorizontal:10, alignItems: 'center', alignContent:"center"}}>
+      <View style={{width:'100%',  justifyContent: 'center',paddingLeft:10, alignItems: 'center', alignContent:"center"}}>
        {
         groups.length > 0 ?
       <FlatList 
