@@ -4,17 +4,17 @@ import {colors} from '../constants/colors';
 
 export const styles = StyleSheet.create({
   inputContainer: {
-    backgroundColor: colors.grey,
+    backgroundColor: colors.deepGrey,
     width: '100%',
     borderColor:  colors.deepGrey,
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
     marginVertical: 10,
-    color:colors.black,
+    color:'black',
   },
   buttonContainer: {
-    backgroundColor: colors.black,
+    backgroundColor: colors.green,
     width: '100%',
     padding: 15,
     marginVertical: 10,

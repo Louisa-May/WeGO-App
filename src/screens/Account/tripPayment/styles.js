@@ -39,51 +39,100 @@ export const styles = StyleSheet.create({
     marginBottom:-20,
     fontWeight:'bold'
   },
+  // tripCardRow: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   width: '94%',
+  //   paddingHorizontal: 10,
+  //   paddingTop: 20,
+  //   height:80,
+  //   // backgroundColor:colors.grey,
+  //   marginTop:20,
+  //   borderRadius:20,
+  //   borderWidth:0.5,
+
+
+  // },
   tripCardRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '94%',
-    paddingHorizontal: 10,
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // width: '70%',
+    marginHorizontal:10,
+    // backgroundColor:'red',
     paddingTop: 20,
-    height:80,
+    // height:80,
     // backgroundColor:colors.grey,
     marginTop:20,
-    borderRadius:20,
-    borderWidth:0.5,
-
-
+    borderRadius:11,
+    borderWidth:0.2,
+    borderColor:'grey',
+    // marginBottom:20
   },
-
   maintrip:{
-  width:'50%',
-  paddingBottom:30
-},
-  tripText: {
-    justifyContent: 'flex-start',
-    color: colors.black,
-    fontSize: 15,
-    fontWeight: 'semiBold',
-    // paddingTop: 5,
+    width:'75%',
+    paddingBottom:20,
+    paddingLeft:30,
+    marginTop:20,
+    // backgroundColor:'green',
+    marginLeft:20
+  },
+    tripText: {
+      justifyContent: 'flex-start',
+      color: colors.black,
+      fontSize: 15,
+      fontWeight: 'semiBold',
+      // paddingTop: 5,
+  
+      // backgroundColor:'red'
+    },
+    tripText1: {
+      justifyContent: 'flex-start',
+      color: 'gray',
+      fontSize: 15,
+      fontWeight: 'bold',
+      marginLeft:10
+    },
+    tripTextBold: {
+      justifyContent: 'flex-start',
+      width: '100%',
+      color: colors.black,
+      fontSize: 20,
+      fontWeight: 'bold',
+      // paddingTop: 5,
+  
+      // backgroundColor:'red'
+    },
 
-    // backgroundColor:'red'
-  },
-  tripText1: {
-    justifyContent: 'flex-start',
-    color: 'gray',
-    fontSize: 15,
-    fontWeight: 'bold',
-   
-  },
-  tripTextBold: {
-    justifyContent: 'flex-start',
-    width: '100%',
-    color: colors.black,
-    fontSize: 20,
-    fontWeight: 'bold',
-    // paddingTop: 5,
+//   maintrip:{
+//   width:'50%',
+//   paddingBottom:30
+// },
+//   tripText: {
+//     justifyContent: 'flex-start',
+//     color: colors.black,
+//     fontSize: 15,
+//     fontWeight: 'semiBold',
+//     // paddingTop: 5,
 
-    // backgroundColor:'red'
-  },
+//     // backgroundColor:'red'
+//   },
+//   tripText1: {
+//     justifyContent: 'flex-start',
+//     color: 'gray',
+//     fontSize: 15,
+//     fontWeight: 'bold',
+
+//   },
+//   tripTextBold: {
+//     justifyContent: 'flex-start',
+//     width: '100%',
+//     color: colors.black,
+//     fontSize: 20,
+//     fontWeight: 'bold',
+//     // paddingTop: 5,
+
+//     // backgroundColor:'red'
+//   },
   mediumText: {
     color: colors.black,
     fontSize: 22,

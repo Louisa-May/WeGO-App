@@ -26,7 +26,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../../../redux-store/userAuth';
 import { LogBox } from 'react-native';
 // LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-LogBox.ignoreAllLogs();//Ignore all log notifications
+// LogBox.ignoreAllLogs();//Ignore all log notifications
 
 export default function GroupDetails({route, navigation}) {
   const transactionReference = database().ref('transactions');

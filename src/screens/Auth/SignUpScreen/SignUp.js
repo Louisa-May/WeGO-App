@@ -15,11 +15,10 @@ import {colors} from '../../../constants/colors';
 import CustomInput from '../../../components/customInput';
 import CustomButton from '../../../components/customButton';
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import database from '@react-native-firebase/database';
-import { firebase } from '@react-native-firebase/database';
 import { setUser } from '../../../../redux-store/userAuth';
 import { useDispatch } from 'react-redux';
+import { useToast } from 'react-native-toast-notifications';
 const reference = database().ref('/users');
 
 export default function SignUp({navigation}) {
@@ -34,6 +33,7 @@ export default function SignUp({navigation}) {
   const onLoginPressed = () => {
     navigation.navigate('Login');
   };
+  const toast = useToast()
   const newReference = database().ref('/users').push();
   const handleClick = () => {
     setIsloading(true);
@@ -54,12 +54,19 @@ export default function SignUp({navigation}) {
         email: Email,
         role: 'user',
         // clciked:false,
-        wallet_balance:0,
+        wallet_balance:2000,
     }
       let newUser = reference.push();
       userData.id = newUser.key;
       newUser.set(userData)
       dispatch(setUser(userData))
+      toast.show(`Thank you ${firstName} ${lastName} for registering an account with us!`, {
+      type: 'success',
+      placement: 'top',
+      duration: 5000,
+      offset: 30,
+      animationType: 'slide-in',
+    });
     setIsloading(false)
   }).then(() => {
       navigation.navigate('Congrats');
@@ -69,11 +76,25 @@ export default function SignUp({navigation}) {
         console.log('That email address is invalid!');
         setIsError("That email address is invalid!");
         setIsloading(false);
+        toast.show(`'That email address is invalid!!`, {
+          type: 'danger',
+          placement: 'top',
+          duration: 5000,
+          offset: 30,
+          animationType: 'slide-in',
+        });
         return;
       }
       if (error.code === 'auth/email-already-in-use') {
         console.log('That email address is already in use!');
-        setIsError("That email address is already in use!");
+        setIsError("That email address is already in use in our platform.Kindly Login");
+        toast.show(`That email address is already in use in our platform.Kindly Login`, {
+          type: 'danger',
+          placement: 'top',
+          duration: 5000,
+          offset: 30,
+          animationType: 'slide-in',
+        });
         setIsloading(false);
         return;
       }

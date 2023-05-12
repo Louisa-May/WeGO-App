@@ -295,7 +295,7 @@ const getBalance = () => {
             console.log(item);
             navigation.navigate('tripDetails', {item})
           }}  style={styles.tripCardRow}  >
-            <View style={{ width:'100%',justifyContent:'center',  marginTop:-20, alignItems:'center', padding:5 }}>
+            <View style={{ width:'100%',justifyContent:'center',  marginTop:-20, alignItems:'center', paddingHorizontal:0 }}>
               <Image
                   source={{ uri: item.image }}
                   style={{ width: '100%', height:200, borderTopLeftRadius:10, borderTopRightRadius:10, resizeMode: 'contain' }}
@@ -322,7 +322,7 @@ const getBalance = () => {
         availableGroups.length > 0 ?
         <View style={styles.makeDepositView}>
         <View style={{width:'100%'}}>
-          <Text style={{color:'black', fontWeight:'bold', fontSize:25}}>
+          <Text style={{color:colors.green, fontWeight:'bold', fontSize:25}}>
               Quick Transfer
           </Text>
         </View>
@@ -374,7 +374,7 @@ const getBalance = () => {
             keyboardType = 'number-pad' */}
            {/* onChangeText={(text) => setAmount(text)} */}
           {/* > */}
-          <View style={{width:'100%',height:45, backgroundColor:colors.grey}}>
+          <View style={{width:'100%',height:45, backgroundColor:colors.deepGrey}}>
             <Text style={{color:colors.black, fontSize:20, paddingLeft:15, paddingTop:10}}>£ {amount}</Text>
           </View>
         </View>

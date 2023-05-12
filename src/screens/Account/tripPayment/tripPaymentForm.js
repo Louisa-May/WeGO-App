@@ -51,114 +51,6 @@ import {
       });
     };
 
-    const payForTrips = (item) => {
-        // console.log(item);
-        reference.ref('tripTransactions').orderByChild('payer_id').equalTo(user.id)
-        .once('value', snapshot => {
-          if (snapshot.exists()) {
-          const paidTrips = Object.values(snapshot.val());
-          console.log('paid trips',paidTrips);
-          const paidForPresentTrip = paidTrips.filter(trip => trip.tripName === item.TripName )
-          if (paidForPresentTrip.length > 0) {
-            toast.show(`Payment for this trip isnt successful as you have paid for this trip before`, {
-              type: 'danger',
-              placement: 'bottom',
-              duration: 5000,
-              offset: 30,
-              animationType: 'slide-in',
-            });
-            return
-          } 
-          const userRef= reference.ref('users').orderByChild('id').equalTo(user.id);
-          userRef.once('value', snapshot => {
-          if (snapshot.exists()) {
-              const User = snapshot.val();
-              const currentUser = Object.values(User)
-              console.log(Number(currentUser[0].wallet_balance), Number(item.tripCost));
-              if (Number(currentUser[0].wallet_balance) >= Number(item.tripCost)) {
-                  reference.ref(`users/${user.id}`).update({
-                      wallet_balance: Number(currentUser[0].wallet_balance) - Number(item.tripCost),
-                  });
-  
-                  let transactionData = {
-                    amount: Number(item.tripCost),
-                    tripName: item.TripName,
-                    date: moment().format('MMMM Do, YYYY'),
-                    payer: `${user.first_name} ${user.last_name}`,
-                    payer_id: user.id,
-                    status:'Pending',
-                   };
-                  let newTransaction = tripTransactionReference;
-                  transactionData.id = newTransaction.key;
-                  let transactionDataClone = {...transactionData, id: newTransaction.key}
-                  newTransaction.set(transactionDataClone);
-                  toast.show(`Payment of £${item.tripCost} for the ${item.TripName} trip payment is successful!`, {
-                  type: 'success',
-                  placement: 'bottom',
-                  duration: 5000,
-                  offset: 30,
-                  animationType: 'slide-in',
-                });
-              } 
-              else {
-                  toast.show(`Payment of £${item.tripCost} for the ${item.TripName} trip payment wasnt successful as you do not have enough money in your wallet!`, {
-                  type: 'danger',
-                  placement: 'bottom',
-                  duration: 5000,
-                  offset: 30,
-                  animationType: 'slide-in',
-                });
-                return
-              }    
-          }
-      })
-        } else {
-           const userRef= reference.ref('users').orderByChild('id').equalTo(user.id);
-        userRef.once('value', snapshot => {
-        if (snapshot.exists()) {
-            const User = snapshot.val();
-            const currentUser = Object.values(User)
-            console.log(Number(currentUser[0].wallet_balance), Number(item.tripCost));
-            if (Number(currentUser[0].wallet_balance) >= Number(item.tripCost)) {
-                reference.ref(`users/${user.id}`).update({
-                    wallet_balance: Number(currentUser[0].wallet_balance) - Number(item.tripCost),
-                });
-
-                let transactionData = {
-                  amount: Number(item.tripCost),
-                  tripName: item.TripName,
-                  date: moment().format('MMMM Do, YYYY'),
-                  payer: `${user.first_name} ${user.last_name}`,
-                  payer_id: user.id,
-                  status:'Pending',
-                 };
-                let newTransaction = tripTransactionReference;
-                transactionData.id = newTransaction.key;
-                let transactionDataClone = {...transactionData, id: newTransaction.key}
-                newTransaction.set(transactionDataClone);
-                toast.show(`Payment of £${item.tripCost} for the ${item.TripName} trip payment is successful!`, {
-                type: 'success',
-                placement: 'bottom',
-                duration: 5000,
-                offset: 30,
-                animationType: 'slide-in',
-              });
-            } 
-            else {
-                toast.show(`Payment of £${item.tripCost} for the ${item.TripName} trip payment wasnt successful as you do not have enough money in your wallet!`, {
-                type: 'danger',
-                placement: 'bottom',
-                duration: 5000,
-                offset: 30,
-                animationType: 'slide-in',
-              });
-              return
-            }    
-        }
-    })
-        }
-      })      
-    }
   
   useEffect(()=>{
     gettrips()
@@ -187,44 +79,40 @@ import {
         /> */}
         <Text style={styles.mainText}>Choose from Available Trips</Text>
         <View style={{width:'100%',  justifyContent: 'center',paddingHorizontal:10, alignItems: 'center', alignContent:"center"}}>
-         {
-          trips.length > 0 ?
-        <FlatList
-          data={trips}
-          // contentContainerStyle={styles.maintrip}
-          vertical
-          keyExtractor={(item) => item.id}
-          renderItem={({item, index})=> {
-          return  (
-            // <Card >
-            <TouchableOpacity onPress={() => payForTrips(item)} style={styles.tripCardRow}>
-              <View style={{ justifyContent:'center',  marginTop:-20, alignItems:'center' }}>
+        {
+        trips.length > 0 ?
+      <FlatList
+        data={trips}
+        contentContainerStyle={{width:'90%'}}
+        keyExtractor={(item) => item.id}
+        // horizontal
+        showsHorizontalScrollIndicator={false}
+        renderItem={({item, index})=> {
+        return  (
+          <TouchableOpacity onPress={() => {
+            console.log(item);
+            navigation.navigate('tripDetails', {item})
+          }}  style={styles.tripCardRow}  >
+            <View style={{ width:'100%',justifyContent:'center',  marginTop:-20, alignItems:'center', paddingHorizontal:4 }}>
               <Image
                   source={{ uri: item.image }}
-                  style={{ width: 55, height:55, borderRadius:10, resizeMode: 'contain' }}
+                  style={{ width: '101%', height:200, borderTopLeftRadius:11, borderTopRightRadius:11, resizeMode: 'contain' }}
                 />
             </View>
-              <View style={styles.maintrip}>
-                <Text style={styles.tripTextBold}>{item.TripName}</Text>
-                <View style={{flexDirection:'row',width:150, justifyContent:'space-between'}}>
+          
+            <View style={styles.maintrip}>
+              <Text style={styles.tripTextBold}>{item.TripName}</Text>
+              <View style={{flexDirection:'row',width:'100%', justifyContent:'space-between'}}>
                 <Text style={styles.tripText}>£{item.tripCost}</Text>
                 <Text style={styles.tripText1}>{item.date}</Text>
-                </View>
               </View>
-              <EntypoIcon
-                name="chevron-right"
-                size={32}
-                color={colors.black}
-                onPress={() => {
-                  navigation.navigate('tripDetails', {item})
-                }}
-              />
-            </TouchableOpacity>
-          // </Card>
-        );
-            }  }
-        /> : <Text style={styles.mainText}> No created trips at the moment</Text>
-         }
+            </View>
+          </TouchableOpacity>
+        // </Card>
+      );
+          }  }
+      /> : <Text style={styles.mainText}> No created trips at the moment</Text>
+       }
         </View>
   
        </View>

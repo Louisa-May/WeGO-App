@@ -17,7 +17,6 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry,multiline, n
         keyboardType={keyboardType}
         multiline={multiline}
         numberOfLines={numberOfLines}
-        
       />
     </View>
   );

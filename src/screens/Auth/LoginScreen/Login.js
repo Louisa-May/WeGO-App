@@ -18,6 +18,7 @@ import {useSelector} from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setIsAunthenticated, setUser } from '../../../../redux-store/userAuth';
 import database from '@react-native-firebase/database';
+import { useToast } from 'react-native-toast-notifications';
 
 
 
@@ -28,6 +29,7 @@ export default function Login({navigation}) {
   const [isLoading, setIsloading] = useState(false);
   const [isError, setIsError] = useState('');
   const dispatch = useDispatch();
+  const toast = useToast()
 
   const onSignUpPressed = () => {
     navigation.navigate('SignUp');
@@ -58,12 +60,26 @@ export default function Login({navigation}) {
       dispatch(setUser(user))
       dispatch(setIsAunthenticated(true));
       setIsloading(false);
+      toast.show(`Welcome back ${user.first_name}  for registering an account with us!`, {
+        type: 'success',
+        placement: 'top',
+        duration: 5000,
+        offset: 30,
+        animationType: 'slide-in',
+      });
       }
       setIsloading(false);
     }
      )}else{
       setIsloading(false);
       setIsError('An error occured while signing you in, check back later please')
+      toast.show(`'An error occured while signing you in, check back later please!`, {
+        type: 'danger',
+        placement: 'top',
+        duration: 5000,
+        offset: 30,
+        animationType: 'slide-in',
+      });
      }
     
     }

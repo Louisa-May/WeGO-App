@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     // backgroundColor:colors.grey,
     marginTop:20,
     borderRadius:11,
-    borderWidth:0.2,
+    borderWidth:0.5,
     borderColor:'grey',
     marginBottom:20
   },
@@ -108,7 +108,7 @@ export const styles = StyleSheet.create({
   noColorText: {
     fontSize: 26,
     fontWeight: '900',
-    color: colors.black,
+    color: colors.green,
     textAlign:'center'
   },
   bigText2: {
@@ -209,7 +209,7 @@ export const styles = StyleSheet.create({
     tripTextBold: {
       justifyContent: 'flex-start',
       width: '100%',
-      color: colors.black,
+      color: colors.green,
       fontSize: 20,
       fontWeight: 'bold',
       // paddingTop: 5,
