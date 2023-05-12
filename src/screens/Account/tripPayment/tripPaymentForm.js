@@ -61,13 +61,13 @@ import {
         {/* Header */}
        <View style={{width:'100%'}}>
        <View style={styles.row}>
-          <EntypoIcon
+          {/* <EntypoIcon
             name="chevron-left"
             size={32}
             style={{marginTop:7}}
             color={colors.black}
             onPress={goBack}
-          />
+          /> */}
           <Text style={styles.headerText}>Pay for a desired trip</Text>
         </View>
         {/* <Text style={styles.searchText}>Search or select savings trip</Text> */}

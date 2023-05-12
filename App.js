@@ -4,13 +4,14 @@ import {persistor, store} from './redux-store/store';
 import {PersistGate} from 'redux-persist/integration/react';
 import {Provider} from 'react-redux';
 import Navigation from './src/navigation';
-import { ToastProvider } from 'react-native-toast-notifications'
+import { ToastProvider } from 'react-native-toast-notifications';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { useState } from 'react';
-import { Image, StatusBar, StyleSheet, Text, View } from 'react-native';
-import ArrowForwardIcon from './src/assets/svgs/icons/arrow-forward-svgrepo-com.svg'
-import CheckMarkIcon from './src/assets/svgs/icons/icons8-checkmark (1).svg'
+import { Image, StyleSheet, Text, View } from 'react-native';
+import ArrowForwardIcon from './src/assets/svgs/icons/arrow-forward-svgrepo-com.svg';
+import CheckMarkIcon from './src/assets/svgs/icons/icons8-checkmark (1).svg';
 import { colors } from './src/constants/colors';
+import { useSelector } from 'react-redux';
 
 const slides = [
   {
@@ -29,7 +30,10 @@ const slides = [
   },
 ];
 export default function App() {
-  const [showRealApp, setShowRealApp] = useState(false)
+  const [showRealApp, setShowRealApp] = useState(false);
+  // const isAuthenticated = useSelector(
+  //   (state) => state.user.isAunthenticated,
+  // );
   const _renderItem = ({ item }) => {
     return (
         <View style={styles.slide}>
@@ -39,12 +43,12 @@ export default function App() {
         </View>
         // <StatusBar />
     );
-  }
+  };
   const  _onDone = () => {
     // User finished the introduction. Show real app through
     // navigation or simply by controlling state
     setShowRealApp(true);
-  }
+  };
 
  const  _renderNextButton = () => {
     return (
@@ -62,15 +66,13 @@ export default function App() {
   };
   if (showRealApp) {
     return (
-      // <NativeBaseProvider>
-        <ToastProvider>
           <Provider store={store}>
+            <ToastProvider>
               <PersistGate loading={null} persistor={persistor}>
                   <Navigation />
               </PersistGate>
+            </ToastProvider>
           </Provider>
-        </ToastProvider>
-      // </NativeBaseProvider>
     );
   }
   else {
@@ -83,25 +85,25 @@ const styles = StyleSheet.create({
   screen : {
    paddingTop: 20,
    flex:1,
-   justifyContent: "flex-start",
-   alignItems: "center",
-   width: "100%"
+   justifyContent: 'flex-start',
+   alignItems: 'center',
+   width: '100%',
   },
   slide:{
     flex:1,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'space-around',
     paddingBottom: 100,
     height:100,
-    width:'100%'
+    width:'100%',
   },
   title: {
     padding: 10,
     textAlign: 'center',
     fontSize: 28,
     fontWeight: 'bold',
-    color: colors.green
+    color: colors.green,
   },
   text:{
     fontSize: 18,
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
   image:{
     width: '90%',
     height: 400,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   buttonCircle: {
     height:50,
@@ -123,5 +125,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, .2)',
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 });

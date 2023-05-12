@@ -24,12 +24,12 @@ export default function GroupDetails({navigation}) {
       <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
       {/* Header */}
       <View style={styles.row}>
-        <EntypoIcon
+        {/* <EntypoIcon
           name="chevron-left"
           size={32}
           color={colors.black}
           onPress={goBack}
-        />
+        /> */}
         <Text style={styles.headerText}>Payout</Text>
       </View>
       <Text style={styles.searchText}>Book your trip now</Text>

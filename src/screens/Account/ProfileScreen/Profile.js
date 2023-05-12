@@ -71,7 +71,7 @@ export default function Profile({navigation}) {
         </View>
      </View>
       <View style={{width:'100%', justifyContent:'center', alignItems:'center'}}>
-        <View style={{width:'90%', backgroundColor:colors.grey, borderRadius:20, padding:20}}>
+        <View style={{width:'90%', backgroundColor:colors.deepGrey, borderRadius:20, padding:20}}>
                 <Text style={styles.profileText}>Name : {user.first_name} {user.last_name} </Text>
                 <Text style={styles.profileText}>Email : {user.email}  </Text>
           </View>
@@ -103,7 +103,7 @@ export default function Profile({navigation}) {
           </View>
       </TouchableOpacity> */}
       <TouchableOpacity onPress={onSignOut} style={{width:'100%', justifyContent:'center', alignItems:'center',alignContent:'center', marginTop:20}}>
-        <View style={{width:'90%', height:100, backgroundColor:colors.grey, borderRadius:20, padding:20, paddingTop:30, flexDirection:'row', justifyContent:'space-around'}}>
+        <View style={{width:'90%', height:100, backgroundColor:colors.deepGrey, borderRadius:20, padding:20, paddingTop:30, flexDirection:'row', justifyContent:'space-around'}}>
         <View style={styles.profileCardRow}>
           {/* <FontAwesomeIcon icon="fa-arrow-right-from-bracket" size={32} color={colors.black} /> */}
           <LogoutIcon height={32} width={32} />
