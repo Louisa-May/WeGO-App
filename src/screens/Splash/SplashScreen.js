@@ -12,7 +12,7 @@ import {styles} from './styles';
 import {colors} from '../../constants/colors';
 import { LogBox } from 'react-native';
 // LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-// LogBox.ignoreAllLogs();//Ignore all log notifications
+LogBox.ignoreAllLogs();//Ignore all log notifications
 export default function SplashScreen({navigation}) {
   const [mainSplash, setMainSplash] = React.useState(false);
   React.useEffect(() => {

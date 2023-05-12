@@ -60,7 +60,7 @@ export default function Login({navigation}) {
       dispatch(setUser(user))
       dispatch(setIsAunthenticated(true));
       setIsloading(false);
-      toast.show(`Welcome back ${user.first_name}  for registering an account with us!`, {
+      toast.show(`Hi ${user.first_name}!, welcome back`, {
         type: 'success',
         placement: 'top',
         duration: 5000,

@@ -13,6 +13,7 @@ import {
     FlatList,
     TouchableOpacity,
     Image,
+    ActivityIndicator,
   } from 'react-native';
   import React from 'react';
   import EntypoIcon from 'react-native-vector-icons/Entypo';
@@ -38,12 +39,14 @@ import {
     // const dispatch = useDispatch();
     // let [paymentHistory, setPaymentHistory] = useState([]);
     const toast = useToast();
+    const [isLoading, setIsloading] = useState(false)
     const goBack = () => {
       navigation.goBack();
     };
 
     const payForTrips = (trip) => {
       // console.log(item);
+      setIsloading(true)
       console.log(trip.item.TripName);
       reference.ref('tripTransactions').orderByChild('payer_id').equalTo(user.id)
       .once('value', snapshot => {
@@ -59,6 +62,7 @@ import {
             offset: 30,
             animationType: 'slide-in',
           });
+          setIsloading(false)
           return;
         };
         const userRef = reference.ref('users').orderByChild('id').equalTo(user.id);
@@ -91,6 +95,8 @@ import {
                 offset: 30,
                 animationType: 'slide-in',
               });
+              setIsloading(false)
+              return
             }
             else {
                 toast.show(`Payment of £${trip.item.tripCost} for the ${trip.trip.item.TripName} trip payment wasnt successful as you do not have enough money in your wallet!`, {
@@ -100,54 +106,11 @@ import {
                 offset: 30,
                 animationType: 'slide-in',
               });
+              setIsloading(false)
               return;
             }
         }
     });
-      } else {
-         const userRef = reference.ref('users').orderByChild('id').equalTo(user.id);
-      userRef.once('value', snapshot => {
-      if (snapshot.exists()) {
-          const User = snapshot.val();
-          const currentUser = Object.values(User);
-          console.log(Number(currentUser[0].wallet_balance), Number(trip.item.tripCost));
-          if (Number(currentUser[0].wallet_balance) >= Number(trip.item.tripCost)) {
-              reference.ref(`users/${user.id}`).update({
-                  wallet_balance: Number(currentUser[0].wallet_balance) - Number(trip.item.tripCost),
-              });
-
-              let transactionData = {
-                amount: Number(trip.item.tripCost),
-                tripName: trip.item.TripName,
-                date: moment().format('MMMM Do, YYYY'),
-                payer: `${user.first_name} ${user.last_name}`,
-                payer_id: user.id,
-                status:'Pending',
-               };
-              let newTransaction = tripTransactionReference;
-              transactionData.id = newTransaction.key;
-              let transactionDataClone = {...transactionData, id: newTransaction.key};
-              newTransaction.set(transactionDataClone);
-              toast.show(`Payment of £${trip.item.tripCost} for the ${trip.item.TripName} trip payment is successful!`, {
-              type: 'success',
-              placement: 'bottom',
-              duration: 5000,
-              offset: 30,
-              animationType: 'slide-in',
-            });
-          }
-          else {
-              toast.show(`Payment of £${trip.item.tripCost} for the ${trip.item.TripName} trip payment wasnt successful as you do not have enough money in your wallet!`, {
-              type: 'danger',
-              placement: 'bottom',
-              duration: 5000,
-              offset: 30,
-              animationType: 'slide-in',
-            });
-            return;
-          }
-      }
-  });
       }
     });
   };
@@ -209,9 +172,17 @@ import {
               </View>
             </View>
             <View>
-              <TouchableOpacity onPress={()=> {payForTrips(trip);}} style={{backgroundColor:colors.green, paddingHorizontal:30, paddingVertical:10, marginTop:10 ,alignItems:'center', borderRadius:20 }}>
-                <Text style={{color: colors.white,fontSize: 14,fontWeight: 'bold'}}>Pay for {trip.item.TripName} Trip</Text>
-              </TouchableOpacity>
+              {
+                isLoading ?   (
+                  <ActivityIndicator color="purple" animating={true} />
+                ) :
+                (
+                  <TouchableOpacity onPress={()=> {payForTrips(trip);}} style={{backgroundColor:colors.green, paddingHorizontal:30, paddingVertical:10, marginTop:20 ,alignItems:'center', borderRadius:10 }}>
+                  <Text style={{color: colors.white,fontSize: 14,fontWeight: 'bold'}}>Pay £{trip.item.tripCost} for {trip.item.TripName} Trip</Text>
+                </TouchableOpacity>
+                )
+              }
+             
             </View>
             <View style={styles.cardPadding1}>
                 <Text style={styles.summaryText}>Trip Description</Text>

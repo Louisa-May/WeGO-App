@@ -97,7 +97,7 @@ export const styles = StyleSheet.create({
     // shadowRadius:20,
     borderRadius:20,
     backgroundColor:colors.grey,
-    padding:20
+    padding:10
 
   },
   payoutAmountTrip: {

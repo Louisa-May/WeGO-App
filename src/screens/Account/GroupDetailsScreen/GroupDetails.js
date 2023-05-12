@@ -180,7 +180,7 @@ const payOutUser = () => {
         <Text style={styles.headerText}>Group Details</Text>
       </View>
 
-      <ScrollView style={{width:'90%'}}>
+      <ScrollView style={{width:'92%'}}>
         {/* Payout Amount*/}
           <View style={{flexDirection:'column', backgroundColor:colors.grey, borderRadius:20, paddingBottom:20}}>
             <View style={styles.payoutAmount}>
