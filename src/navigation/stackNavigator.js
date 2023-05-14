@@ -15,10 +15,10 @@ import Profile from '../screens/Account/ProfileScreen/Profile';
 import ProfileDetails from '../screens/Account/ProfileDetailsScreen/ProfileDetails';
 
 export const AuthStackScreens = [
-  {
-    screen: SplashScreen,
-    name: 'SplashScreen',
-  },
+  // {
+  //   screen: SplashScreen,
+  //   name: 'SplashScreen',
+  // },
   // {
   //   screen: SwipeUp,
   //   name: 'SwipeUp',

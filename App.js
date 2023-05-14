@@ -12,6 +12,8 @@ import ArrowForwardIcon from './src/assets/svgs/icons/arrow-forward-svgrepo-com.
 import CheckMarkIcon from './src/assets/svgs/icons/icons8-checkmark (1).svg';
 import { colors } from './src/constants/colors';
 import { useSelector } from 'react-redux';
+import { SplashScreen } from './src/screens/Splash/SplashScreen';
+import { useEffect } from 'react';
 
 const slides = [
   {
@@ -31,6 +33,11 @@ const slides = [
 ];
 export default function App() {
   const [showRealApp, setShowRealApp] = useState(false);
+  const [isAppReady, setIsAppReady] = useState(false);
+
+  useEffect(() => {
+    setIsAppReady(true);
+  }, []);
   // const isAuthenticated = useSelector(
   //   (state) => state.user.isAunthenticated,
   // );
@@ -76,7 +83,11 @@ export default function App() {
     );
   }
   else {
-    return <AppIntroSlider renderItem={_renderItem} data={slides} onDone={_onDone} renderDoneButton={_renderDoneButton}  renderNextButton={_renderNextButton}/>;
+    return (
+            <SplashScreen isAppReady={isAppReady}>
+              <AppIntroSlider renderItem={_renderItem} data={slides} onDone={_onDone} renderDoneButton={_renderDoneButton}  renderNextButton={_renderNextButton}/>
+            </SplashScreen>
+    );
   }
 
 }
