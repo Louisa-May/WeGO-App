@@ -6,10 +6,10 @@ export const styles = StyleSheet.create({
   container: {
     // justifyContent: 'center',
     alignItems: 'center',
-    height:'100%',
+    height: '100%',
     backgroundColor: colors.white,
     position: 'relative',
-    paddingHorizontal:16
+    paddingHorizontal: 16,
   },
   topView: {
     flexDirection: 'row',
@@ -24,16 +24,16 @@ export const styles = StyleSheet.create({
     // flexDirection: 'row',
     // justifyContent: 'space-between',
     // width: '70%',
-    marginHorizontal:10,
+    marginHorizontal: 10,
     // backgroundColor:'red',
     paddingTop: 20,
     // height:80,
     // backgroundColor:colors.grey,
-    marginTop:20,
-    borderRadius:11,
-    borderWidth:0.5,
-    borderColor:'grey',
-    marginBottom:20
+    marginTop: 20,
+    borderRadius: 11,
+    borderWidth: 0.5,
+    borderColor: 'grey',
+    marginBottom: 20,
   },
   userImageCover: {
     // justifyContent: 'space-between',
@@ -53,8 +53,8 @@ export const styles = StyleSheet.create({
     // },
     // elevation: 3,
     marginVertical: 30,
-    justifyContent:'flex-end',
-    marginRight:20, 
+    justifyContent: 'flex-end',
+    marginRight: 20,
   },
   userImage: {
     resizeMode: 'contain',
@@ -65,87 +65,85 @@ export const styles = StyleSheet.create({
   welcomeTextCover: {
     marginVertical: 10,
   },
-  WelometextDiv:{
-    flexDirection:'row',
-    borderWidth:0.1,
-    borderRadius:30,
+  WelometextDiv: {
+    flexDirection: 'row',
+    borderWidth: 0.1,
+    borderRadius: 30,
     // padding:20,
-    paddingHorizontal:30,
-    paddingVertical:10
+    paddingHorizontal: 30,
+    paddingVertical: 10,
   },
-  cardCover:{
-    width:'100%',
-    justifyContent:'center',
-    alignItems:'center',
-    alignContent:'center',
-    paddingBottom:20,
+  cardCover: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    paddingBottom: 20,
   },
   depositView: {
-    width:'100%',
-    height:100,
-    borderRadius:10,
-    borderWidth:0.2,
-    borderColor:'grey',
-    paddingHorizontal:20,
-    paddingVertical:10,
-    justifyContent:'space-between',
-    flexDirection:'row',
-    paddingTop:15
+    width: '100%',
+    height: 100,
+    borderRadius: 10,
+    borderWidth: 0.2,
+    borderColor: 'grey',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    paddingTop: 15,
   },
   cardImage: {
-    width:380,
+    width: 380,
     height: 200,
 
     // borderRadius: 23,
   },
-  DepositIcon:{
-    height:50,
-    width:50
+  DepositIcon: {
+    height: 50,
+    width: 50,
   },
-  DepositSmallView:{
-
-  },
+  DepositSmallView: {},
   noColorText: {
     fontSize: 26,
     fontWeight: '900',
     color: colors.green,
-    textAlign:'center'
+    textAlign: 'center',
   },
   bigText2: {
     color: colors.black,
     fontSize: 26,
     fontWeight: 'bold',
-   textAlign:'center'
+    textAlign: 'center',
   },
-  wallet_balance_view:{height:150,
-    width:'100%',
-    marginBottom:20,
-    borderRadius:15,
-    backgroundColor:colors.deepGrey,
-    justifyContent:'center'
+  wallet_balance_view: {
+    height: 150,
+    width: '100%',
+    marginBottom: 20,
+    borderRadius: 15,
+    backgroundColor: colors.deepGrey,
+    justifyContent: 'center',
   },
-  makeDepositView:{
-    width:'100%',
-    borderRadius:10,
-    borderWidth:0.2,
-    borderColor:'grey',
-    paddingHorizontal:15,
-    paddingVertical:20,
-    marginTop:15,
-    paddingBottom:20
-
+  makeDepositView: {
+    width: '100%',
+    borderRadius: 10,
+    borderWidth: 0.2,
+    borderColor: 'grey',
+    paddingHorizontal: 15,
+    paddingVertical: 20,
+    marginTop: 15,
+    paddingBottom: 20,
   },
-  inputSelect:{
+  inputSelect: {
     height: 50,
     width: '100%',
     backgroundColor: colors.grey,
     // borderWidth: 1,
     marginTop: 8,
   },
-  DepositText:{
-    fontSize:15,
-    color:'grey',
-    textAlign:'center'
+  DepositText: {
+    fontSize: 15,
+    color: 'grey',
+    textAlign: 'center',
   },
   smallText: {
     color: colors.black,
@@ -167,7 +165,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
   },
-  
+
   graphImage: {
     resizeMode: 'contain',
     width: 100,
@@ -184,36 +182,36 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     width: '100%',
   },
-  maintrip:{
-    width:200,
-    paddingBottom:20,
-    paddingHorizontal:30,
-    marginTop:20
+  maintrip: {
+    width: 200,
+    paddingBottom: 20,
+    paddingHorizontal: 30,
+    marginTop: 20,
   },
-    tripText: {
-      justifyContent: 'flex-start',
-      color: colors.black,
-      fontSize: 15,
-      fontWeight: 'semiBold',
-      // paddingTop: 5,
-  
-      // backgroundColor:'red'
-    },
-    tripText1: {
-      justifyContent: 'flex-start',
-      color: 'gray',
-      fontSize: 15,
-      fontWeight: 'bold',
-      marginLeft:10
-    },
-    tripTextBold: {
-      justifyContent: 'flex-start',
-      width: '100%',
-      color: colors.green,
-      fontSize: 20,
-      fontWeight: 'bold',
-      // paddingTop: 5,
-  
-      // backgroundColor:'red'
-    },
+  tripText: {
+    justifyContent: 'flex-start',
+    color: colors.black,
+    fontSize: 15,
+    fontWeight: 'semiBold',
+    // paddingTop: 5,
+
+    // backgroundColor:'red'
+  },
+  tripText1: {
+    justifyContent: 'flex-start',
+    color: 'gray',
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  tripTextBold: {
+    justifyContent: 'flex-start',
+    width: '100%',
+    color: colors.green,
+    fontSize: 18,
+    fontWeight: 'bold',
+    // paddingTop: 5,
+
+    // backgroundColor:'red'
+  },
 });
