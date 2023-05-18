@@ -74,70 +74,76 @@ export default function TripPayment({navigation}) {
           setValue={setSearchInput}
         /> */}
         <Text style={styles.mainText}>Choose from Available Trips</Text>
-        <View
+        {/* <View
           style={{
             width: '100%',
             justifyContent: 'center',
             paddingHorizontal: 10,
             alignItems: 'center',
             alignContent: 'center',
-          }}>
-          {trips.length > 0 ? (
-            <FlatList
-              data={trips}
-              contentContainerStyle={{width: '90%'}}
-              keyExtractor={item => item.id}
-              // horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={({item, index}) => {
-                return (
-                  <TouchableOpacity
-                    onPress={() => {
-                      console.log(item);
-                      navigation.navigate('tripDetails', {item});
-                    }}
-                    style={styles.tripCardRow}>
-                    <View
+          }}> */}
+        {trips.length > 0 ? (
+          <FlatList
+            data={trips}
+            contentContainerStyle={{
+              width: '90%',
+              paddingBottom: 130,
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'center',
+            }}
+            keyExtractor={item => item.id}
+            // horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item, index}) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    console.log(item);
+                    navigation.navigate('tripDetails', {item});
+                  }}
+                  style={styles.tripCardRow}>
+                  <View
+                    style={{
+                      width: '100%',
+                      justifyContent: 'center',
+                      marginTop: -20,
+                      alignItems: 'center',
+                      paddingHorizontal: 4,
+                    }}>
+                    <Image
+                      source={{uri: item.image}}
                       style={{
                         width: '100%',
-                        justifyContent: 'center',
-                        marginTop: -20,
-                        alignItems: 'center',
-                        paddingHorizontal: 4,
-                      }}>
-                      <Image
-                        source={{uri: item.image}}
-                        style={{
-                          width: '100%',
-                          height: 300,
-                          borderTopLeftRadius: 11,
-                          borderTopRightRadius: 11,
-                          resizeMode: 'cover',
-                        }}
-                      />
-                    </View>
+                        height: 300,
+                        borderTopLeftRadius: 11,
+                        borderTopRightRadius: 11,
+                        resizeMode: 'cover',
+                      }}
+                    />
+                  </View>
 
-                    <View style={styles.maintrip}>
-                      <Text style={styles.tripTextBold}>{item.TripName}</Text>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          width: '100%',
-                          justifyContent: 'space-between',
-                        }}>
-                        <Text style={styles.tripText}>£{item.tripCost}</Text>
-                        <Text style={styles.tripText1}>{item.date}</Text>
-                      </View>
+                  <View style={styles.maintrip}>
+                    <Text style={styles.tripTextBold}>{item.TripName}</Text>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        width: '100%',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text style={styles.tripText}>£{item.tripCost}</Text>
+                      <Text style={styles.tripText1}>{item.date}</Text>
                     </View>
-                  </TouchableOpacity>
-                  // </Card>
-                );
-              }}
-            />
-          ) : (
-            <Text style={styles.mainText}> No created trips at the moment</Text>
-          )}
-        </View>
+                  </View>
+                </TouchableOpacity>
+                // </Card>
+              );
+            }}
+          />
+        ) : (
+          <Text style={styles.mainText}> No created trips at the moment</Text>
+        )}
       </View>
       {/* Create trip */}
       {user.role === 'admin' ? (

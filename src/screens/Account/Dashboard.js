@@ -4,7 +4,6 @@
 /* eslint-disable prettier/prettier */
 import {
   View,
-  StatusBar,
   SafeAreaView,
   Text,
   Image,
@@ -16,20 +15,14 @@ import {
   FlatList,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-// import RNPickerSelect from 'react-native-picker-select';
-import FeatherIcon from 'react-native-vector-icons/Feather';
-import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {styles} from './styles';
 import {colors} from '../../constants/colors';
-import Card from '../../components/card';
 import {useSelector} from 'react-redux';
-import CustomInput from '../../components/customInput';
 import CustomButton from '../../components/customButton';
 import DropDownIcon from '../../assets/svgs/icons/drop-down.svg';
 import database from '@react-native-firebase/database';
 import moment from 'moment';
 import {useToast} from 'react-native-toast-notifications';
-import objectUnfreeze from 'object-unfreeze';
 import {setUser} from '../../../redux-store/userAuth';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';

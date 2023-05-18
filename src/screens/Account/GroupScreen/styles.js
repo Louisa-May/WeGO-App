@@ -7,15 +7,14 @@ export const styles = StyleSheet.create({
     // justifyContent: 'center',
     // alignItems: 'center',
     backgroundColor: colors.white,
-    height:'100%'
+    height: '100%',
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: '100%',
     paddingHorizontal: 10,
-    marginTop:20,
-   
+    marginTop: 20,
   },
   headerText: {
     color: colors.black,
@@ -36,8 +35,8 @@ export const styles = StyleSheet.create({
     padding: 20,
     fontSize: 20,
     color: colors.black,
-    marginBottom:-20,
-    fontWeight:'bold'
+    marginBottom: -20,
+    fontWeight: 'bold',
   },
   groupCardRow: {
     flexDirection: 'row',
@@ -45,12 +44,12 @@ export const styles = StyleSheet.create({
     width: '96%',
     paddingHorizontal: 10,
     paddingTop: 20,
-    height:80,
-    backgroundColor:colors.grey,
-    marginTop:20,
-    borderRadius:20
+    height: 80,
+    backgroundColor: colors.grey,
+    marginTop: 20,
+    borderRadius: 20,
   },
-  mainGroup:{width:'95%'},
+  mainGroup: {width: '95%', marginBottom: 200},
   groupText: {
     justifyContent: 'flex-start',
     width: '70%',
@@ -66,8 +65,8 @@ export const styles = StyleSheet.create({
   },
   plusIcon: {
     position: 'absolute',
-    bottom:10,
-    right:20
+    bottom: 10,
+    right: 20,
   },
   footer: {
     flexDirection: 'row',
