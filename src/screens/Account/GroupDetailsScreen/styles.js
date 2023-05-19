@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: colors.white,
     // position: 'relative',
-    height:'100%',
+    height: '100%',
     // paddingHorizontal:10
   },
   row: {
@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: '100%',
     paddingHorizontal: 10,
-    marginTop:20
+    marginTop: 20,
   },
   headerText: {
     color: colors.black,
@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     paddingTop: 10,
-    color:colors.black
+    color: colors.black,
   },
   bigText: {
     color: colors.black,
@@ -52,22 +52,22 @@ export const styles = StyleSheet.create({
     color: colors.black,
     fontSize: 26,
     fontWeight: 'bold',
-    textAlign:'center'
+    textAlign: 'center',
   },
   bigTextRight: {
     color: colors.black,
     fontSize: 26,
     fontWeight: 'bold',
-    marginLeft:85
+    marginLeft: 85,
   },
   cardRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-   paddingHorizontal: 20, 
-    marginTop:10,
+    paddingHorizontal: 20,
+    marginTop: 10,
     width: '100%',
   },
-  cardRowText:{
+  cardRowText: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
@@ -76,65 +76,65 @@ export const styles = StyleSheet.create({
   pushLeft: {
     // left: 30,
     // paddingVertical: 5,
-    color:colors.black
+    color: colors.black,
   },
   pushRight: {
     right: 0,
     // paddingVertical: 5,
-    color:colors.black
+    color: colors.black,
   },
   pushRight2: {
     // right: 55,
     paddingVertical: 5,
-    color:colors.black,
+    color: colors.black,
   },
   payoutAmount: {
     // paddingHorizontal:20,
-    width:'100%',
-    shadowColor:'black',
-    shadowOffset: { width: 20, height: 20},
-    shadowOpacity:0.5,
+    width: '100%',
+    shadowColor: 'black',
+    shadowOffset: {width: 20, height: 20},
+    shadowOpacity: 0.5,
     // shadowRadius:20,
-    borderRadius:20,
-    backgroundColor:colors.grey,
-    padding:10
-
+    borderRadius: 20,
+    backgroundColor: colors.grey,
+    padding: 10,
   },
   payoutAmountTrip: {
     // paddingHorizontal:20,
-    width:'100%',
-    shadowColor:'black',
-    shadowOffset: { width: 20, height: 20},
-    shadowOpacity:0.5,
+    width: '100%',
+    shadowColor: 'black',
+    shadowOffset: {width: 20, height: 20},
+    shadowOpacity: 0.5,
     // shadowRadius:20,
-    borderRadius:20,
-    backgroundColor:colors.white,
+    borderRadius: 20,
+    backgroundColor: colors.white,
     // padding:20
-
   },
   cardInnerRow: {
     flexDirection: 'row',
     // alignItems:'center',
     // justifyContent:'center',
-    width:'50%',
-    textAlign:'left'
+    // backgroundColor: 'red',
+    width: '40%',
+    textAlign: 'left',
   },
   cardInnerRightRow: {
     flexDirection: 'row',
     // alignItems:'center',
     // justifyContent:'center',
-    width:'50%',
-    textAlign:'right'
+    // width: '90%',
+    // backgroundColor: 'red',
+    textAlign: 'right',
   },
   walletBalanceView: {
-    width:'100%',
-    justifyContent:'center',
-    alignContent:'center',
-    alignItems:'center'
+    width: '100%',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
   },
   walletBalance: {
     width: 150,
-    marginBottom:30
+    marginBottom: 30,
   },
   summaryText: {
     color: colors.black,
@@ -147,40 +147,40 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'semiBold',
     paddingVertical: 10,
-    textAlign:'center',
-    textTransform: 'capitalize'
+    textAlign: 'center',
+    textTransform: 'capitalize',
   },
   summarySmallTextLeft: {
     color: colors.black,
     fontSize: 14,
     fontWeight: 'semiBold',
     paddingVertical: 10,
-    textAlign:'left',
-    textTransform: 'capitalize'
+    textAlign: 'left',
+    textTransform: 'capitalize',
   },
   cardPadding: {
     paddingVertical: 30,
-    marginTop:10,
-    width:'100%'
+    marginTop: 10,
+    width: '100%',
   },
   cardPadding1: {
     paddingVertical: 10,
-    width:'100%',
+    width: '100%',
   },
   mainGroup: {
     // height:400
   },
   scheduleCover: {
-    width:'100%',
+    width: '100%',
   },
-  nohistoryText:{
+  nohistoryText: {
     color: colors.black,
   },
   nohistoryView: {
-    backgroundColor:colors.grey,
+    backgroundColor: colors.grey,
     width: '98%',
     paddingHorizontal: 20,
-    paddingVertical:10
+    paddingVertical: 10,
   },
   paymentToday: {
     backgroundColor: colors.grey,
@@ -195,18 +195,18 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     backgroundColor: colors.grey,
-    borderRadius:15,
-    paddingHorizontal:20,
-    marginTop:15,
+    borderRadius: 15,
+    paddingHorizontal: 20,
+    marginTop: 15,
     // paddingVertical:20
   },
   repaymentRow2: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: colors.grey,
-    borderRadius:15,
-    paddingHorizontal:20,
-    marginTop:15,
+    borderRadius: 15,
+    paddingHorizontal: 20,
+    marginTop: 15,
     // paddingVertical:20
   },
   repaymentStatusRow: {
@@ -215,45 +215,45 @@ export const styles = StyleSheet.create({
   },
   repaymentStatusRow1: {
     paddingTop: 20,
-    width:'30%'
+    width: '30%',
   },
   paymentScheduleRow: {
     paddingTop: 20,
-    width:'30%'
+    width: '30%',
   },
   repaymentSmallText: {
     color: colors.black,
     fontSize: 14,
     fontWeight: 'semiBold',
     paddingTop: 50,
-    textAlign:'center'
+    textAlign: 'center',
   },
-  summarySmallTextRight:{
+  summarySmallTextRight: {
     color: colors.black,
     fontSize: 14,
     fontWeight: 'semiBold',
     paddingTop: 14,
-    textAlign:'right',
+    textAlign: 'right',
   },
   repaymentStausText: {
     color: colors.green,
     fontSize: 14,
     fontWeight: 'semiBold',
     textTransform: 'capitalize',
-    textAlign:'center',
+    textAlign: 'center',
   },
   repaymentStausTextLeft: {
     color: colors.green,
     fontSize: 14,
     fontWeight: 'semiBold',
     textTransform: 'capitalize',
-    textAlign:'left',
+    textAlign: 'left',
   },
-  repaymentStausTextRight:{
+  repaymentStausTextRight: {
     color: colors.green,
     fontSize: 14,
     fontWeight: 'semiBold',
     textTransform: 'capitalize',
-    textAlign:'right',
+    textAlign: 'right',
   },
 });

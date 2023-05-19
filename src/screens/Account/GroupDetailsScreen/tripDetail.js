@@ -45,7 +45,8 @@ export default function TripDetails({route, navigation}) {
   const payForTrips = trip => {
     // console.log(item);
     setIsloading(true);
-    console.log(trip.item.TripName);
+    // console.log(trip.item.TripName);
+    trip.trip;
     reference
       .ref('tripTransactions')
       .orderByChild('payer_id')
@@ -57,6 +58,7 @@ export default function TripDetails({route, navigation}) {
           const paidForPresentTrip = paidTrips.filter(
             paidtrip => paidtrip.tripName === trip.item.TripName,
           );
+          console.log(paidForPresentTrip.length);
           if (paidForPresentTrip.length > 0) {
             toast.show(
               'Payment for this trip isnt successful as you have paid for this trip before',
@@ -109,7 +111,7 @@ export default function TripDetails({route, navigation}) {
                 };
                 newTransaction.set(transactionDataClone);
                 toast.show(
-                  `Payment of £${trip.item.tripCost} for the ${trip.item.TripName} trip payment is successful!`,
+                  `Payment of £${trip.item.tripCost} for the ${trip.item.TripName} trip payment is successful!!!`,
                   {
                     type: 'success',
                     placement: 'bottom',
@@ -122,7 +124,7 @@ export default function TripDetails({route, navigation}) {
                 return;
               } else {
                 toast.show(
-                  `Payment of £${trip.item.tripCost} for the ${trip.trip.item.TripName} trip payment wasnt successful as you do not have enough money in your wallet!`,
+                  `Payment of £${trip.item.tripCost} for the ${trip.item.TripName} trip payment wasnt successful as you do not have enough money in your wallet!`,
                   {
                     type: 'danger',
                     placement: 'bottom',
@@ -136,7 +138,78 @@ export default function TripDetails({route, navigation}) {
               }
             }
           });
+          setIsloading(false);
+          return;
         }
+        const userRef = reference
+          .ref('users')
+          .orderByChild('id')
+          .equalTo(user.id);
+        userRef.once('value', snapshot => {
+          if (snapshot.exists()) {
+            const User = snapshot.val();
+            const currentUser = Object.values(User);
+            console.log(
+              Number(currentUser[0].wallet_balance),
+              Number(trip.item.tripCost),
+            );
+            if (
+              Number(currentUser[0].wallet_balance) >=
+              Number(trip.item.tripCost)
+            ) {
+              reference.ref(`users/${user.id}`).update({
+                wallet_balance:
+                  Number(currentUser[0].wallet_balance) -
+                  Number(trip.item.tripCost),
+              });
+
+              let transactionData = {
+                amount: Number(trip.item.tripCost),
+                tripName: trip.item.TripName,
+                date: moment().format('MMMM Do, YYYY'),
+                payer: `${user.first_name} ${user.last_name}`,
+                payer_id: user.id,
+                status: 'Pending',
+              };
+              let newTransaction = tripTransactionReference;
+              transactionData.id = newTransaction.key;
+              let transactionDataClone = {
+                ...transactionData,
+                id: newTransaction.key,
+              };
+              newTransaction.set(transactionDataClone);
+              toast.show(
+                `Payment of £${trip.item.tripCost} for the ${trip.item.TripName} trip payment is successful!`,
+                {
+                  type: 'success',
+                  placement: 'bottom',
+                  duration: 5000,
+                  offset: 30,
+                  animationType: 'slide-in',
+                },
+              );
+              setIsloading(false);
+              return;
+            } else {
+              toast.show(
+                `Payment of £${trip.item.tripCost} for the ${trip.item.TripName} trip payment wasnt successful as you do not have enough money in your wallet!`,
+                {
+                  type: 'danger',
+                  placement: 'bottom',
+                  duration: 5000,
+                  offset: 30,
+                  animationType: 'slide-in',
+                },
+              );
+              setIsloading(false);
+              return;
+            }
+          }
+          setIsloading(false);
+          return;
+        });
+        setIsloading(false);
+        return;
       });
   };
 
